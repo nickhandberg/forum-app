@@ -3,7 +3,7 @@ import Post from "../components/Post";
 
 const Feed = () => {
     return (
-        <div className="h-[100vh]">
+        <div className="">
             <h1>Feed</h1>
             <Post />
         </div>
