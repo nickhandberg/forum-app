@@ -1,10 +1,10 @@
 import "./index.css";
+import Feed from "./pages/Feed";
 
 function App() {
     return (
         <div className="App">
-            <p className="mt-6 text-black bg-white">Test</p>
-            <p className="mt-6 text-white bg-black">Test</p>
+            <Feed />
         </div>
     );
 }
