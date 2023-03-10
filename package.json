@@ -1,0 +1,23 @@
+{
+    "name": "forum-app",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "client-install": "cd client && npm install",
+        "server-install": "cd server && npm install"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/noko12312/forum-app.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/noko12312/forum-app/issues"
+    },
+    "homepage": "https://github.com/noko12312/forum-app#readme",
+    "dependencies": {
+        "dotenv": "^16.0.3"
+    }
+}
