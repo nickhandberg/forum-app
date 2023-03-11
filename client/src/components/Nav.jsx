@@ -5,7 +5,7 @@ const Nav = ({
     profileMenuOpen,
     setProfileMenuOpen,
     darkMode,
-    toggleDarkMode,
+    setDarkMode,
 }) => {
     return (
         <header>
@@ -19,7 +19,7 @@ const Nav = ({
                 </div>
                 <div className="hidden md:flex lg:flex items-center gap-2 mr-8">
                     <input
-                        className="w-full rounded-md placeholder-dark-2 bg-light-2 border-light-2 border-2 px-2 dark:bg-dark-3 dark:border-dark-3 dark:placeholder-light-3"
+                        className="w-full rounded-md placeholder-dark-2 bg-light-3 border-light-3 border-2 px-2 dark:bg-dark-3 dark:border-dark-3 dark:placeholder-light-3"
                         type="text"
                         placeholder="search"
                     />
@@ -47,7 +47,7 @@ const Nav = ({
                     {profileMenuOpen && (
                         <ProfileDropdown
                             darkMode={darkMode}
-                            toggleDarkMode={toggleDarkMode}
+                            setDarkMode={setDarkMode}
                         />
                     )}
                 </div>

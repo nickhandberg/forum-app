@@ -1,11 +1,11 @@
 import React from "react";
 
-const ProfileDropdown = ({ darkMode, toggleDarkMode }) => {
+const ProfileDropdown = ({ darkMode, setDarkMode }) => {
     return (
         <div className="fixed top-12 right-2 rounded-b-lg border-dark-3 border-[2px] border-t-0 bg-light-1 dark:bg-dark-2 overflow-hidden  flex flex-col text-lg transition-all ease-in-out">
             <button
                 className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
-                onClick={toggleDarkMode}
+                onClick={() => setDarkMode(!darkMode)}
             >
                 <box-icon
                     color={darkMode ? "#e6e8eb" : "#161617"}

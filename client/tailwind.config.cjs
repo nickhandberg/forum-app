@@ -12,10 +12,11 @@ module.exports = {
             /*LIGHT MODE */
             "light-1": "#e6e8eb",
             "light-2": "#c4c4c4",
-            "light-3": "#ababab",
+            "light-3": "#dadce0",
 
             /*COMMON */
             "green-1": "#6fc938",
+            "green-2": "#4db010",
         },
     },
     plugins: [],

@@ -2,16 +2,12 @@ import "boxicons";
 import { useState } from "react";
 import Nav from "./components/Nav";
 import "./index.css";
-import Feed from "./pages/Feed";
+import Home from "./pages/Home";
 
 function App() {
     const [darkMode, setDarkMode] = useState(false);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-
-    const toggleDarkMode = () => {
-        setDarkMode(!darkMode);
-        setProfileMenuOpen(true);
-    };
+    const [showGrid, setShowGrid] = useState(true);
 
     return (
         <div className={`${darkMode && "dark"} `}>
@@ -20,9 +16,13 @@ function App() {
                     profileMenuOpen={profileMenuOpen}
                     setProfileMenuOpen={setProfileMenuOpen}
                     darkMode={darkMode}
-                    toggleDarkMode={toggleDarkMode}
+                    setDarkMode={setDarkMode}
                 />
-                <Feed />
+                <Home
+                    showGrid={showGrid}
+                    setShowGrid={setShowGrid}
+                    darkMode={darkMode}
+                />
             </div>
         </div>
     );
