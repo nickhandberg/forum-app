@@ -1,13 +1,24 @@
 import "boxicons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Nav from "./components/Nav";
 import "./index.css";
 import Home from "./pages/Home";
+import {
+    getUserPrefs,
+    setDarkModePref,
+    setShowGridPref,
+} from "./utils/userPrefs";
 
 function App() {
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(getUserPrefs().darkMode);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-    const [showGrid, setShowGrid] = useState(true);
+    const [showGrid, setShowGrid] = useState(getUserPrefs().showGrid);
+
+    useEffect(() => {
+        setDarkModePref(darkMode);
+
+        setShowGridPref(showGrid);
+    }, [darkMode, showGrid]);
 
     return (
         <div className={`${darkMode && "dark"} `}>
