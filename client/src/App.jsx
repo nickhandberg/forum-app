@@ -15,10 +15,19 @@ function App() {
     const [showGrid, setShowGrid] = useState(getUserPrefs().showGrid);
 
     useEffect(() => {
+        // Update user preferences
         setDarkModePref(darkMode);
-
         setShowGridPref(showGrid);
     }, [darkMode, showGrid]);
+
+    // Hide dropdown menu if user clicks on another part of screen
+    document.addEventListener("click", function (event) {
+        const dropdown = document.getElementById("profileDropdown");
+        const icon = document.getElementById("profileIcon");
+        if (!dropdown.contains(event.target) && !icon.contains(event.target)) {
+            setProfileMenuOpen(false);
+        }
+    });
 
     return (
         <div className={`${darkMode && "dark"} `}>

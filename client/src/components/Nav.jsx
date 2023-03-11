@@ -35,6 +35,7 @@ const Nav = ({
                     <button
                         onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                         className="cursor-pointer flex align-middle"
+                        id="profileIcon"
                     >
                         <box-icon
                             color={darkMode ? "#e6e8eb" : "#161617"}

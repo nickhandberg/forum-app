@@ -21,7 +21,7 @@ const Home = ({ showGrid, setShowGrid, darkMode }) => {
                     )}
                 </button>
             </div>
-            <Feed showGrid={showGrid} />
+            <Feed showGrid={showGrid} darkMode={darkMode} />
         </div>
     );
 };
