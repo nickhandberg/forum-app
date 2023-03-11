@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import ProfileDropdown from "./ProfileDropdown";
 
-const Nav = ({ darkMode, toggleDarkMode }) => {
-    let color = "white";
+const Nav = ({
+    profileMenuOpen,
+    setProfileMenuOpen,
+    darkMode,
+    toggleDarkMode,
+}) => {
     return (
-        <header className={`${darkMode && "dark"}`}>
-            <nav className=" w-full h-auto  bg-light-1 dark:bg-dark-2 dark:text-light-1 flex p-2 px-14 rounded-bl-[50px] border-b-[2px] border-dark-3 justify-between items-center">
+        <header>
+            <nav className="fixed w-full h-[50px] bg-light-1 dark:bg-dark-2 dark:text-light-1 flex p-2 pl-14 pr-[75px] rounded-bl-[50px] border-b-[2px] border-dark-3 justify-between items-center">
                 <h1 className="text-2xl  font-bold">Forum</h1>
                 <div className="flex-shrink  text-md font-medium hidden md:flex lg:flex space-x-[4vw] mx-8">
                     <a href="">home</a>
@@ -18,10 +23,7 @@ const Nav = ({ darkMode, toggleDarkMode }) => {
                         type="text"
                         placeholder="search"
                     />
-                    <button
-                        className="flex align-middle"
-                        onClick={toggleDarkMode}
-                    >
+                    <button className="flex align-middle">
                         <box-icon
                             color={darkMode ? "#e6e8eb" : "#161617"}
                             name="search"
@@ -29,13 +31,25 @@ const Nav = ({ darkMode, toggleDarkMode }) => {
                         ></box-icon>
                     </button>
                 </div>
-                <div className="flex-shrink flex align-middle">
-                    <box-icon
-                        color={darkMode ? "#e6e8eb" : "#161617"}
-                        type="solid"
-                        name="user-circle"
-                        size="md"
-                    ></box-icon>
+                <div className="flex-shrink  ">
+                    <button
+                        onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                        className="cursor-pointer flex align-middle"
+                    >
+                        <box-icon
+                            color={darkMode ? "#e6e8eb" : "#161617"}
+                            type="solid"
+                            name="user-circle"
+                            size="md"
+                        ></box-icon>
+                    </button>
+
+                    {profileMenuOpen && (
+                        <ProfileDropdown
+                            darkMode={darkMode}
+                            toggleDarkMode={toggleDarkMode}
+                        />
+                    )}
                 </div>
             </nav>
         </header>
