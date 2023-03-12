@@ -38,7 +38,7 @@ function App() {
     return (
         <Router>
             <div className={`${darkMode && "dark"} `}>
-                <div className="bg-light-2 dark:bg-dark-1">
+                <div className="bg-light-2 dark:bg-dark-1 min-h-screen">
                     <Nav
                         profileMenuOpen={profileMenuOpen}
                         setProfileMenuOpen={setProfileMenuOpen}
