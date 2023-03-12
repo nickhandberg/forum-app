@@ -1,4 +1,6 @@
 import React from "react";
+import { moon, signIn, signUp, sun } from "../img/iconPaths";
+import Icon from "./Icon";
 
 const ProfileDropdown = ({ darkMode, setDarkMode }) => {
     return (
@@ -10,27 +12,33 @@ const ProfileDropdown = ({ darkMode, setDarkMode }) => {
                 className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
                 onClick={() => setDarkMode(!darkMode)}
             >
-                <box-icon
-                    color={darkMode ? "#e6e8eb" : "#161617"}
-                    name={darkMode ? "sun" : "moon"}
-                    size="25px"
+                <Icon
+                    path={darkMode ? sun : moon}
+                    fill={darkMode ? "#c4c4c4" : "#161617"}
+                    stroke={darkMode ? "#c4c4c4" : "#161617"}
+                    w={"25px"}
+                    h={"25px"}
                 />
                 {darkMode ? "Light Mode" : "Dark Mode"}
             </button>
             <button className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3">
-                <box-icon
-                    color={darkMode ? "#e6e8eb" : "#161617"}
-                    name="user"
-                    size="25px"
-                ></box-icon>
+                <Icon
+                    path={signIn}
+                    fill={darkMode ? "#c4c4c4" : "#161617"}
+                    stroke={darkMode ? "#c4c4c4" : "#161617"}
+                    w={"25px"}
+                    h={"25px"}
+                />
                 Sign In
             </button>
             <button className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3">
-                <box-icon
-                    color={darkMode ? "#e6e8eb" : "#161617"}
-                    name="user-plus"
-                    size="25px"
-                ></box-icon>
+                <Icon
+                    path={signUp}
+                    fill={darkMode ? "#c4c4c4" : "#161617"}
+                    stroke={darkMode ? "#c4c4c4" : "#161617"}
+                    w={"25px"}
+                    h={"25px"}
+                />
                 Sign Up
             </button>
         </div>

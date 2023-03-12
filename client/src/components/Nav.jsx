@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { profileDropdownIcon, search } from "../img/iconPaths";
+import Icon from "./Icon";
 import ProfileDropdown from "./ProfileDropdown";
 
 const Nav = ({
@@ -24,11 +26,13 @@ const Nav = ({
                         placeholder="search"
                     />
                     <button className="flex align-middle">
-                        <box-icon
-                            color={darkMode ? "#e6e8eb" : "#161617"}
-                            name="search"
-                            size="28px"
-                        ></box-icon>
+                        <Icon
+                            path={search}
+                            fill={darkMode ? "#c4c4c4" : "#161617"}
+                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            w={"28px"}
+                            h={"28px"}
+                        />
                     </button>
                 </div>
                 <div className="flex-shrink  ">
@@ -37,12 +41,13 @@ const Nav = ({
                         className="cursor-pointer flex align-middle"
                         id="profileIcon"
                     >
-                        <box-icon
-                            color={darkMode ? "#e6e8eb" : "#161617"}
-                            type="solid"
-                            name="user-circle"
-                            size="md"
-                        ></box-icon>
+                        <Icon
+                            path={profileDropdownIcon}
+                            fill={darkMode ? "#c4c4c4" : "#161617"}
+                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            w={"40px"}
+                            h={"40px"}
+                        />
                     </button>
 
                     {profileMenuOpen && (

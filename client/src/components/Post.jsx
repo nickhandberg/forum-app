@@ -1,5 +1,16 @@
 import React, { useState } from "react";
+import {
+    comment,
+    downvote,
+    downvoteFilled,
+    linkExternal,
+    star,
+    starFilled,
+    upvote,
+    upvoteFilled,
+} from "../img/iconPaths";
 import { getPostAge } from "../utils/getPostAge";
+import Icon from "./Icon";
 
 const Post = ({
     image,
@@ -46,11 +57,13 @@ const Post = ({
                     href={link}
                     className="max-h-[480px] bg-light-3 dark:bg-dark-3 text-center overflow-hidden p-4 text-lg rounded-md h-full dark:text-light-2"
                 >
-                    <box-icon
-                        name="link-external"
-                        size="200px"
-                        color="#161617"
-                    ></box-icon>{" "}
+                    <Icon
+                        path={linkExternal}
+                        fill={darkMode ? "#c4c4c4" : "#161617"}
+                        stroke={darkMode ? "#c4c4c4" : "#161617"}
+                        w={"200px"}
+                        h={"200px"}
+                    />
                     <br />
                     {link}
                 </a>
@@ -63,18 +76,19 @@ const Post = ({
                             setDownvoted(false);
                         }}
                     >
-                        <box-icon
-                            name="upvote"
-                            size="30px"
-                            type="solid"
-                            color={
+                        <Icon
+                            path={upvoted ? upvoteFilled : upvote}
+                            fill={
                                 upvoted
                                     ? "#6fc938"
                                     : darkMode
                                     ? "#c4c4c4"
                                     : "#161617"
                             }
-                        ></box-icon>
+                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            w={"30px"}
+                            h={"30px"}
+                        />
                     </button>
                     <p className="dark:text-light-2 text-lg text-center">
                         {karma > 1000 ? (karma / 1000).toFixed(1) + "k" : karma}
@@ -85,44 +99,48 @@ const Post = ({
                             setUpvoted(false);
                         }}
                     >
-                        <box-icon
-                            name="downvote"
-                            size="30px"
-                            type="solid"
-                            color={
+                        <Icon
+                            path={downvoted ? downvoteFilled : downvote}
+                            fill={
                                 downvoted
                                     ? "#d90f63"
                                     : darkMode
                                     ? "#c4c4c4"
                                     : "#161617"
                             }
-                        ></box-icon>
+                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            w={"30px"}
+                            h={"30px"}
+                        />
                     </button>
                 </div>
                 <div className="flex gap-16">
                     <button>
-                        <box-icon
-                            name="comment"
-                            size="30px"
-                            color={darkMode ? "#c4c4c4" : "#161617"}
-                        ></box-icon>
+                        <Icon
+                            path={comment}
+                            fill={darkMode ? "#c4c4c4" : "#161617"}
+                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            w={"30px"}
+                            h={"30px"}
+                        />
                     </button>
                     <button
                         className="flex align-middle"
                         onClick={() => setSaved(!saved)}
                     >
-                        <box-icon
-                            name="star"
-                            size="30px"
-                            type="solid"
-                            color={
+                        <Icon
+                            path={saved ? starFilled : star}
+                            fill={
                                 saved
                                     ? "#d6c106"
                                     : darkMode
                                     ? "#c4c4c4"
                                     : "#161617"
                             }
-                        ></box-icon>
+                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            w={"30px"}
+                            h={"30px"}
+                        />
                     </button>
                 </div>
             </div>
