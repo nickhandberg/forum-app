@@ -9,6 +9,19 @@ const getAllPosts = async (req, res) => {
     }
 };
 
+const getPostsByChannel = async (req, res) => {
+    try {
+        const { channel_name } = req.params;
+        const allPosts = await pool.query(
+            "SELECT * FROM post WHERE channel_name = $1",
+            [channel_name]
+        );
+        res.json(allPosts.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
 const createPost = async (req, res) => {
     try {
         const { image_link, link, self_text, title, channel_name, karma } =
@@ -71,4 +84,11 @@ const getPost = async (req, res) => {
     }
 };
 
-module.exports = { getAllPosts, createPost, updatePost, deletePost, getPost };
+module.exports = {
+    getAllPosts,
+    getPostsByChannel,
+    createPost,
+    updatePost,
+    deletePost,
+    getPost,
+};

@@ -18,8 +18,5 @@
     "bugs": {
         "url": "https://github.com/noko12312/forum-app/issues"
     },
-    "homepage": "https://github.com/noko12312/forum-app#readme",
-    "dependencies": {
-        "dotenv": "^16.0.3"
-    }
+    "homepage": "https://github.com/noko12312/forum-app#readme"
 }

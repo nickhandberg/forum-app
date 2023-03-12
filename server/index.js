@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "../.env" });
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -11,8 +11,6 @@ app.use(express.json()); // req.body
 
 // ROUTES
 app.use("/posts", require("./routes/posts"));
-
-// delete a post
 
 app.listen(PORT, () => {
     console.log(`Server has started on port ${PORT}`);
