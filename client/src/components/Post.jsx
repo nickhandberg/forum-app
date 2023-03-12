@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getPostAge } from "../utils/getPostAge";
 
 const Post = ({
     image,
@@ -25,7 +26,7 @@ const Post = ({
                         {channel}
                     </a>
                     <p className="dark:text-light-2">
-                        Posted by u/noko {age} ago
+                        Posted by u/noko {getPostAge(age)}
                     </p>
                 </div>
             </div>

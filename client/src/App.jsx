@@ -24,8 +24,13 @@ function App() {
     document.addEventListener("click", function (event) {
         const dropdown = document.getElementById("profileDropdown");
         const icon = document.getElementById("profileIcon");
-        if (!dropdown.contains(event.target) && !icon.contains(event.target)) {
-            setProfileMenuOpen(false);
+        if (dropdown !== null) {
+            if (
+                !dropdown.contains(event.target) &&
+                !icon.contains(event.target)
+            ) {
+                setProfileMenuOpen(false);
+            }
         }
     });
 
