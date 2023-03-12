@@ -1,7 +1,9 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import Feed from "../components/Feed";
 
 const Home = ({ showGrid, setShowGrid, darkMode }) => {
+    let { channel } = useParams();
     return (
         <div className="py-16 mx-8">
             <div className="hidden md:flex">
@@ -21,7 +23,7 @@ const Home = ({ showGrid, setShowGrid, darkMode }) => {
                     )}
                 </button>
             </div>
-            <Feed showGrid={showGrid} darkMode={darkMode} />
+            <Feed channel={channel} showGrid={showGrid} darkMode={darkMode} />
         </div>
     );
 };

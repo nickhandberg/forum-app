@@ -1,5 +1,6 @@
 import "boxicons";
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav";
 import "./index.css";
 import Home from "./pages/Home";
@@ -35,21 +36,40 @@ function App() {
     });
 
     return (
-        <div className={`${darkMode && "dark"} `}>
-            <div className="bg-light-2 dark:bg-dark-1">
-                <Nav
-                    profileMenuOpen={profileMenuOpen}
-                    setProfileMenuOpen={setProfileMenuOpen}
-                    darkMode={darkMode}
-                    setDarkMode={setDarkMode}
-                />
-                <Home
-                    showGrid={showGrid}
-                    setShowGrid={setShowGrid}
-                    darkMode={darkMode}
-                />
+        <Router>
+            <div className={`${darkMode && "dark"} `}>
+                <div className="bg-light-2 dark:bg-dark-1">
+                    <Nav
+                        profileMenuOpen={profileMenuOpen}
+                        setProfileMenuOpen={setProfileMenuOpen}
+                        darkMode={darkMode}
+                        setDarkMode={setDarkMode}
+                    />
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={
+                                <Home
+                                    showGrid={showGrid}
+                                    setShowGrid={setShowGrid}
+                                    darkMode={darkMode}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/c/:channel"
+                            element={
+                                <Home
+                                    showGrid={showGrid}
+                                    setShowGrid={setShowGrid}
+                                    darkMode={darkMode}
+                                />
+                            }
+                        />
+                    </Routes>
+                </div>
             </div>
-        </div>
+        </Router>
     );
 }
 

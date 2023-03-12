@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
 
-const Feed = ({ showGrid, darkMode }) => {
+const Feed = ({ channel, showGrid, darkMode }) => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_BASE}/posts`, { method: "GET" })
+        fetch(
+            `${import.meta.env.VITE_API_BASE}/posts/${channel ? channel : ""}`,
+            {
+                method: "GET",
+            }
+        )
             .then((response) => response.json())
             .then((data) => {
                 setPosts(data);
