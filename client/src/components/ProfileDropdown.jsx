@@ -28,7 +28,10 @@ const ProfileDropdown = ({ darkMode, setDarkMode }) => {
                 />
                 {darkMode ? "Light Mode" : "Dark Mode"}
             </button>
-            <button className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3">
+            <button
+                onClick={() => redirect("/login")}
+                className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
+            >
                 <Icon
                     path={signIn}
                     fill={darkMode ? "#c4c4c4" : "#161617"}

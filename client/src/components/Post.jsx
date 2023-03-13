@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     comment,
     downvote,
@@ -27,6 +28,12 @@ const Post = ({
     const [downvoted, setDownvoted] = useState(false);
     const [saved, setSaved] = useState(false);
 
+    const navigate = useNavigate();
+
+    function redirect(path) {
+        navigate(path);
+    }
+
     return (
         <div className="bg-light-1 dark:bg-dark-2 p-4  rounded-md flex-col flex justify-between">
             <div className="flex flex-col">
@@ -34,12 +41,20 @@ const Post = ({
                     {title}
                 </h1>
                 <div className="flex gap-8 mb-2">
-                    <a className="text-green-2 dark:text-green-1" href="">
+                    <p
+                        className="text-green-2 dark:text-green-1 cursor-pointer"
+                        onClick={() => redirect(`/c/${channel}`)}
+                    >
                         {channel}
-                    </a>
+                    </p>
                     <p className="dark:text-light-2">
                         Posted by{" "}
-                        <span className="text-green-2">u/{username}</span>{" "}
+                        <span
+                            onClick={() => redirect(`/u/${username}`)}
+                            className="text-green-2 cursor-pointer"
+                        >
+                            {username}
+                        </span>{" "}
                         {getPostAge(age)}
                     </p>
                 </div>
