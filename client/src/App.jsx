@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav";
 import "./index.css";
+import Channel from "./pages/Channel";
 import Home from "./pages/Home";
+import Registration from "./pages/Registration";
 import {
     getUserPrefs,
     setDarkModePref,
@@ -46,7 +48,7 @@ function App() {
                     />
                     <Routes>
                         <Route
-                            path="/"
+                            path=""
                             element={
                                 <Home
                                     showGrid={showGrid}
@@ -58,13 +60,14 @@ function App() {
                         <Route
                             path="/c/:channel"
                             element={
-                                <Home
+                                <Channel
                                     showGrid={showGrid}
                                     setShowGrid={setShowGrid}
                                     darkMode={darkMode}
                                 />
                             }
                         />
+                        <Route path="/register" element={<Registration />} />
                     </Routes>
                 </div>
             </div>

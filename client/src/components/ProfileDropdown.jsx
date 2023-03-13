@@ -1,8 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { moon, signIn, signUp, sun } from "../img/iconPaths";
 import Icon from "./Icon";
 
 const ProfileDropdown = ({ darkMode, setDarkMode }) => {
+    const navigate = useNavigate();
+
+    function redirect(path) {
+        navigate(path);
+    }
+
     return (
         <div
             id="profileDropdown"
@@ -31,7 +38,10 @@ const ProfileDropdown = ({ darkMode, setDarkMode }) => {
                 />
                 Sign In
             </button>
-            <button className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3">
+            <button
+                onClick={() => redirect("/register")}
+                className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
+            >
                 <Icon
                     path={signUp}
                     fill={darkMode ? "#c4c4c4" : "#161617"}

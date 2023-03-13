@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { profileDropdownIcon, search } from "../img/iconPaths";
 import Icon from "./Icon";
 import ProfileDropdown from "./ProfileDropdown";
@@ -8,16 +9,39 @@ const Nav = ({
     setProfileMenuOpen,
     darkMode,
     setDarkMode,
+    randomChannelName,
 }) => {
+    const navigate = useNavigate();
+
+    function redirect(path) {
+        navigate(path);
+    }
     return (
         <header>
             <nav className="fixed w-full h-[50px] bg-light-1 dark:bg-dark-2 dark:text-light-1 flex p-2 pl-14 pr-[75px] rounded-bl-[50px] border-b-[2px] border-dark-3 justify-between items-center">
                 <h1 className="text-2xl  font-bold">Forum</h1>
                 <div className="flex-shrink  text-md font-medium hidden md:flex lg:flex space-x-[4vw] mx-8">
-                    <a href="">home</a>
-                    <a href="">popular</a>
-                    <a href="">random</a>
-                    <a href="">favorites</a>
+                    <p className="cursor-pointer" onClick={() => redirect("/")}>
+                        home
+                    </p>
+                    <p
+                        className="cursor-pointer"
+                        onClick={() => redirect("/c/popular")}
+                    >
+                        popular
+                    </p>
+                    <p
+                        className="cursor-pointer"
+                        onClick={() => redirect(`/c/${randomChannelName}`)}
+                    >
+                        random
+                    </p>
+                    <p
+                        className="cursor-pointer"
+                        onClick={() => redirect("/c/all")}
+                    >
+                        all
+                    </p>
                 </div>
                 <div className="hidden md:flex lg:flex items-center gap-2 mr-8">
                     <input
