@@ -28,12 +28,13 @@ const Feed = ({ channel, showGrid, darkMode }) => {
             >
                 {posts.map((post) => (
                     <Post
+                        channel={post.channel_name}
+                        username={post.username}
                         image={post.image_link}
                         link={post.link}
                         selfText={post.self_text}
                         title={post.title}
                         age={post.post_date}
-                        channel={post.channel_name}
                         karma={post.karma}
                         darkMode={darkMode}
                     />

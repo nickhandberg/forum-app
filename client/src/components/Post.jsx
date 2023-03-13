@@ -13,12 +13,13 @@ import { getPostAge } from "../utils/getPostAge";
 import Icon from "./Icon";
 
 const Post = ({
+    channel,
+    username,
     image,
     link,
     selfText,
     title,
     age,
-    channel,
     karma,
     darkMode,
 }) => {
@@ -37,7 +38,9 @@ const Post = ({
                         {channel}
                     </a>
                     <p className="dark:text-light-2">
-                        Posted by u/noko {getPostAge(age)}
+                        Posted by{" "}
+                        <span className="text-green-2">u/{username}</span>{" "}
+                        {getPostAge(age)}
                     </p>
                 </div>
             </div>

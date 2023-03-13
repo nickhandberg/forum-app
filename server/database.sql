@@ -23,8 +23,8 @@ CREATE TABLE posts(
     self_text TEXT,
     title VARCHAR(255) NOT NULL,
     karma INT,
-    post_date TIMESTAMP
-    CONSTRAINT fk_channel FOREIGN KEY(channel_id) REFERENCES channel(channel_id)
-    CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES user(user_id)
+    post_date TIMESTAMP,
+    FOREIGN KEY(channel_id) REFERENCES channels(channel_id),
+    FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 

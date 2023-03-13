@@ -2,7 +2,9 @@ const pool = require("../db");
 
 const getAllPosts = async (req, res) => {
     try {
-        const allPosts = await pool.query("SELECT * FROM posts");
+        const allPosts = await pool.query(
+            "SELECT p.*, u.username, c.channel_name FROM posts p JOIN users u ON p.user_id = u.user_id JOIN channels c ON p.channel_id = c.channel_id"
+        );
         res.json(allPosts.rows);
     } catch (err) {
         console.error(err.message);
@@ -12,9 +14,13 @@ const getAllPosts = async (req, res) => {
 const getPostsByChannel = async (req, res) => {
     try {
         const { channel_name } = req.params;
-        const allPosts = await pool.query(
-            "SELECT * FROM posts WHERE channel_name = $1",
+        const channel_id = await pool.query(
+            "SELECT * FROM channels WHERE channel_name = $1",
             [channel_name]
+        );
+        const allPosts = await pool.query(
+            "SELECT p.*, u.username, c.channel_name FROM posts p JOIN users u ON p.user_id = u.user_id JOIN channels c ON p.channel_id = c.channel_id WHERE p.channel_id = $1",
+            [channel_id.rows[0].channel_id]
         );
         res.json(allPosts.rows);
     } catch (err) {
@@ -24,16 +30,24 @@ const getPostsByChannel = async (req, res) => {
 
 const createPost = async (req, res) => {
     try {
-        const { image_link, link, self_text, title, channel_name, karma } =
-            req.body;
+        const {
+            channel_id,
+            user_id,
+            image_link,
+            link,
+            self_text,
+            title,
+            karma,
+        } = req.body;
         const newPost = await pool.query(
-            "INSERT INTO posts (image_link, link, self_text, title, channel_name, karma, post_date) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+            "INSERT INTO posts (channel_id, user_id, image_link, link, self_text, title, karma, post_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
             [
+                channel_id,
+                user_id,
                 image_link,
                 link,
                 self_text,
                 title,
-                channel_name,
                 karma,
                 new Date(),
             ]
