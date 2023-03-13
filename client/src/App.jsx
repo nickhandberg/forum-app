@@ -4,6 +4,7 @@ import Nav from "./components/Nav";
 import "./index.css";
 import Channel from "./pages/Channel";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import {
     getUserPrefs,
@@ -68,6 +69,7 @@ function App() {
                             }
                         />
                         <Route path="/register" element={<Registration />} />
+                        <Route path="/login" element={<Login />} />
                     </Routes>
                 </div>
             </div>

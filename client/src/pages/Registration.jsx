@@ -5,7 +5,7 @@ const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Registration = () => {
-    const userRef = useRef();
+    const emailRef = useRef();
     const errRef = useRef();
 
     const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ const Registration = () => {
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        userRef.current.focus();
+        emailRef.current.focus();
     }, []);
 
     useEffect(() => {
@@ -85,7 +85,7 @@ const Registration = () => {
                         className="bg-light-3 dark:bg-dark-3 rounded-md text-3xl px-2 py-[2px]"
                         type="text"
                         id="email"
-                        ref={userRef}
+                        ref={emailRef}
                         autoComplete="off"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
@@ -98,7 +98,6 @@ const Registration = () => {
                         className="bg-light-3 dark:bg-dark-3 rounded-md text-3xl px-2 py-[2px]"
                         type="text"
                         id="username"
-                        ref={userRef}
                         autoComplete="off"
                         onChange={(e) => setUser(e.target.value)}
                         value={user}
