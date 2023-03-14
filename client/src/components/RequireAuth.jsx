@@ -5,7 +5,7 @@ const RequireAuth = () => {
     const { auth } = useAppContext();
     const location = useLocation();
 
-    return auth?.username ? (
+    return auth?.accessToken ? (
         <Outlet />
     ) : (
         <Navigate to="/login" state={{ from: location }} replace />

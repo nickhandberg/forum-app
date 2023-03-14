@@ -91,7 +91,7 @@ const Registration = () => {
                         </p>
                         <p
                             onClick={() => redirect("/login")}
-                            className="text-green-2 text-center mt-8 text-2xl cursor-pointer"
+                            className="text-green-1 text-center mt-8 text-2xl cursor-pointer"
                         >
                             Sign In
                         </p>
@@ -213,7 +213,7 @@ const Registration = () => {
                                     !validMatch ||
                                     !validEmail
                                         ? "bg-light-2 dark:bg-dark-3"
-                                        : "bg-green-2 text-dark-1"
+                                        : "bg-green-1 text-dark-1"
                                 }  mt-4 rounded-lg text-2xl p-2`}
                                 disabled={
                                     !validName ||
@@ -233,7 +233,7 @@ const Registration = () => {
                             <br />
                             <span
                                 onClick={() => redirect("/login")}
-                                className="line text-green-2 cursor-pointer"
+                                className="line text-green-1 cursor-pointer"
                             >
                                 Sign In
                             </span>

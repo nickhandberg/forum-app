@@ -43,7 +43,7 @@ const Post = ({
                 </h1>
                 <div className="flex gap-8 mb-2">
                     <p
-                        className="text-green-2 dark:text-green-1 cursor-pointer"
+                        className="text-green-1 dark:text-green-1 cursor-pointer"
                         onClick={() => redirect(`/c/${channel}`)}
                     >
                         {channel}
@@ -52,7 +52,7 @@ const Post = ({
                         Posted by{" "}
                         <span
                             onClick={() => redirect(`/u/${username}`)}
-                            className="text-green-2 cursor-pointer"
+                            className="text-green-1 cursor-pointer"
                         >
                             {username}
                         </span>{" "}

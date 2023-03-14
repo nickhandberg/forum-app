@@ -5,17 +5,13 @@ import "./index.css";
 import Channel from "./pages/Channel";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Missing from "./pages/Missing";
 import Registration from "./pages/Registration";
-import {
-    getUserPrefs,
-    setDarkModePref,
-    setShowGridPref,
-} from "./utils/userPrefs";
 
+import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import useAppContext from "./hooks/useAppContext";
 import CreatePost from "./pages/CreatePost";
-import Logout from "./pages/Logout";
 
 function App() {
     const { darkMode } = useAppContext();
@@ -44,20 +40,24 @@ function App() {
                         setProfileMenuOpen={setProfileMenuOpen}
                     />
                     <Routes>
+                        {/* PUBLIC ROUTES */}
                         <Route path="" element={<Home />} />
-
                         <Route path="/c/:channel" element={<Channel />}></Route>
-                        <Route element={<RequireAuth />}>
-                            {/* Routes that need sign in go here */}
-                            <Route
-                                path="/c/:channel/newpost"
-                                element={<CreatePost />}
-                            />
-                        </Route>
-
                         <Route path="/register" element={<Registration />} />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/logout" element={<Logout />} />
+
+                        {/* PROTECTED ROUTES */}
+                        <Route element={<PersistLogin />}>
+                            <Route element={<RequireAuth />}>
+                                <Route
+                                    path="/c/:channel/newpost"
+                                    element={<CreatePost />}
+                                />
+                            </Route>
+                        </Route>
+
+                        {/* CATCH ALL ROUTE */}
+                        <Route path="*" element={<Missing />} />
                     </Routes>
                 </div>
             </div>

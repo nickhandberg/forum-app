@@ -89,7 +89,7 @@ const Login = () => {
                         className={`${
                             !username || !password
                                 ? "bg-light-2 dark:bg-dark-3"
-                                : "bg-green-2 text-dark-1"
+                                : "bg-green-1 text-dark-1"
                         }  mt-4 rounded-lg text-2xl p-2`}
                         disabled={!username || !password ? true : false}
                     >
@@ -102,7 +102,7 @@ const Login = () => {
                     <br />
                     <span
                         onClick={() => redirect("/register")}
-                        className="line text-green-2 cursor-pointer"
+                        className="line text-green-1 cursor-pointer"
                     >
                         Sign up
                     </span>

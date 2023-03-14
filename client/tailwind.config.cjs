@@ -15,8 +15,7 @@ module.exports = {
             "light-3": "#dadce0",
 
             /*COMMON */
-            "green-1": "#6fc938",
-            "green-2": "#4db010",
+            "green-1": "#4db010",
         },
     },
     plugins: [],

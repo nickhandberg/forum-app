@@ -66,7 +66,7 @@ const Nav = ({ profileMenuOpen, setProfileMenuOpen }) => {
                         className="cursor-pointer flex align-middle items-center"
                         id="profileIcon"
                     >
-                        {auth?.username ? (
+                        {auth?.accessToken ? (
                             <p className="mx-2">{auth.username}</p>
                         ) : (
                             ""
