@@ -29,13 +29,13 @@ const handleLogin = async (req, res) => {
                 },
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: "10s" }
+            { expiresIn: 60 * 5 }
         );
         // create refresh token
         const refreshToken = jwt.sign(
             { username: foundUser.username },
             process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: "7d" }
+            { expiresIn: 60 * 60 * 24 * 7 }
         );
         // saving refresh token for current user
         const result = await pool.query(
@@ -158,7 +158,7 @@ const handleRefreshToken = async (req, res) => {
                     },
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: "10s" }
+                { expiresIn: 60 * 5 }
             );
             res.json({ accessToken });
         }

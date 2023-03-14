@@ -2,9 +2,11 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import Feed from "../components/Feed";
 import Icon from "../components/Icon";
+import useAppContext from "../hooks/useAppContext";
 import { card, grid } from "../img/iconPaths";
 
-const Home = ({ showGrid, setShowGrid, darkMode }) => {
+const Home = () => {
+    const { darkMode, showGrid, setShowGrid } = useAppContext();
     let { channel } = useParams();
     return (
         <div className="py-16 mx-8">

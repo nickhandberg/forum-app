@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useAppContext from "../hooks/useAppContext";
 import { moon, signIn, signOut, signUp, sun } from "../img/iconPaths";
 import Icon from "./Icon";
 
-const ProfileDropdown = ({ darkMode, setDarkMode }) => {
-    const { auth } = useAuth();
+const ProfileDropdown = () => {
+    const { auth, darkMode, setDarkMode } = useAppContext();
     const navigate = useNavigate();
 
     function redirect(path) {

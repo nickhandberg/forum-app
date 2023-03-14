@@ -13,19 +13,13 @@ import {
 } from "./utils/userPrefs";
 
 import RequireAuth from "./components/RequireAuth";
+import useAppContext from "./hooks/useAppContext";
 import CreatePost from "./pages/CreatePost";
 import Logout from "./pages/Logout";
 
 function App() {
-    const [darkMode, setDarkMode] = useState(getUserPrefs().darkMode);
+    const { darkMode } = useAppContext();
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-    const [showGrid, setShowGrid] = useState(getUserPrefs().showGrid);
-
-    useEffect(() => {
-        // Update user preferences
-        setDarkModePref(darkMode);
-        setShowGridPref(showGrid);
-    }, [darkMode, showGrid]);
 
     // Hide dropdown menu if user clicks on another part of screen
     document.addEventListener("click", function (event) {
@@ -48,31 +42,11 @@ function App() {
                     <Nav
                         profileMenuOpen={profileMenuOpen}
                         setProfileMenuOpen={setProfileMenuOpen}
-                        darkMode={darkMode}
-                        setDarkMode={setDarkMode}
                     />
                     <Routes>
-                        <Route
-                            path=""
-                            element={
-                                <Home
-                                    showGrid={showGrid}
-                                    setShowGrid={setShowGrid}
-                                    darkMode={darkMode}
-                                />
-                            }
-                        />
+                        <Route path="" element={<Home />} />
 
-                        <Route
-                            path="/c/:channel"
-                            element={
-                                <Channel
-                                    showGrid={showGrid}
-                                    setShowGrid={setShowGrid}
-                                    darkMode={darkMode}
-                                />
-                            }
-                        ></Route>
+                        <Route path="/c/:channel" element={<Channel />}></Route>
                         <Route element={<RequireAuth />}>
                             {/* Routes that need sign in go here */}
                             <Route

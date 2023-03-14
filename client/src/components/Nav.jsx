@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useAppContext from "../hooks/useAppContext";
 import { profileDropdownIcon, search } from "../img/iconPaths";
 import Icon from "./Icon";
 import ProfileDropdown from "./ProfileDropdown";
 
-const Nav = ({
-    profileMenuOpen,
-    setProfileMenuOpen,
-    darkMode,
-    setDarkMode,
-    randomChannelName,
-}) => {
-    const { auth } = useAuth();
+const Nav = ({ profileMenuOpen, setProfileMenuOpen }) => {
+    const { auth, darkMode } = useAppContext();
     const navigate = useNavigate();
+
+    const getRandomChannel = () => {
+        return "test";
+    };
 
     function redirect(path) {
         navigate(path);
@@ -34,7 +32,9 @@ const Nav = ({
                     </p>
                     <p
                         className="cursor-pointer"
-                        onClick={() => redirect(`/c/${randomChannelName}`)}
+                        onClick={() =>
+                            redirect(`/c/${() => getRandomChannel()}`)
+                        }
                     >
                         random
                     </p>
@@ -84,7 +84,7 @@ const Nav = ({
                     {profileMenuOpen && (
                         <ProfileDropdown
                             darkMode={darkMode}
-                            setDarkMode={setDarkMode}
+                            // setDarkMode={setDarkMode}
                         />
                     )}
                 </div>

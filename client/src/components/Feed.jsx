@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
+import useAppContext from "../hooks/useAppContext";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 import Post from "./Post";
 
-const Feed = ({ channel, showGrid, darkMode }) => {
+const Feed = ({ channel }) => {
     const [posts, setPosts] = useState([]);
     const axiosPrivate = useAxiosPrivate();
+    const { darkMode, showGrid } = useAppContext();
 
     useEffect(() => {
         let isMounted = true;

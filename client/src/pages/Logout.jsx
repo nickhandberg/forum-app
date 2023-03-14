@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../hooks/context/AuthProvider";
+import AppContext from "../hooks/context/ContextProvider";
 import axios from "../utils/axios";
 
 const Logout = () => {
-    const { setAuth } = useContext(AuthContext);
+    const { setAuth } = useContext(AppContext);
     const navigate = useNavigate();
     useEffect(() => {
         axios.get("/auth/logout").then(function (response) {

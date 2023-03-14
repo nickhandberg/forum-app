@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAppContext from "../hooks/useAppContext";
 import {
     comment,
     downvote,
@@ -22,11 +23,11 @@ const Post = ({
     title,
     age,
     karma,
-    darkMode,
 }) => {
     const [upvoted, setUpvoted] = useState(false);
     const [downvoted, setDownvoted] = useState(false);
     const [saved, setSaved] = useState(false);
+    const { darkMode } = useAppContext();
 
     const navigate = useNavigate();
 
