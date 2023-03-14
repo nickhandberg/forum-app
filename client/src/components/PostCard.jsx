@@ -14,7 +14,7 @@ import {
 import { getPostAge } from "../utils/getPostAge";
 import Icon from "./Icon";
 
-const Post = ({
+const PostCard = ({
     channel,
     username,
     image,
@@ -36,19 +36,19 @@ const Post = ({
     }
 
     return (
-        <div className="bg-light-1 dark:bg-dark-2 p-4  rounded-md flex-col flex justify-between">
+        <div className="bg-light-1 dark:bg-dark-2 p-4  md:rounded-md flex-col flex justify-between">
             <div className="flex flex-col">
-                <h1 className="text-2xl dark:text-light-1 font-semibold mb-2">
+                <h1 className="text-xl md:text-2xl dark:text-light-1 font-semibold mb-2">
                     {title}
                 </h1>
-                <div className="flex gap-8 mb-2">
+                <div className="flex flex-col md:flex-row md:gap-8 mb-2">
                     <p
-                        className="text-green-1 dark:text-green-1 cursor-pointer"
+                        className="text-green-1  dark:text-green-1 cursor-pointer"
                         onClick={() => redirect(`/c/${channel}`)}
                     >
                         {channel}
                     </p>
-                    <p className="dark:text-light-2">
+                    <p className="dark:text-light-2 text-sm md:text-base">
                         Posted by{" "}
                         <span
                             onClick={() => redirect(`/u/${username}`)}
@@ -80,15 +80,15 @@ const Post = ({
                         path={linkExternal}
                         fill={darkMode ? "#c4c4c4" : "#161617"}
                         stroke={darkMode ? "#c4c4c4" : "#161617"}
-                        w={"200px"}
-                        h={"200px"}
+                        w={"15vw"}
+                        h={"15vw"}
                     />
                     <br />
                     {link}
                 </a>
             )}
-            <div className="flex justify-between mt-4 px-6">
-                <div className="flex gap-4">
+            <div className="flex justify-between mt-4 md:px-6 max-w-[400px]">
+                <div className="flex gap-2">
                     <button
                         onClick={() => {
                             setUpvoted(!upvoted);
@@ -133,38 +133,32 @@ const Post = ({
                         />
                     </button>
                 </div>
-                <div className="flex gap-16">
-                    <button>
-                        <Icon
-                            path={comment}
-                            fill={darkMode ? "#c4c4c4" : "#161617"}
-                            stroke={darkMode ? "#c4c4c4" : "#161617"}
-                            w={"30px"}
-                            h={"30px"}
-                        />
-                    </button>
-                    <button
-                        className="flex align-middle"
-                        onClick={() => setSaved(!saved)}
-                    >
-                        <Icon
-                            path={saved ? starFilled : star}
-                            fill={
-                                saved
-                                    ? "#d6c106"
-                                    : darkMode
-                                    ? "#c4c4c4"
-                                    : "#161617"
-                            }
-                            stroke={darkMode ? "#c4c4c4" : "#161617"}
-                            w={"30px"}
-                            h={"30px"}
-                        />
-                    </button>
-                </div>
+                <button>
+                    <Icon
+                        path={comment}
+                        fill={darkMode ? "#c4c4c4" : "#161617"}
+                        stroke={darkMode ? "#c4c4c4" : "#161617"}
+                        w={"30px"}
+                        h={"30px"}
+                    />
+                </button>
+                <button
+                    className="flex align-middle"
+                    onClick={() => setSaved(!saved)}
+                >
+                    <Icon
+                        path={saved ? starFilled : star}
+                        fill={
+                            saved ? "#d6c106" : darkMode ? "#c4c4c4" : "#161617"
+                        }
+                        stroke={darkMode ? "#c4c4c4" : "#161617"}
+                        w={"30px"}
+                        h={"30px"}
+                    />
+                </button>
             </div>
         </div>
     );
 };
 
-export default Post;
+export default PostCard;

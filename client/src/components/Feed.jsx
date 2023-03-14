@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import useAppContext from "../hooks/useAppContext";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+//import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import axios from "../utils/axios";
 
-import Post from "./Post";
+import PostCard from "./PostCard";
 
 const Feed = ({ channel }) => {
     const [posts, setPosts] = useState([]);
-    const axiosPrivate = useAxiosPrivate();
+    //const axiosPrivate = useAxiosPrivate();
     const { darkMode, showGrid } = useAppContext();
 
     useEffect(() => {
@@ -14,7 +15,7 @@ const Feed = ({ channel }) => {
         const controller = new AbortController();
         const getPosts = async () => {
             try {
-                const response = await axiosPrivate.get(
+                const response = await axios.get(
                     `/posts/${channel ? channel : ""}`,
                     {
                         signal: controller.signal,
@@ -43,7 +44,7 @@ const Feed = ({ channel }) => {
                 } gap-3`}
             >
                 {posts.map((post, i) => (
-                    <Post
+                    <PostCard
                         key={i}
                         channel={post.channel_name}
                         username={post.username}

@@ -9,7 +9,7 @@ const Home = () => {
     const { darkMode, showGrid, setShowGrid } = useAppContext();
     let { channel } = useParams();
     return (
-        <div className="py-16 mx-8">
+        <div className="py-16 md:mx-8">
             <div className="hidden md:flex">
                 <button onClick={() => setShowGrid(!showGrid)} className="mb-2">
                     <Icon
