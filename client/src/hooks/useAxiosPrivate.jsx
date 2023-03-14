@@ -26,7 +26,6 @@ const useAxiosPrivate = () => {
             (response) => response,
             // hanndle bad response (expired token)
             async (error) => {
-                console.log("responseIntercept");
                 const prevRequest = error?.config;
                 // Checks if response is forbidden (expired token)
                 // and if we havent previously sent the request (prevents infinite loop)

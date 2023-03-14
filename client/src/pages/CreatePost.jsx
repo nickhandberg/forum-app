@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-import Post from "../components/Post";
-
-const CreatePost = ({ showGrid, darkMode }) => {
+const CreatePost = () => {
     const [posts, setPosts] = useState([]);
     const axiosPrivate = useAxiosPrivate();
     let { channel } = useParams();
@@ -41,27 +39,10 @@ const CreatePost = ({ showGrid, darkMode }) => {
 
     return (
         <div>
-            <div
-                className={`grid ${
-                    showGrid
-                        ? "xl:grid-cols-3 md:grid-cols-2 grid-cols-1"
-                        : "grid-cols-1 max-w-[800px] m-auto w-full"
-                } gap-3`}
-            >
-                {posts.map((post) => (
-                    <Post
-                        channel={post.channel_name}
-                        username={post.username}
-                        image={post.image_link}
-                        link={post.link}
-                        selfText={post.self_text}
-                        title={post.title}
-                        age={post.post_date}
-                        karma={post.karma}
-                        darkMode={darkMode}
-                    />
-                ))}
-            </div>
+            <h1 className="text-center text-3xl pt-[100px]">
+                {" "}
+                Create post in {channel}
+            </h1>
         </div>
     );
 };

@@ -100,13 +100,11 @@ const Login = () => {
                 <p className="mt-8 ">
                     Dont have an account?
                     <br />
-                    <span className="line text-green-2">
-                        <p
-                            className="cursor-pointer"
-                            onClick={() => redirect("/register")}
-                        >
-                            Sign up
-                        </p>
+                    <span
+                        onClick={() => redirect("/register")}
+                        className="line text-green-2 cursor-pointer"
+                    >
+                        Sign up
                     </span>
                 </p>
             </div>

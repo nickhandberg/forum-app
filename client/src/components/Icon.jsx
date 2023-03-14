@@ -10,8 +10,8 @@ const Icon = ({ path, fill, stroke, w, h }) => {
                 viewBox="0 0 24 24"
                 style={{ fill: fill, stroke: stroke, strokeWidth: "0.1" }}
             >
-                {path.map((p) => (
-                    <path d={p}></path>
+                {path.map((p, i) => (
+                    <path key={i} d={p}></path>
                 ))}
             </svg>
         </div>

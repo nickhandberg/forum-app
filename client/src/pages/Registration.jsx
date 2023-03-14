@@ -231,13 +231,11 @@ const Registration = () => {
                         <p className="mt-8 ">
                             Already registered?
                             <br />
-                            <span className="line text-green-2">
-                                <p
-                                    className="cursor-pointer"
-                                    onClick={() => redirect("/login")}
-                                >
-                                    Sign In
-                                </p>
+                            <span
+                                onClick={() => redirect("/login")}
+                                className="line text-green-2 cursor-pointer"
+                            >
+                                Sign In
                             </span>
                         </p>
                     </div>

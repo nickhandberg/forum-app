@@ -42,8 +42,9 @@ const Feed = ({ channel }) => {
                         : "grid-cols-1 max-w-[800px] m-auto w-full"
                 } gap-3`}
             >
-                {posts.map((post) => (
+                {posts.map((post, i) => (
                     <Post
+                        key={i}
                         channel={post.channel_name}
                         username={post.username}
                         image={post.image_link}
