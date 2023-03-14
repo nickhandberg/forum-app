@@ -17,7 +17,6 @@ app.use(cookieParser());
 // ROUTES
 
 app.use("/auth", require("./routes/auth"));
-app.use(verifyJWT);
 app.use("/posts", require("./routes/posts"));
 
 app.listen(PORT, () => {

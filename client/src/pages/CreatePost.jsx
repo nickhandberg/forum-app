@@ -22,7 +22,6 @@ const CreatePost = () => {
                 );
                 isMounted && setPosts(response.data);
             } catch (err) {
-                console.error(err);
                 navigate("/login", {
                     state: { from: location },
                     replace: true,
