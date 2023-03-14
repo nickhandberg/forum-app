@@ -17,6 +17,7 @@ const Login = () => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [notif, setNotif] = useState("");
 
     useEffect(() => {
         usernameRef.current.focus();
@@ -39,13 +40,11 @@ const Login = () => {
             navigate(from, { replace: true });
         } catch (err) {
             if (!err?.response) {
-                console.log("No server response");
-            } else if (err.response?.status === 400) {
-                console.log("Missing username or password");
+                setNotif("Login failed");
             } else if (err.response?.status === 401) {
-                console.log("Unauthorized");
+                setNotif("Username or password is incorrect");
             } else {
-                console.log("Login failed");
+                setNotif("Login failed");
             }
         }
     };
@@ -84,6 +83,7 @@ const Login = () => {
                         value={password}
                         required
                     />
+                    <p className="text-[red] mt-2">{notif}</p>
 
                     <button
                         className={`${

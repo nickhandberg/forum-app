@@ -9,8 +9,9 @@ const Nav = ({ profileMenuOpen, setProfileMenuOpen }) => {
     const { auth, darkMode } = useAppContext();
     const navigate = useNavigate();
 
-    const getRandomChannel = () => {
-        return "test";
+    const navToRandomChannel = () => {
+        let randomChannel = "test";
+        redirect(`/c/${randomChannel}`);
     };
 
     function redirect(path) {
@@ -32,9 +33,7 @@ const Nav = ({ profileMenuOpen, setProfileMenuOpen }) => {
                     </p>
                     <p
                         className="cursor-pointer"
-                        onClick={() =>
-                            redirect(`/c/${() => getRandomChannel()}`)
-                        }
+                        onClick={() => navToRandomChannel()}
                     >
                         random
                     </p>
