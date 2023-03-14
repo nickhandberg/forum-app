@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-import Post from "./Post";
+import Post from "../components/Post";
 
-const Feed = ({ channel, showGrid, darkMode }) => {
+const CreatePost = ({ showGrid, darkMode }) => {
     const [posts, setPosts] = useState([]);
     const axiosPrivate = useAxiosPrivate();
+    let { channel } = useParams();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         let isMounted = true;
@@ -21,6 +25,10 @@ const Feed = ({ channel, showGrid, darkMode }) => {
                 isMounted && setPosts(response.data);
             } catch (err) {
                 console.error(err);
+                navigate("/login", {
+                    state: { from: location },
+                    replace: true,
+                });
             }
         };
         getPosts();
@@ -58,4 +66,4 @@ const Feed = ({ channel, showGrid, darkMode }) => {
     );
 };
 
-export default Feed;
+export default CreatePost;

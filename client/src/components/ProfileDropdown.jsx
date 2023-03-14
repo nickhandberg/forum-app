@@ -1,9 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { moon, signIn, signUp, sun } from "../img/iconPaths";
+import useAuth from "../hooks/useAuth";
+import { moon, signIn, signOut, signUp, sun } from "../img/iconPaths";
 import Icon from "./Icon";
 
 const ProfileDropdown = ({ darkMode, setDarkMode }) => {
+    const { auth } = useAuth();
     const navigate = useNavigate();
 
     function redirect(path) {
@@ -29,7 +31,11 @@ const ProfileDropdown = ({ darkMode, setDarkMode }) => {
                 {darkMode ? "Light Mode" : "Dark Mode"}
             </button>
             <button
-                onClick={() => redirect("/login")}
+                onClick={
+                    auth?.username
+                        ? () => redirect(`/u/${auth.username}`)
+                        : () => redirect("/login")
+                }
                 className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
             >
                 <Icon
@@ -39,20 +45,24 @@ const ProfileDropdown = ({ darkMode, setDarkMode }) => {
                     w={"25px"}
                     h={"25px"}
                 />
-                Sign In
+                {auth?.username ? "Profile" : "Sign In"}
             </button>
             <button
-                onClick={() => redirect("/register")}
+                onClick={
+                    auth?.username
+                        ? () => redirect("/logout")
+                        : () => redirect("/register")
+                }
                 className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
             >
                 <Icon
-                    path={signUp}
+                    path={auth?.username ? signOut : signUp}
                     fill={darkMode ? "#c4c4c4" : "#161617"}
                     stroke={darkMode ? "#c4c4c4" : "#161617"}
                     w={"25px"}
                     h={"25px"}
                 />
-                Sign Up
+                {auth?.username ? "Sign Out" : "Sign Up"}
             </button>
         </div>
     );

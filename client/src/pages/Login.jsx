@@ -1,36 +1,54 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
 
-const Registration = () => {
-    const loginRef = useRef();
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import AuthContext from "../hooks/context/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
-    const [login, setLogin] = useState("");
+import axios from "../utils/axios";
+
+const Login = () => {
+    const { setAuth } = useAuth();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
+    const usernameRef = useRef();
+
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     useEffect(() => {
-        loginRef.current.focus();
+        usernameRef.current.focus();
     }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let data = { login: login, password: password };
-        fetch(`${import.meta.env.VITE_API_BASE}/auth/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Success:", data);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
+        let data = { username: username, password: password };
+        try {
+            const response = await axios.post(
+                "/auth/login",
+                JSON.stringify(data),
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true,
+                }
+            );
+            const accessToken = response?.data?.accessToken;
+            setAuth({ username, password, accessToken });
+            navigate(from, { replace: true });
+        } catch (err) {
+            if (!err?.response) {
+                console.log("No server response");
+            } else if (err.response?.status === 400) {
+                console.log("Missing username or password");
+            } else if (err.response?.status === 401) {
+                console.log("Unauthorized");
+            } else {
+                console.log("Login failed");
+            }
+        }
     };
-
-    const navigate = useNavigate();
 
     function redirect(path) {
         navigate(path);
@@ -41,17 +59,17 @@ const Registration = () => {
             <div className="bg-light-1 dark:bg-dark-2 p-8 rounded-lg max-w-[500px] w-full text-dark-1 dark:text-light-1">
                 <h1 className="text-center text-4xl mb-8">Sign In</h1>
                 <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-                    <label className="text-2xl" htmlFor="login">
-                        {"Username or Email:"}
+                    <label className="text-2xl" htmlFor="username">
+                        {"Username:"}
                     </label>
                     <input
                         className="bg-light-3 dark:bg-dark-3 rounded-md text-3xl px-2 py-[2px]"
                         type="text"
-                        id="login"
-                        ref={loginRef}
+                        id="username"
+                        ref={usernameRef}
                         autoComplete="off"
-                        onChange={(e) => setLogin(e.target.value)}
-                        value={login}
+                        onChange={(e) => setUsername(e.target.value)}
+                        value={username}
                         required
                     />
                     <label className="text-2xl" htmlFor="password">
@@ -69,11 +87,11 @@ const Registration = () => {
 
                     <button
                         className={`${
-                            !login || !password
+                            !username || !password
                                 ? "bg-light-2 dark:bg-dark-3"
                                 : "bg-green-2 text-dark-1"
                         }  mt-4 rounded-lg text-2xl p-2`}
-                        disabled={!login || !password ? true : false}
+                        disabled={!username || !password ? true : false}
                     >
                         Sign In
                     </button>
@@ -96,4 +114,4 @@ const Registration = () => {
     );
 };
 
-export default Registration;
+export default Login;

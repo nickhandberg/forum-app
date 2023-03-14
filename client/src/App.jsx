@@ -12,6 +12,10 @@ import {
     setShowGridPref,
 } from "./utils/userPrefs";
 
+import RequireAuth from "./components/RequireAuth";
+import CreatePost from "./pages/CreatePost";
+import Logout from "./pages/Logout";
+
 function App() {
     const [darkMode, setDarkMode] = useState(getUserPrefs().darkMode);
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -58,6 +62,7 @@ function App() {
                                 />
                             }
                         />
+
                         <Route
                             path="/c/:channel"
                             element={
@@ -67,9 +72,18 @@ function App() {
                                     darkMode={darkMode}
                                 />
                             }
-                        />
+                        ></Route>
+                        <Route element={<RequireAuth />}>
+                            {/* Routes that need sign in go here */}
+                            <Route
+                                path="/c/:channel/newpost"
+                                element={<CreatePost />}
+                            />
+                        </Route>
+
                         <Route path="/register" element={<Registration />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/logout" element={<Logout />} />
                     </Routes>
                 </div>
             </div>

@@ -3,18 +3,16 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const handleLogin = async (req, res) => {
-    // login can be username or email
-    const { login, password } = req.body;
-    console.log(login, password);
-    if (!login || !password) {
+    const { username, password } = req.body;
+    if (!username || !password) {
         return res
             .status(400)
             .json({ message: "Username/email and password are required" });
     }
 
     const foundUsers = await pool.query(
-        "SELECT * FROM users WHERE email = $1 OR username = $1",
-        [login]
+        "SELECT * FROM users WHERE username = $1",
+        [username]
     );
     const foundUser = foundUsers.rows[0];
 
@@ -31,13 +29,13 @@ const handleLogin = async (req, res) => {
                 },
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: "5m" }
+            { expiresIn: "10s" }
         );
         // create refresh token
         const refreshToken = jwt.sign(
             { username: foundUser.username },
             process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: "1d" }
+            { expiresIn: "7d" }
         );
         // saving refresh token for current user
         const result = await pool.query(
@@ -52,7 +50,7 @@ const handleLogin = async (req, res) => {
         res.cookie("jwt", refreshToken, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
-            sameSite: "None",
+            // sameSite: "None",
             // secure: true,
         });
         res.json({ accessToken });
@@ -113,8 +111,8 @@ const handleLogout = async (req, res) => {
     if (!foundUser) {
         res.clearCookie("jwt", {
             httpOnly: true,
-            sameSite: "None",
-            secure: true,
+            // sameSite: "None",
+            // secure: true,
         });
         return res.sendStatus(204); // successful but no content
     }
@@ -125,7 +123,10 @@ const handleLogout = async (req, res) => {
         ["", foundUser.username]
     );
 
-    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+    res.clearCookie("jwt", {
+        httpOnly: true,
+        /*sameSite: "None" ,secure: true*/
+    });
     res.sendStatus(204);
 };
 
@@ -157,7 +158,7 @@ const handleRefreshToken = async (req, res) => {
                     },
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: "5m" }
+                { expiresIn: "10s" }
             );
             res.json({ accessToken });
         }

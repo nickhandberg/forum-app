@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import { profileDropdownIcon, search } from "../img/iconPaths";
 import Icon from "./Icon";
 import ProfileDropdown from "./ProfileDropdown";
@@ -11,6 +12,7 @@ const Nav = ({
     setDarkMode,
     randomChannelName,
 }) => {
+    const { auth } = useAuth();
     const navigate = useNavigate();
 
     function redirect(path) {
@@ -26,9 +28,9 @@ const Nav = ({
                     </p>
                     <p
                         className="cursor-pointer"
-                        onClick={() => redirect("/c/popular")}
+                        onClick={() => redirect("/c/battlestations/newpost")}
                     >
-                        popular
+                        post
                     </p>
                     <p
                         className="cursor-pointer"
@@ -62,9 +64,14 @@ const Nav = ({
                 <div className="flex-shrink  ">
                     <button
                         onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                        className="cursor-pointer flex align-middle"
+                        className="cursor-pointer flex align-middle items-center"
                         id="profileIcon"
                     >
+                        {auth?.username ? (
+                            <p className="mx-2">{auth.username}</p>
+                        ) : (
+                            ""
+                        )}
                         <Icon
                             path={profileDropdownIcon}
                             fill={darkMode ? "#c4c4c4" : "#161617"}
