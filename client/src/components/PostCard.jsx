@@ -101,7 +101,7 @@ const PostCard = ({
 
             {link && (
                 <div
-                    onClick={(e) => handleLink(e)}
+                    onClick={(e) => handleLink(e, link)}
                     className="max-h-[480px]  cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden p-4 text-lg rounded-md h-full dark:text-light-2"
                 >
                     <Icon

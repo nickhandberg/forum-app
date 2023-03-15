@@ -11,6 +11,7 @@ import Registration from "./pages/Registration";
 import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import useAppContext from "./hooks/useAppContext";
+import useRefreshToken from "./hooks/useRefreshToken";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
 import User from "./pages/User";
@@ -18,6 +19,11 @@ import User from "./pages/User";
 function App() {
     const { darkMode } = useAppContext();
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+    const refresh = useRefreshToken();
+
+    useEffect(() => {
+        refresh();
+    }, []);
 
     // Hide dropdown menu if user clicks on another part of screen
     document.addEventListener("click", function (event) {
