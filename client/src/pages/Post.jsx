@@ -37,7 +37,6 @@ const Post = () => {
                     }
                 );
                 isMounted && setPost(response.data);
-                console.log(response.data);
             } catch (err) {
                 console.error(err);
             }

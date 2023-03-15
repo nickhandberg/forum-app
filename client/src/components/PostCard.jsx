@@ -65,7 +65,7 @@ const PostCard = ({
             onClick={() => navigate(`/c/${channel}/${post_id.toString(32)}`)}
             className="bg-light-1 dark:bg-dark-2 cursor-pointer md:p-4  md:rounded-md flex-col flex justify-between"
         >
-            <div className="flex flex-col p-4 md:p-0">
+            <div className="flex flex-col p-4 md:p-0 z-10">
                 <h1 className="text-xl md:text-2xl dark:text-light-1 font-semibold mb-2">
                     {title}
                 </h1>
@@ -95,13 +95,17 @@ const PostCard = ({
 
             {self_text && (
                 <div>
-                    <pre className="max-h-[250px] md:max-h-[300px] lg:max-h-[480px] bg-light-3 dark:bg-dark-3 overflow-hidden p-4 text-lg md:rounded-md h-full dark:text-light-2">
+                    <pre className="postText max-h-[250px] md:max-h-[300px] lg:max-h-[480px] bg-light-3 dark:bg-dark-3 overflow-hidden p-4 text-lg md:rounded-md h-full dark:text-light-2">
                         {self_text}
                     </pre>
 
                     <div
                         className={`${
-                            darkMode ? "grad1" : "grad2"
+                            self_text.length > 500
+                                ? darkMode
+                                    ? "grad1"
+                                    : "grad2"
+                                : ""
                         } w-full bottom-[0px] h-[100px] md:h-[100px] mt-[-100px] md:mt-[-100px] relative `}
                     ></div>
                     {/* <p className="text-dark-1  dark:text-light-1 text-lg relative bottom-[10px] md:bottom-[25px] text-center">

@@ -46,23 +46,27 @@ const getPostsByUser = async (req, res) => {
 
 const createPost = async (req, res) => {
     try {
-        const { channel_id, image_link, link, self_text, title, karma } =
-            req.body;
+        const { channel_name, image_link, link, self_text, title } = req.body;
+
+        const channel_id = await pool.query(
+            "SELECT channel_id FROM channels WHERE channel_name = $1",
+            [channel_name]
+        );
 
         const user_id = await pool.query(
             "SELECT user_id FROM users WHERE username = $1",
             [req.username]
         );
         const newPost = await pool.query(
-            "INSERT INTO posts (channel_id, user_id, image_link, link, self_text, title, karma, post_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+            "INSERT INTO posts (channel_id, user_id, image_link, link, self_text, karma, title, post_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING post_id",
             [
-                channel_id,
+                channel_id.rows[0].channel_id,
                 user_id.rows[0].user_id,
                 image_link,
                 link,
                 self_text,
+                0,
                 title,
-                karma,
                 new Date(),
             ]
         );
