@@ -30,10 +30,14 @@ const Post = () => {
         const controller = new AbortController();
         const getPosts = async () => {
             try {
-                const response = await axios.get(`/posts/getPost/${post_id}`, {
-                    signal: controller.signal,
-                });
+                const response = await axios.get(
+                    `/posts/getPost/${parseInt(post_id, 32)}`,
+                    {
+                        signal: controller.signal,
+                    }
+                );
                 isMounted && setPost(response.data);
+                console.log(response.data);
             } catch (err) {
                 console.error(err);
             }

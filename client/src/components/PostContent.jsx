@@ -51,14 +51,14 @@ const PostContent = ({
     };
 
     return (
-        <div className="bg-light-1 dark:bg-dark-2 p-4 md:rounded-md w-full md:max-w-[1000px] flex-col flex justify-between">
-            <div className="flex flex-col">
+        <div className="bg-light-1 dark:bg-dark-2 md:p-4 md:rounded-md w-full md:max-w-[1000px] flex-col flex justify-between">
+            <div className="flex flex-col p-4 md:p-0">
                 <h1 className="text-xl md:text-2xl dark:text-light-1 font-semibold mb-2">
                     {title}
                 </h1>
                 <div className="flex flex-col md:flex-row md:gap-8 mb-2">
                     <p
-                        className="text-green-1 hover:underline  dark:text-green-1 cursor-pointer"
+                        className="text-green-1 hover:underline w-min dark:text-green-1 cursor-pointer"
                         onClick={() => navigate(`/c/${channel}`)}
                     >
                         {channel}
@@ -81,15 +81,15 @@ const PostContent = ({
             )}
 
             {self_text && (
-                <p className=" bg-light-3 dark:bg-dark-3 overflow-hidden p-4 text-lg rounded-md h-full dark:text-light-2">
+                <pre className=" bg-light-3 dark:bg-dark-3 overflow-hidden p-4 text-lg md:rounded-md h-full dark:text-light-2">
                     {self_text}
-                </p>
+                </pre>
             )}
 
             {link && (
                 <a
                     href={link}
-                    className="max-h-[480px]   cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden p-4 text-lg rounded-md h-full dark:text-light-2"
+                    className="max-h-[480px]   cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden p-4 text-lg md:rounded-md h-full dark:text-light-2"
                 >
                     <Icon
                         path={linkExternal}
@@ -102,7 +102,7 @@ const PostContent = ({
                     {link}
                 </a>
             )}
-            <div className="flex justify-between mt-4 md:px-6 max-w-[400px]">
+            <div className="flex justify-between mt-4 py-4 md:py-0 px-6 max-w-[400px]">
                 <div className="flex gap-2">
                     <button
                         onClick={(e) => {

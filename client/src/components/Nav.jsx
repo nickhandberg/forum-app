@@ -19,7 +19,7 @@ const Nav = ({ profileMenuOpen, setProfileMenuOpen }) => {
     }
     return (
         <header>
-            <nav className="fixed w-full h-[50px] bg-light-1 dark:bg-dark-2 dark:text-light-1 flex p-2 pl-14 pr-[75px] rounded-bl-[50px] border-b-[2px] border-dark-3 justify-between items-center">
+            <nav className="fixed w-full z-10 h-[50px] bg-light-1 dark:bg-dark-2 dark:text-light-1 flex p-2 pl-14 pr-[75px] rounded-bl-[50px] border-b-[2px] border-dark-3 justify-between items-center">
                 <h1 className="text-2xl  font-bold">Forum</h1>
                 <div className="flex-shrink  text-md font-medium hidden md:flex lg:flex space-x-[4vw] mx-8">
                     <p className="cursor-pointer" onClick={() => redirect("/")}>
