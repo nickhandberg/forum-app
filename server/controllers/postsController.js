@@ -28,6 +28,22 @@ const getPostsByChannel = async (req, res) => {
     }
 };
 
+const getPostsByUser = async (req, res) => {
+    try {
+        const user_id = await pool.query(
+            "SELECT * FROM users WHERE username = $1",
+            [req.params.username]
+        );
+        const allPosts = await pool.query(
+            "SELECT p.*, u.username, c.channel_name FROM posts p JOIN users u ON p.user_id = u.user_id JOIN channels c ON p.channel_id = c.channel_id WHERE u.user_id = $1",
+            [user_id.rows[0].user_id]
+        );
+        res.json(allPosts.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
 const createPost = async (req, res) => {
     try {
         const {
@@ -90,7 +106,7 @@ const deletePost = async (req, res) => {
 const getPost = async (req, res) => {
     try {
         const post = await pool.query(
-            "SELECT * FROM posts WHERE post_id = $1",
+            "SELECT p.*, u.username, c.channel_name FROM posts p JOIN users u ON p.user_id = u.user_id JOIN channels c ON p.channel_id = c.channel_id WHERE p.post_id = $1",
             [req.params.id]
         );
         res.json(post.rows[0]);
@@ -106,4 +122,5 @@ module.exports = {
     updatePost,
     deletePost,
     getPost,
+    getPostsByUser,
 };

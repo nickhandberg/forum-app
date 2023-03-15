@@ -12,6 +12,8 @@ import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import useAppContext from "./hooks/useAppContext";
 import CreatePost from "./pages/CreatePost";
+import Post from "./pages/Post";
+import User from "./pages/User";
 
 function App() {
     const { darkMode } = useAppContext();
@@ -43,8 +45,10 @@ function App() {
                         {/* PUBLIC ROUTES */}
                         <Route path="" element={<Home />} />
                         <Route path="/c/:channel" element={<Channel />}></Route>
+                        <Route path="/u/:username" element={<User />} />
                         <Route path="/register" element={<Registration />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/c/:channel/:post_id" element={<Post />} />
 
                         {/* PROTECTED ROUTES */}
                         <Route element={<PersistLogin />}>

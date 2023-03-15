@@ -5,7 +5,7 @@ import axios from "../utils/axios";
 
 import PostCard from "./PostCard";
 
-const Feed = ({ channel }) => {
+const Feed = ({ param, feedType }) => {
     const [posts, setPosts] = useState([]);
     //const axiosPrivate = useAxiosPrivate();
     const { darkMode, showGrid } = useAppContext();
@@ -16,7 +16,9 @@ const Feed = ({ channel }) => {
         const getPosts = async () => {
             try {
                 const response = await axios.get(
-                    `/posts/${channel ? channel : ""}`,
+                    `/posts/${feedType === "user" ? "getByUser" : ""}/${
+                        param ? param : ""
+                    }`,
                     {
                         signal: controller.signal,
                     }
@@ -46,11 +48,12 @@ const Feed = ({ channel }) => {
                 {posts.map((post, i) => (
                     <PostCard
                         key={i}
+                        post_id={post.post_id}
                         channel={post.channel_name}
                         username={post.username}
                         image={post.image_link}
                         link={post.link}
-                        selfText={post.self_text}
+                        self_text={post.self_text}
                         title={post.title}
                         age={post.post_date}
                         karma={post.karma}
