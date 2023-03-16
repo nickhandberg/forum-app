@@ -9,16 +9,8 @@ const verifyJWT = require("./middleware/verifyJWT");
 const PORT = 5000;
 
 // middleware
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-});
 app.use(express.urlencoded({ extended: false }));
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json()); // req.body
 app.use(cookieParser());
 app.set("trust proxy", 1);
