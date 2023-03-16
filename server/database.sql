@@ -1,4 +1,4 @@
-CREATE DATABASE forumapp
+CREATE DATABASE forumapp;
 
 CREATE TABLE users(
     user_id SERIAL PRIMARY KEY,

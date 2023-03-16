@@ -198,7 +198,7 @@ const PostContent = ({
                         }}
                     >
                         <Icon
-                            path={upvoted ? puvoteFilled : upvote}
+                            path={upvoted ? upvoteFilled : upvote}
                             fill={
                                 upvoted
                                     ? "#6fc938"
