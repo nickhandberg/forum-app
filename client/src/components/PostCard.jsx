@@ -56,11 +56,6 @@ const PostCard = ({
         navigate(path);
     }
 
-    const handleLink = (e, link) => {
-        e.stopPropagation();
-        window.location.href = link;
-    };
-
     return (
         <div
             onClick={() => navigate(`/c/${channel}/${post_id.toString(32)}`)}
@@ -132,11 +127,11 @@ const PostCard = ({
                 <div>
                     <div className="max-h-[720px] cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden text-lg md:rounded-md h-full dark:text-light-2">
                         <img className="w-min m-auto" src={image}></img>
-                        <div className="relative backdrop-brightness-50 backdrop-blur-sm p-4 bottom-0 h-[60px] mt-[-60px]">
-                            <p className="text-xl md:text-3xl">
-                                {getDomain(link)}
-                            </p>
-                        </div>
+                    </div>
+                    <div className="relative backdrop-brightness-50 backdrop-blur-sm p-4 bottom-0 h-[60px] mt-[-60px]">
+                        <p className="text-xl dark:text-light-2  md:text-3xl">
+                            {getDomain(link)}
+                        </p>
                     </div>
                 </div>
             )}

@@ -182,12 +182,10 @@ const PostContent = ({
                         className="max-h-[720px] cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden text-lg md:rounded-md h-full dark:text-light-2"
                     >
                         <img className="w-min m-auto" src={image}></img>
-                        <div className="relative backdrop-brightness-50 backdrop-blur-sm p-4 bottom-0 h-[60px] mt-[-60px]">
-                            <p className="text-xl md:text-3xl">
-                                {getDomain(link)}
-                            </p>
-                        </div>
                     </a>
+                    <div className="relative backdrop-brightness-50 backdrop-blur-sm p-4 bottom-0 h-[60px] mt-[-60px]">
+                        <p className="text-xl md:text-3xl">{getDomain(link)}</p>
+                    </div>
                 </div>
             )}
             <div className="flex justify-between mt-4 py-4 md:py-0 px-6 max-w-[400px]">
