@@ -24,6 +24,7 @@ const CreatePost = () => {
         e.preventDefault();
         let data = {
             channel_name: channel,
+            image_link: image,
             title: title,
             self_text: selfText,
             link: link,
@@ -151,7 +152,14 @@ const CreatePost = () => {
                                 ? "bg-light-2 dark:bg-dark-3"
                                 : "bg-green-1 text-dark-1"
                         }  mt-4 rounded-lg text-2xl p-2`}
-                        disabled={!title || !selfText ? true : false}
+                        disabled={
+                            !title ||
+                            (postType === PostTypes.text && !selfText) ||
+                            (postType === PostTypes.link && !link) ||
+                            (postType === PostTypes.image && !image)
+                                ? true
+                                : false
+                        }
                     >
                         Create Post
                     </button>

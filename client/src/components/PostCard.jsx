@@ -12,6 +12,7 @@ import {
     upvoteFilled,
 } from "../img/iconPaths";
 import axios from "../utils/axios";
+import { getDomain } from "../utils/getDomain";
 import { getPostAge } from "../utils/getPostAge";
 import Icon from "./Icon";
 
@@ -89,7 +90,7 @@ const PostCard = ({
                 </div>
             </div>
 
-            {image && (
+            {image && !link && (
                 <img className=" max-h-[480px] w-min m-auto" src={image}></img>
             )}
 
@@ -114,11 +115,8 @@ const PostCard = ({
                 </div>
             )}
 
-            {link && (
-                <div
-                    onClick={(e) => handleLink(e, link)}
-                    className="max-h-[480px]  cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden p-4 text-lg md:rounded-md h-full dark:text-light-2"
-                >
+            {link && !image && (
+                <div className="max-h-[480px]  cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden p-4 text-lg md:rounded-md h-full dark:text-light-2">
                     <Icon
                         path={linkExternal}
                         fill={darkMode ? "#c4c4c4" : "#161617"}
@@ -128,6 +126,18 @@ const PostCard = ({
                     />
                     <br />
                     {link}
+                </div>
+            )}
+            {link && image && (
+                <div>
+                    <div className="max-h-[720px] cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden text-lg md:rounded-md h-full dark:text-light-2">
+                        <img className="w-min m-auto" src={image}></img>
+                        <div className="relative backdrop-brightness-50 backdrop-blur-sm p-4 bottom-0 h-[60px] mt-[-60px]">
+                            <p className="text-xl md:text-3xl">
+                                {getDomain(link)}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             )}
             <div className="flex justify-between mt-4 py-4 md:py-0 px-6 max-w-[400px]">

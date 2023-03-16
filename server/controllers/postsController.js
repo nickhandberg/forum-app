@@ -1,4 +1,10 @@
 const pool = require("../db");
+const lpg = require("link-preview-generator");
+
+const getPreviewData = async (link) => {
+    const previewData = await lpg(link);
+    return previewData;
+};
 
 const getAllPosts = async (req, res) => {
     try {
@@ -72,6 +78,14 @@ const createPost = async (req, res) => {
         );
 
         res.json(newPost.rows[0]);
+
+        if (link) {
+            const previewData = await getPreviewData(link);
+            const updateImage = await pool.query(
+                "UPDATE posts SET image_link = $1 WHERE post_id = $2",
+                [previewData.img, newPost.rows[0].post_id]
+            );
+        }
     } catch (err) {
         console.error(err.message);
     }

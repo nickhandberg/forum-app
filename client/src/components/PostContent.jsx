@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Icon from "../components/Icon";
 import useAppContext from "../hooks/useAppContext";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -15,6 +15,7 @@ import {
     upvote,
     upvoteFilled,
 } from "../img/iconPaths";
+import { getDomain } from "../utils/getDomain";
 import { getPostAge } from "../utils/getPostAge";
 
 const PostContent = ({
@@ -32,10 +33,17 @@ const PostContent = ({
     const [downvoted, setDownvoted] = useState(false);
     const [saved, setSaved] = useState(false);
     const [confirm, setConfirm] = useState(false);
+    const [showEditForm, setShowEditForm] = useState(false);
+    const [editedText, setEditedText] = useState(self_text);
     const [linkData, setLinkData] = useState({});
+    const editRef = useRef();
 
     const { auth, darkMode } = useAppContext();
     const axiosPrivate = useAxiosPrivate();
+
+    useEffect(() => {
+        editRef?.current?.focus();
+    }, [showEditForm]);
 
     const navigate = useNavigate();
 
@@ -70,9 +78,24 @@ const PostContent = ({
         }
     };
 
-    const handleEdit = (e) => {
+    const handleEdit = async (e) => {
         e.stopPropagation();
-        setSaved(!saved);
+        try {
+            const data = { self_text: editedText };
+            const response = await axiosPrivate.put(
+                `/posts/getPost/${post_id}`,
+
+                JSON.stringify(data),
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true,
+                }
+            );
+
+            navigate(`/c/${channel}/${post_id}`);
+        } catch (err) {
+            // setNotif("Update post failed");
+        }
     };
 
     return (
@@ -125,7 +148,7 @@ const PostContent = ({
                 </div>
             </div>
 
-            {image && (
+            {image && !link && (
                 <img className=" max-h-[720px] w-min m-auto" src={image}></img>
             )}
 
@@ -135,7 +158,7 @@ const PostContent = ({
                 </pre>
             )}
 
-            {link && (
+            {link && !image && (
                 <a
                     href={link}
                     className="max-h-[480px]   cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden p-4 text-lg md:rounded-md h-full dark:text-light-2"
@@ -150,6 +173,22 @@ const PostContent = ({
                     <br />
                     {link}
                 </a>
+            )}
+
+            {link && image && (
+                <div>
+                    <a
+                        href={link}
+                        className="max-h-[720px] cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden text-lg md:rounded-md h-full dark:text-light-2"
+                    >
+                        <img className="w-min m-auto" src={image}></img>
+                        <div className="relative backdrop-brightness-50 backdrop-blur-sm p-4 bottom-0 h-[60px] mt-[-60px]">
+                            <p className="text-xl md:text-3xl">
+                                {getDomain(link)}
+                            </p>
+                        </div>
+                    </a>
+                </div>
             )}
             <div className="flex justify-between mt-4 py-4 md:py-0 px-6 max-w-[400px]">
                 <div className="flex gap-2">
@@ -227,7 +266,9 @@ const PostContent = ({
                 {auth?.username === username && self_text != "" && (
                     <button
                         className="flex align-middle"
-                        onClick={(e) => handleEdit(e)}
+                        onClick={() => {
+                            setShowEditForm(!showEditForm);
+                        }}
                     >
                         <Icon
                             path={editIcon}
@@ -239,6 +280,47 @@ const PostContent = ({
                     </button>
                 )}
             </div>
+            {showEditForm && (
+                <form onSubmit={handleEdit} className="flex flex-col gap-2 p-4">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-2xl" htmlFor="editedText">
+                            {"Edit:"}
+                        </label>
+                        <textarea
+                            className="bg-light-3 text-[2ch]  dark:bg-dark-3 rounded-md text-3xl px-2 py-[2px]"
+                            rows="12"
+                            id="editedText"
+                            autoComplete="off"
+                            ref={editRef}
+                            onChange={(e) => setEditedText(e.target.value)}
+                            value={editedText}
+                            required
+                            defaultValue={self_text}
+                        />
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            className={`w-1/2 ${
+                                !editedText
+                                    ? "bg-light-2 dark:bg-dark-3"
+                                    : "bg-green-1 text-dark-1"
+                            }  mt-4 rounded-lg text-2xl p-2`}
+                            disabled={!editedText ? true : false}
+                        >
+                            Update
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setShowEditForm(false);
+                            }}
+                            className={`w-1/2 mt-4 bg-light-2 dark:bg-dark-3 rounded-lg text-2xl p-2`}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            )}
         </div>
     );
 };
