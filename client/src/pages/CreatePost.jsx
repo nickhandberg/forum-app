@@ -23,7 +23,8 @@ const CreatePost = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // prevent
+        // prevent potential to add multiple post types
+        // also checked in api
         switch (postType) {
             case PostTypes.text:
                 setLink("");

@@ -15,10 +15,6 @@ const ProfileDropdown = () => {
         navigate("/");
     };
 
-    function redirect(path) {
-        navigate(path);
-    }
-
     return (
         <div
             id="profileDropdown"
@@ -40,8 +36,8 @@ const ProfileDropdown = () => {
             <button
                 onClick={
                     auth?.accessToken
-                        ? () => redirect(`/u/${auth.username}`)
-                        : () => redirect("/login")
+                        ? () => navigate(`/u/${auth.username}`)
+                        : () => navigate("/login")
                 }
                 className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
             >
@@ -58,7 +54,7 @@ const ProfileDropdown = () => {
                 onClick={
                     auth?.accessToken
                         ? () => handleLogout()
-                        : () => redirect("/register")
+                        : () => navigate("/register")
                 }
                 className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
             >
