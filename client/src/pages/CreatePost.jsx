@@ -22,6 +22,22 @@ const CreatePost = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // prevent
+        switch (postType) {
+            case PostTypes.text:
+                setLink("");
+                setImage("");
+                break;
+            case PostTypes.link:
+                setSelfText("");
+                setImage("");
+                break;
+            case PostTypes.image:
+                setSelfText("");
+                setLink("");
+                break;
+        }
         let data = {
             channel_name: channel,
             image_link: image,

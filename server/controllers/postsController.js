@@ -52,7 +52,15 @@ const getPostsByUser = async (req, res) => {
 
 const createPost = async (req, res) => {
     try {
-        const { channel_name, image_link, link, self_text, title } = req.body;
+        let { channel_name, image_link, link, self_text, title } = req.body;
+
+        // Preventing a post with more than one type
+        if ((image_link && link) || (image_link && self_text)) {
+            self_text = link = "";
+        }
+        if (link && self_text) {
+            link = "";
+        }
 
         const channel_id = await pool.query(
             "SELECT channel_id FROM channels WHERE channel_name = $1",
