@@ -179,12 +179,14 @@ const PostContent = ({
                 <div>
                     <a
                         href={link}
-                        className="max-h-[720px] cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden text-lg md:rounded-md h-full dark:text-light-2"
+                        className="max-h-[720px] cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden text-lg md:rounded-md h-ful"
                     >
                         <img className="w-min m-auto" src={image}></img>
                     </a>
                     <div className="relative backdrop-brightness-50 backdrop-blur-sm p-4 bottom-0 h-[60px] mt-[-60px]">
-                        <p className="text-xl md:text-3xl">{getDomain(link)}</p>
+                        <p className="text-xl text-light-1 md:text-3xl">
+                            {getDomain(link)}
+                        </p>
                     </div>
                 </div>
             )}
@@ -196,7 +198,7 @@ const PostContent = ({
                         }}
                     >
                         <Icon
-                            path={upvoted ? upvoteFilled : upvote}
+                            path={upvoted ? puvoteFilled : upvote}
                             fill={
                                 upvoted
                                     ? "#6fc938"

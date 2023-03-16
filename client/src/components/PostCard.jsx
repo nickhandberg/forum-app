@@ -129,7 +129,7 @@ const PostCard = ({
                         <img className="w-min m-auto" src={image}></img>
                     </div>
                     <div className="relative backdrop-brightness-50 backdrop-blur-sm p-4 bottom-0 h-[60px] mt-[-60px]">
-                        <p className="text-xl dark:text-light-2  md:text-3xl">
+                        <p className="text-xl text-light-1  md:text-3xl">
                             {getDomain(link)}
                         </p>
                     </div>
