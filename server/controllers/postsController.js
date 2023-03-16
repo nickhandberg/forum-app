@@ -95,9 +95,15 @@ const updatePost = async (req, res) => {
 const deletePost = async (req, res) => {
     try {
         const { id } = req.params;
+
+        const user_id = await pool.query(
+            "SELECT user_id FROM users WHERE username = $1",
+            [req.username]
+        );
+
         const deletedPost = await pool.query(
-            "DELETE FROM posts WHERE post_id = $1",
-            [id]
+            "DELETE FROM posts WHERE post_id = $1 AND user_id = $2",
+            [id, user_id.rows[0].user_id]
         );
         res.json(`Post ${id} was deleted`);
     } catch (err) {

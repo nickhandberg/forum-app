@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Icon from "../components/Icon";
 import useAppContext from "../hooks/useAppContext";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import {
     comment,
     downvote,
     downvoteFilled,
+    editIcon,
     linkExternal,
     star,
     starFilled,
+    trashcan,
     upvote,
     upvoteFilled,
 } from "../img/iconPaths";
-import axios from "../utils/axios";
 import { getPostAge } from "../utils/getPostAge";
 
 const PostContent = ({
@@ -29,8 +31,11 @@ const PostContent = ({
     const [upvoted, setUpvoted] = useState(false);
     const [downvoted, setDownvoted] = useState(false);
     const [saved, setSaved] = useState(false);
+    const [confirm, setConfirm] = useState(false);
     const [linkData, setLinkData] = useState({});
-    const { darkMode } = useAppContext();
+
+    const { auth, darkMode } = useAppContext();
+    const axiosPrivate = useAxiosPrivate();
 
     const navigate = useNavigate();
 
@@ -50,10 +55,54 @@ const PostContent = ({
         setSaved(!saved);
     };
 
+    const handleDelete = async () => {
+        try {
+            const response = await axiosPrivate.delete(
+                `/posts/getPost/${post_id}`,
+                {
+                    withCredentials: true,
+                }
+            );
+
+            navigate("/");
+        } catch (err) {
+            // setNotif("Delete post failed");
+        }
+    };
+
+    const handleEdit = (e) => {
+        e.stopPropagation();
+        setSaved(!saved);
+    };
+
     return (
-        <div className="bg-light-1 dark:bg-dark-2 md:p-4 md:rounded-md w-full md:max-w-[1000px] flex-col flex justify-between">
+        <div className="bg-light-1 dark:text-light-1 dark:bg-dark-2 md:p-4 md:rounded-md w-full md:max-w-[1000px] flex-col flex justify-between">
+            {confirm && (
+                <div className="flex flex-col w-[100vw] h-[100vh] absolute top-0 left-0  backdrop-blur-sm ">
+                    <div className="absolute top-0 bottom-0 left-0 right-0 m-auto text-center max-w-max max-h-min md:rounded-lg bg-light-1 dark:bg-dark-2">
+                        <h1 className="text-3xl p-8 border-b-light-2 dark:border-b-dark-3 border-b-2">
+                            Confirm Delete?
+                        </h1>
+                        <div className="flex text-2xl">
+                            <button
+                                onClick={() => handleDelete()}
+                                className="w-1/2 p-4 hover:bg-[red] rounded-bl-lg"
+                            >
+                                DELETE
+                            </button>
+                            <button
+                                onClick={() => setConfirm(false)}
+                                className="w-1/2 p-4 hover:bg-light-3 dark:hover:bg-dark-3 rounded-br-lg"
+                            >
+                                CANCEL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="flex flex-col p-4 md:p-0">
-                <h1 className="text-xl md:text-2xl dark:text-light-1 font-semibold mb-2">
+                <h1 className="text-xl md:text-2xl  font-semibold mb-2">
                     {title}
                 </h1>
                 <div className="flex flex-col md:flex-row md:gap-8 mb-2">
@@ -161,6 +210,34 @@ const PostContent = ({
                         h={"30px"}
                     />
                 </button>
+                {auth?.username === username && (
+                    <button
+                        className="flex align-middle"
+                        onClick={() => setConfirm(true)}
+                    >
+                        <Icon
+                            path={trashcan}
+                            fill={darkMode ? "#c4c4c4" : "#161617"}
+                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            w={"30px"}
+                            h={"30px"}
+                        />
+                    </button>
+                )}
+                {auth?.username === username && self_text != "" && (
+                    <button
+                        className="flex align-middle"
+                        onClick={(e) => handleEdit(e)}
+                    >
+                        <Icon
+                            path={editIcon}
+                            fill={darkMode ? "#c4c4c4" : "#161617"}
+                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            w={"30px"}
+                            h={"30px"}
+                        />
+                    </button>
+                )}
             </div>
         </div>
     );
