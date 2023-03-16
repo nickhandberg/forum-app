@@ -13,12 +13,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
 app.use(express.json()); // req.body
 app.use(cookieParser());
+app.set("trust proxy", 1);
 
 // ROUTES
 
 app.use("/auth", require("./routes/auth"));
 app.use("/posts", require("./routes/posts"));
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
     console.log(`Server has started on port ${PORT}`);
 });

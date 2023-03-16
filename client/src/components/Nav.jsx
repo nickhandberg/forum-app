@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAppContext from "../hooks/useAppContext";
-import { profileDropdownIcon, search } from "../img/iconPaths";
+import { menuIcon, profileDropdownIcon, search } from "../img/iconPaths";
 import Icon from "./Icon";
 import ProfileDropdown from "./ProfileDropdown";
 
@@ -19,8 +19,18 @@ const Nav = ({ profileMenuOpen, setProfileMenuOpen }) => {
     }
     return (
         <header>
-            <nav className="fixed w-full z-20 h-[50px] bg-light-1 dark:bg-dark-2 dark:text-light-1 flex p-2 pl-14 pr-[75px] rounded-bl-[50px] border-b-[2px] border-dark-3 justify-between items-center">
-                <h1 className="text-2xl  font-bold">Forum</h1>
+            <nav className="fixed w-full z-20 h-[50px] bg-light-1 dark:bg-dark-2 dark:text-light-1 flex p-2 md:pl-14 md:pr-[75px] md:rounded-bl-[50px] border-b-[2px] border-dark-3 justify-between items-center">
+                <div className="md:hidden">
+                    <Icon
+                        path={menuIcon}
+                        fill={darkMode ? "#c4c4c4" : "#161617"}
+                        stroke={darkMode ? "#c4c4c4" : "#161617"}
+                        w={"28px"}
+                        h={"28px"}
+                    />
+                </div>
+
+                <h1 className="text-2xl hidden md:block  font-bold">Forum</h1>
                 <div className="flex-shrink  text-md font-medium hidden md:flex lg:flex space-x-[4vw] mx-8">
                     <p className="cursor-pointer" onClick={() => redirect("/")}>
                         home

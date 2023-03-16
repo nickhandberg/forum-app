@@ -7,7 +7,8 @@
         "client-install": "cd client && npm install",
         "server-install": "cd server && npm install",
         "client": "cd client && npm run dev",
-        "server": "cd server && npm run dev"
+        "server": "cd server && npm run dev",
+        "start": "cd server && npm start"
     },
     "repository": {
         "type": "git",
