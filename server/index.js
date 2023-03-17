@@ -9,6 +9,12 @@ const verifyJWT = require("./middleware/verifyJWT");
 const PORT = 5000;
 
 // middleware
+app.options("/", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.sendStatus(204);
+});
 app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
 app.use(express.json()); // req.body
