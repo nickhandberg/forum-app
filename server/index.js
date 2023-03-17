@@ -10,7 +10,7 @@ const PORT = 5000;
 
 // middleware
 app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Origin", "https://sawwit.netlify.app");
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("Access-Control-Allow-Methods", "*");
     res.setHeader(
@@ -20,7 +20,7 @@ app.use(function (req, res, next) {
     next();
 });
 app.use(express.urlencoded({ extended: false }));
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 app.use(express.json()); // req.body
 app.use(cookieParser());
 app.set("trust proxy", 1);
