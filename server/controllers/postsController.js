@@ -38,7 +38,7 @@ const getPostsByChannel = async (req, res) => {
         );
         res.json(allPosts.rows);
     } catch (err) {
-        console.error(err.message);
+        res.sendStatus(404);
     }
 };
 
@@ -54,7 +54,7 @@ const getPostsByUser = async (req, res) => {
         );
         res.json(allPosts.rows);
     } catch (err) {
-        console.error(err.message);
+        res.sendStatus(404);
     }
 };
 

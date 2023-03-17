@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAppContext from "../hooks/useAppContext";
-//import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import axios from "../utils/axios";
 
 import PostCard from "./PostCard";
 
 const Feed = ({ param, feedType }) => {
     const [posts, setPosts] = useState([]);
-    //const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
     const { darkMode, showGrid } = useAppContext();
 
     useEffect(() => {
@@ -25,7 +25,13 @@ const Feed = ({ param, feedType }) => {
                 );
                 isMounted && setPosts(response.data);
             } catch (err) {
-                console.error(err);
+                if (err.response?.status === 404) {
+                    feedType === "user"
+                        ? navigate(`/missingUser/${param}`)
+                        : navigate(`/missingChannel/${param}`);
+                } else {
+                    console.error(err);
+                }
             }
         };
         getPosts();

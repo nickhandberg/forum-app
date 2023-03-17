@@ -12,7 +12,10 @@ import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import useAppContext from "./hooks/useAppContext";
 import useRefreshToken from "./hooks/useRefreshToken";
+import CreateChannel from "./pages/CreateChannel";
 import CreatePost from "./pages/CreatePost";
+import MissingChannel from "./pages/MissingChannel";
+import MissingUser from "./pages/MissingUser";
 import Post from "./pages/Post";
 import User from "./pages/User";
 
@@ -55,6 +58,14 @@ function App() {
                         <Route path="/register" element={<Registration />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/c/:channel/:post_id" element={<Post />} />
+                        <Route
+                            path="/missingChannel/:channel"
+                            element={<MissingChannel />}
+                        />
+                        <Route
+                            path="/missingUser/:username"
+                            element={<MissingUser />}
+                        />
 
                         {/* PROTECTED ROUTES */}
                         <Route element={<PersistLogin />}>
@@ -63,10 +74,15 @@ function App() {
                                     path="/c/:channel/newpost"
                                     element={<CreatePost />}
                                 />
+                                <Route
+                                    path="/createChannel/:channel?"
+                                    element={<CreateChannel />}
+                                />
                             </Route>
                         </Route>
 
                         {/* CATCH ALL ROUTE */}
+
                         <Route path="*" element={<Missing />} />
                     </Routes>
                 </div>

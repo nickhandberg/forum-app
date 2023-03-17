@@ -101,7 +101,7 @@ const PostContent = ({
     return (
         <div className="bg-light-1 dark:text-light-1 dark:bg-dark-2 md:p-4 md:rounded-md w-full md:max-w-[1000px] flex-col flex justify-between">
             {confirm && (
-                <div className="flex flex-col w-[100vw] h-[100vh] absolute top-0 left-0  backdrop-blur-sm ">
+                <div className="flex flex-col w-[100vw] h-[100vh] absolute top-0 left-0 z-10 backdrop-blur-sm ">
                     <div className="absolute top-0 bottom-0 left-0 right-0 m-auto text-center max-w-max max-h-min md:rounded-lg bg-light-1 dark:bg-dark-2">
                         <h1 className="text-3xl p-8 border-b-light-2 dark:border-b-dark-3 border-b-2">
                             Delete Post?
