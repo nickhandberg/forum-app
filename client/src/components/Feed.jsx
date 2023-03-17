@@ -5,7 +5,7 @@ import axios from "../utils/axios";
 
 import PostCard from "./PostCard";
 
-const Feed = ({ param, feedType }) => {
+const Feed = ({ param, feedType, setMissing }) => {
     const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
     const { darkMode, showGrid } = useAppContext();
@@ -26,9 +26,7 @@ const Feed = ({ param, feedType }) => {
                 isMounted && setPosts(response.data);
             } catch (err) {
                 if (err.response?.status === 404) {
-                    feedType === "user"
-                        ? navigate(`/missingUser/${param}`)
-                        : navigate(`/missingChannel/${param}`);
+                    setMissing(true);
                 } else {
                     console.error(err);
                 }
