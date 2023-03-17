@@ -11,8 +11,12 @@ const PORT = 5000;
 // middleware
 app.options("/", (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+    );
     res.sendStatus(204);
 });
 app.use(express.urlencoded({ extended: false }));
