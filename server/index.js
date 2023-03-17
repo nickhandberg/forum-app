@@ -9,16 +9,6 @@ const verifyJWT = require("./middleware/verifyJWT");
 const PORT = 5000;
 
 // middleware
-// app.use(function (req, res, next) {
-//     res.setHeader("Access-Control-Allow-Origin", "https://sawwit.netlify.app");
-//     res.setHeader("Access-Control-Allow-Credentials", "true");
-//     res.setHeader("Access-Control-Allow-Methods", "*");
-//     res.setHeader(
-//         "Access-Control-Allow-Headers",
-//         "Origin, X-Requested-With, Content-Type, Accept, authorization"
-//     );
-//     next();
-// });
 app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
 app.use(express.json()); // req.body

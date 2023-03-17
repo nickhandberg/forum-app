@@ -3,6 +3,7 @@ const lpg = require("link-preview-generator");
 
 const getPreviewData = async (link) => {
     const previewData = await lpg(link);
+    console.log(previewData);
     return previewData;
 };
 
