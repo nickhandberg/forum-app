@@ -10,7 +10,7 @@ const PORT = 5000;
 
 // middleware
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json()); // req.body
 app.use(cookieParser());
 app.set("trust proxy", 1);
