@@ -9,7 +9,7 @@ const verifyJWT = require("./middleware/verifyJWT");
 const PORT = 5000;
 
 // middleware
-app.options("/", (req, res) => {
+app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("Access-Control-Allow-Methods", "*");
@@ -17,7 +17,7 @@ app.options("/", (req, res) => {
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     );
-    res.sendStatus(204);
+    next();
 });
 app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
