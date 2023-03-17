@@ -7,9 +7,6 @@
         "start": "node index",
         "dev": "nodemon server"
     },
-    "engines": {
-        "node": "^14"
-    },
     "author": "",
     "license": "ISC",
     "devDependencies": {
