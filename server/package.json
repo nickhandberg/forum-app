@@ -19,7 +19,7 @@
         "dotenv": "^16.0.3",
         "express": "^4.18.2",
         "jsonwebtoken": "^9.0.0",
-        "link-preview-generator": "^1.1.0",
+        "link-preview-node": "^1.0.7",
         "pg": "^8.10.0"
     }
 }

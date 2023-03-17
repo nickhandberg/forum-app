@@ -1,10 +1,17 @@
 const pool = require("../db");
-const lpg = require("link-preview-generator");
+const { linkPreview } = require("link-preview-node");
 
-const getPreviewData = async (link) => {
-    const previewData = await lpg(link);
-    console.log(previewData);
-    return previewData;
+const getPreviewData = async (link, post_id) => {
+    await linkPreview(link)
+        .then(async (resp) => {
+            const updateImage = await pool.query(
+                "UPDATE posts SET image_link = $1 WHERE post_id = $2",
+                [resp.image, post_id]
+            );
+        })
+        .catch((catchErr) => {
+            console.log(catchErr);
+        });
 };
 
 const getAllPosts = async (req, res) => {
@@ -72,6 +79,7 @@ const createPost = async (req, res) => {
             "SELECT user_id FROM users WHERE username = $1",
             [req.username]
         );
+
         const newPost = await pool.query(
             "INSERT INTO posts (channel_id, user_id, image_link, link, self_text, karma, title, post_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING post_id",
             [
@@ -85,16 +93,11 @@ const createPost = async (req, res) => {
                 new Date(),
             ]
         );
+        if (link) {
+            await getPreviewData(link, newPost.rows[0].post_id);
+        }
 
         res.json(newPost.rows[0]);
-
-        if (link) {
-            const previewData = await getPreviewData(link);
-            const updateImage = await pool.query(
-                "UPDATE posts SET image_link = $1 WHERE post_id = $2",
-                [previewData.img, newPost.rows[0].post_id]
-            );
-        }
     } catch (err) {
         console.error(err.message);
     }

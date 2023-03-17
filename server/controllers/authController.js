@@ -111,8 +111,8 @@ const handleLogout = async (req, res) => {
     if (!foundUser) {
         res.clearCookie("jwt", {
             httpOnly: true,
-            // sameSite: "None",
-            // secure: true,
+            sameSite: "None",
+            secure: true,
         });
         return res.sendStatus(204); // successful but no content
     }

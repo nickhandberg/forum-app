@@ -1,7 +1,7 @@
 const whitelist = require("./whitelist");
 
 const corsOptions = {
-    origin: "https://sawwit.netlify.app",
+    origin: process.env.CLIENT_URL,
 
     methods: ["GET, POST, PUT, DELETE, OPTIONS"],
 
