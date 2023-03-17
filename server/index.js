@@ -12,7 +12,7 @@ const PORT = 5000;
 app.options("/", (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Methods", "*");
     res.setHeader(
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept, Authorization"
