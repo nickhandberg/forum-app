@@ -12,7 +12,6 @@ import {
 } from "../img/iconPaths";
 
 import { useNavigate } from "react-router-dom";
-import { async } from "rxjs";
 import MissingChannel from "../components/MissingChannel";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
