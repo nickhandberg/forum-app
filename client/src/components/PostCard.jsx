@@ -59,7 +59,7 @@ const PostCard = ({
     return (
         <div
             onClick={() => navigate(`/c/${channel}/${post_id.toString(32)}`)}
-            className="bg-light-1 dark:bg-dark-2 cursor-pointer md:p-4  md:rounded-md flex-col flex justify-between"
+            className="bg-light-1 dark:bg-dark-2 break-inside-avoid cursor-pointer md:p-4 mb-4 md:rounded-md flex-col flex justify-between"
         >
             <div className="flex flex-col p-4 md:p-0 z-10">
                 <h1 className="text-xl md:text-2xl dark:text-light-1 font-semibold mb-2">
@@ -86,7 +86,7 @@ const PostCard = ({
             </div>
 
             {image && !link && (
-                <img className=" max-h-[480px] w-min m-auto" src={image}></img>
+                <img className="max-h-[800px] w-min m-auto" src={image}></img>
             )}
 
             {self_text && (

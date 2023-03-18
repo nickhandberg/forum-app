@@ -43,11 +43,16 @@ const Feed = ({ param, feedType, setMissing }) => {
     return (
         <div>
             <div
-                className={`grid ${
+                // className={`grid ${
+                //     showGrid
+                //         ? "xl:grid-cols-3 md:grid-cols-2 grid-cols-1"
+                //         : "grid-cols-1 max-w-[800px] m-auto w-full"
+                // } gap-3`}
+                className={`gap-3 columns-1 ${
                     showGrid
-                        ? "xl:grid-cols-3 md:grid-cols-2 grid-cols-1"
-                        : "grid-cols-1 max-w-[800px] m-auto w-full"
-                } gap-3`}
+                        ? "xl:columns-3 md:columns-2 columns-1"
+                        : "columns-1 max-w-[800px] m-auto w-full"
+                }`}
             >
                 {posts.map((post, i) => (
                     <PostCard

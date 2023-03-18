@@ -75,7 +75,7 @@ const Nav = ({
                     )}
                 </div>
 
-                <h1 className="text-2xl hidden md:block  font-bold">Forum</h1>
+                <h1 className="text-2xl hidden md:block  font-bold">sawwit</h1>
                 <div className="flex-shrink  text-md font-medium hidden md:flex lg:flex space-x-[4vw] mx-8">
                     <p className="cursor-pointer" onClick={() => redirect("/")}>
                         home
