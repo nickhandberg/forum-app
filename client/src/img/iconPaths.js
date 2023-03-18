@@ -103,3 +103,14 @@ export const dog = [
 ];
 
 export const plus = ["M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"];
+
+export const chevLeft = [
+    "M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z",
+];
+
+export const chevDown = [
+    "M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z",
+];
+export const chevUp = [
+    "m6.293 13.293 1.414 1.414L12 10.414l4.293 4.293 1.414-1.414L12 7.586z",
+];

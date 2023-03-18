@@ -5,6 +5,7 @@ import { menuIcon, plus, profileDropdownIcon, search } from "../img/iconPaths";
 import axios from "../utils/axios";
 import CreateDropdown from "./CreateDropdown";
 import Icon from "./Icon";
+import MobileMenu from "./MobileMenu";
 import ProfileDropdown from "./ProfileDropdown";
 
 const Nav = ({
@@ -12,6 +13,8 @@ const Nav = ({
     setProfileMenuOpen,
     createMenuOpen,
     setCreateMenuOpen,
+    mobileMenuOpen,
+    setMobileMenuOpen,
 }) => {
     const { auth, darkMode } = useAppContext();
     const [channels, setChannels] = useState(null);
@@ -54,13 +57,22 @@ const Nav = ({
         <header>
             <nav className="fixed w-full z-20 h-[50px] bg-light-1 dark:bg-dark-2 dark:text-light-1 flex p-2 md:pl-14 md:pr-[75px] md:rounded-bl-[50px] border-b-[2px] border-dark-3 justify-between items-center">
                 <div className="md:hidden">
-                    <Icon
-                        path={menuIcon}
-                        fill={darkMode ? "#c4c4c4" : "#161617"}
-                        stroke={darkMode ? "#c4c4c4" : "#161617"}
-                        w={"28px"}
-                        h={"28px"}
-                    />
+                    <button
+                        id="mobileIcon"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    >
+                        <Icon
+                            path={menuIcon}
+                            fill={darkMode ? "#c4c4c4" : "#161617"}
+                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            w={"28px"}
+                            h={"28px"}
+                        />
+                    </button>
+
+                    {mobileMenuOpen && (
+                        <MobileMenu setMobileMenuOpen={setMobileMenuOpen} />
+                    )}
                 </div>
 
                 <h1 className="text-2xl hidden md:block  font-bold">Forum</h1>

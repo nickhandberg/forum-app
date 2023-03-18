@@ -23,6 +23,7 @@ function App() {
     const { darkMode } = useAppContext();
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const [createMenuOpen, setCreateMenuOpen] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const refresh = useRefreshToken();
 
     useEffect(() => {
@@ -33,8 +34,10 @@ function App() {
     document.addEventListener("click", function (event) {
         const dropdown = document.getElementById("profileDropdown");
         const dropdown2 = document.getElementById("createDropdown");
+        const mobileMenu = document.getElementById("mobileMenu");
         const icon = document.getElementById("profileIcon");
         const icon2 = document.getElementById("createIcon");
+        const mobileIcon = document.getElementById("mobileIcon");
         if (dropdown !== null) {
             if (
                 !dropdown.contains(event.target) &&
@@ -51,6 +54,14 @@ function App() {
                 setCreateMenuOpen(false);
             }
         }
+        if (mobileMenu !== null) {
+            if (
+                !mobileMenu.contains(event.target) &&
+                !mobileIcon.contains(event.target)
+            ) {
+                setMobileMenuOpen(false);
+            }
+        }
     });
 
     return (
@@ -62,6 +73,8 @@ function App() {
                         setProfileMenuOpen={setProfileMenuOpen}
                         createMenuOpen={createMenuOpen}
                         setCreateMenuOpen={setCreateMenuOpen}
+                        mobileMenuOpen={mobileMenuOpen}
+                        setMobileMenuOpen={setMobileMenuOpen}
                     />
                     <Routes>
                         {/* PUBLIC ROUTES */}
