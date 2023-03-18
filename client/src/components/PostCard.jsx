@@ -65,7 +65,7 @@ const PostCard = ({
         >
             {image && !link && (
                 <img
-                    className="max-h-[800px] w-min m-auto md:rounded-t-md"
+                    className="max-h-[800px] w-full m-auto md:rounded-t-md"
                     src={image}
                 ></img>
             )}
