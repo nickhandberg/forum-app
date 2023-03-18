@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAppContext from "../hooks/useAppContext";
 import {
+    altDownvote,
+    altUpvote,
     comment,
     downvote,
     downvoteFilled,
@@ -59,55 +61,13 @@ const PostCard = ({
     return (
         <div
             onClick={() => navigate(`/c/${channel}/${post_id.toString(32)}`)}
-            className="bg-light-1 dark:bg-dark-2 break-inside-avoid cursor-pointer md:p-4 mb-4 md:rounded-md flex-col flex justify-between"
+            className="bg-light-1 dark:bg-dark-2 break-inside-avoid cursor-pointer  mb-4 md:rounded-md flex-col flex justify-between"
         >
-            <div className="flex flex-col p-4 md:p-0 z-10">
-                <h1 className="text-xl md:text-2xl dark:text-light-1 font-semibold mb-2">
-                    {title}
-                </h1>
-                <div className="flex flex-col md:flex-row md:gap-8 mb-2">
-                    <p
-                        className="text-green-1 hover:underline w-min dark:text-green-1 cursor-pointer"
-                        onClick={(e) => redirect(e, `/c/${channel}`)}
-                    >
-                        {channel}
-                    </p>
-                    <p className="dark:text-light-2 text-sm md:text-base">
-                        Posted by{" "}
-                        <span
-                            onClick={(e) => redirect(e, `/u/${username}`)}
-                            className="text-green-1 hover:underline cursor-pointer"
-                        >
-                            {username}
-                        </span>{" "}
-                        {getPostAge(age)}
-                    </p>
-                </div>
-            </div>
-
             {image && !link && (
-                <img className="max-h-[800px] w-min m-auto" src={image}></img>
-            )}
-
-            {self_text && (
-                <div>
-                    <pre className="postText max-h-[250px] md:max-h-[300px] lg:max-h-[480px] bg-light-3 dark:bg-dark-3 overflow-hidden p-4 text-lg md:rounded-md h-full dark:text-light-2">
-                        {self_text}
-                    </pre>
-
-                    <div
-                        className={`${
-                            self_text.length > 500
-                                ? darkMode
-                                    ? "grad1"
-                                    : "grad2"
-                                : ""
-                        } w-full bottom-[0px] h-[100px] md:h-[100px] mt-[-100px] md:mt-[-100px] relative `}
-                    ></div>
-                    {/* <p className="text-dark-1  dark:text-light-1 text-lg relative bottom-[10px] md:bottom-[25px] text-center">
-                        Read More
-                    </p> */}
-                </div>
+                <img
+                    className="max-h-[800px] w-min m-auto md:rounded-t-md"
+                    src={image}
+                ></img>
             )}
 
             {link && !image && (
@@ -138,73 +98,140 @@ const PostCard = ({
                     </div>
                 </div>
             )}
-            <div className="flex justify-between mt-4 py-4 md:py-0 px-6 max-w-[400px]">
-                <div className="flex gap-2">
+
+            <div className="flex flex-col px-4 pt-4 z-10">
+                <h1 className="text-lg md:text-2xl dark:text-light-1 font-semibold">
+                    {title}
+                </h1>
+                <div className="flex flex-col md:flex-row md:gap-8 md:mt-1">
+                    <p
+                        className="text-green-1 text-sm md:text-base hover:underline w-min cursor-pointer"
+                        onClick={(e) => redirect(e, `/c/${channel}`)}
+                    >
+                        {channel}
+                    </p>
+                    <p className="dark:text-light-2 text-xs md:text-base">
+                        Posted by{" "}
+                        <span
+                            onClick={(e) => redirect(e, `/u/${username}`)}
+                            className="text-green-1 hover:underline cursor-pointer"
+                        >
+                            {username}
+                        </span>{" "}
+                        {getPostAge(age)}
+                    </p>
+                </div>
+            </div>
+
+            {self_text && (
+                <div>
+                    <pre className="postText max-h-[250px] md:max-h-[300px] lg:max-h-[480px]  overflow-hidden px-4 pt-2 text-lg md:rounded-md h-full dark:text-light-2">
+                        {self_text}
+                    </pre>
+
+                    <div
+                        className={`${
+                            self_text.length > 500
+                                ? darkMode
+                                    ? "grad1"
+                                    : "grad2"
+                                : ""
+                        } w-full bottom-[0px] h-[100px] md:h-[100px] mt-[-100px] md:mt-[-100px] relative `}
+                    ></div>
+                    {/* <p className="text-dark-1  dark:text-light-1 text-lg relative bottom-[10px] md:bottom-[25px] text-center">
+                        Read More
+                    </p> */}
+                </div>
+            )}
+
+            <div className="flex justify-between mt-4 pb-4  px-4">
+                <div className="flex flex-col text-sm dark:text-light-2">
+                    <p>
+                        {karma > 1000 ? (karma / 1000).toFixed(1) + "k" : karma}{" "}
+                        points
+                    </p>
+                    <p>152 comments</p>
+                </div>
+
+                <div className="flex items-center gap-8">
                     <button
                         onClick={(e) => {
                             handleUpvote(e);
                         }}
                     >
                         <Icon
-                            path={upvoted ? upvoteFilled : upvote}
+                            //path={upvoted ? upvoteFilled : upvote}
+                            path={altUpvote}
                             fill={
                                 upvoted
                                     ? "#6fc938"
                                     : darkMode
                                     ? "#c4c4c4"
-                                    : "#161617"
+                                    : "#68696b"
                             }
-                            stroke={darkMode ? "#c4c4c4" : "#161617"}
-                            w={"30px"}
-                            h={"30px"}
+                            stroke={
+                                upvoted
+                                    ? "#6fc938"
+                                    : darkMode
+                                    ? "#c4c4c4"
+                                    : "#68696b"
+                            }
+                            w={"35px"}
+                            h={"35px"}
                         />
                     </button>
-                    <p className="dark:text-light-2 text-lg text-center">
-                        {karma > 1000 ? (karma / 1000).toFixed(1) + "k" : karma}
-                    </p>
+
                     <button
                         onClick={(e) => {
                             handleDownvote(e);
                         }}
                     >
                         <Icon
-                            path={downvoted ? downvoteFilled : downvote}
+                            //path={downvoted ? downvoteFilled : downvote}
+                            path={altDownvote}
                             fill={
                                 downvoted
                                     ? "#d90f63"
                                     : darkMode
                                     ? "#c4c4c4"
-                                    : "#161617"
+                                    : "#68696b"
                             }
-                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            stroke={
+                                downvoted
+                                    ? "#d90f63"
+                                    : darkMode
+                                    ? "#c4c4c4"
+                                    : "#68696b"
+                            }
+                            w={"35px"}
+                            h={"35px"}
+                        />
+                    </button>
+                    <button
+                        className="flex align-middle"
+                        onClick={(e) => handleSave(e)}
+                    >
+                        <Icon
+                            path={saved ? starFilled : star}
+                            fill={
+                                saved
+                                    ? "#d6c106"
+                                    : darkMode
+                                    ? "#c4c4c4"
+                                    : "#68696b"
+                            }
+                            stroke={
+                                saved
+                                    ? "#d6c106"
+                                    : darkMode
+                                    ? "#c4c4c4"
+                                    : "#68696b"
+                            }
                             w={"30px"}
                             h={"30px"}
                         />
                     </button>
                 </div>
-                <button>
-                    <Icon
-                        path={comment}
-                        fill={darkMode ? "#c4c4c4" : "#161617"}
-                        stroke={darkMode ? "#c4c4c4" : "#161617"}
-                        w={"30px"}
-                        h={"30px"}
-                    />
-                </button>
-                <button
-                    className="flex align-middle"
-                    onClick={(e) => handleSave(e)}
-                >
-                    <Icon
-                        path={saved ? starFilled : star}
-                        fill={
-                            saved ? "#d6c106" : darkMode ? "#c4c4c4" : "#161617"
-                        }
-                        stroke={darkMode ? "#c4c4c4" : "#161617"}
-                        w={"30px"}
-                        h={"30px"}
-                    />
-                </button>
             </div>
         </div>
     );
