@@ -16,9 +16,9 @@ app.use(cookieParser());
 app.set("trust proxy", 1);
 
 // ROUTES
-
 app.use("/auth", require("./routes/auth"));
 app.use("/posts", require("./routes/posts"));
+app.use("/channels", require("./routes/channels"));
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Server has started on port ${PORT}`);

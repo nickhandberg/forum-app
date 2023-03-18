@@ -14,6 +14,15 @@ CREATE TABLE channels(
     channel_name VARCHAR(255)
 );
 
+CREATE TABLE user_channel(
+    user_id INT,
+    channel_id INT,
+    user_role INT,
+    PRIMARY KEY (user_id, channel_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (channel_id) REFERENCES channels(channel_id)
+);
+
 CREATE TABLE posts(
     post_id SERIAL PRIMARY KEY,
     channel_id INT NOT NULL,

@@ -11,19 +11,15 @@ const Registration = () => {
 
     const [email, setEmail] = useState("");
     const [validEmail, setValidEmail] = useState(false);
-    const [emailFocus, setEmailFocus] = useState(false);
 
     const [user, setUser] = useState("");
     const [validName, setValidName] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
 
     const [pwd, setPwd] = useState("");
     const [validPwd, setValidPwd] = useState(false);
-    const [pwdFocus, setPwdFocus] = useState(false);
 
     const [matchPwd, setMatchPwd] = useState("");
     const [validMatch, setValidMatch] = useState(false);
-    const [matchFocus, setMatchFocus] = useState(false);
 
     const [success, setSuccess] = useState(false);
     const [notif, setNotif] = useState("");
@@ -115,14 +111,10 @@ const Registration = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                                 value={email}
                                 required
-                                onFocus={() => setEmailFocus(true)}
-                                onBlur={() => setEmailFocus(false)}
                             />
                             <p
                                 className={`relative mt-2 bottom-0 text-[red] ${
-                                    emailFocus && email && !validEmail
-                                        ? "block"
-                                        : "hidden"
+                                    email && !validEmail ? "block" : "hidden"
                                 }`}
                             >
                                 Must be valid email address.
@@ -139,14 +131,10 @@ const Registration = () => {
                                 onChange={(e) => setUser(e.target.value)}
                                 value={user}
                                 required
-                                onFocus={() => setUserFocus(true)}
-                                onBlur={() => setUserFocus(false)}
                             />
                             <p
                                 className={`relative mt-2 bottom-0 text-[red] ${
-                                    userFocus && user && !validName
-                                        ? "block"
-                                        : "hidden"
+                                    user && !validName ? "block" : "hidden"
                                 }`}
                             >
                                 4 to 18 characters.
@@ -164,14 +152,10 @@ const Registration = () => {
                                 onChange={(e) => setPwd(e.target.value)}
                                 value={pwd}
                                 required
-                                onFocus={() => setPwdFocus(true)}
-                                onBlur={() => setPwdFocus(false)}
                             />
                             <p
                                 className={`relative mt-2 bottom-0  text-[red] ${
-                                    pwdFocus && pwd && !validPwd
-                                        ? "block"
-                                        : "hidden"
+                                    pwd && !validPwd ? "block" : "hidden"
                                 }`}
                             >
                                 8 to 24 characters.
@@ -190,15 +174,11 @@ const Registration = () => {
                                 onChange={(e) => setMatchPwd(e.target.value)}
                                 value={matchPwd}
                                 required
-                                onFocus={() => setMatchFocus(true)}
-                                onBlur={() => setMatchFocus(false)}
                             />
                             <p
                                 id="confirmnote"
                                 className={`relative mt-2 bottom-0 text-[red] ${
-                                    matchFocus && !validMatch
-                                        ? "block"
-                                        : "hidden"
+                                    !validMatch ? "block" : "hidden"
                                 }`}
                             >
                                 Must match the first password input field.
