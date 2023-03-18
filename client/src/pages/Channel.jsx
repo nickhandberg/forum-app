@@ -27,7 +27,7 @@ const Channel = () => {
     return (
         <section className="py-16 md:mx-8">
             {missing ? (
-                <MissingChannel />
+                <MissingChannel darkMode={darkMode} />
             ) : (
                 <>
                     <div className=" py-8 m-auto max-w-[1800px] items-center flex flex-col gap-4 md:flex-row md:gap-0 text-dark-1 dark:text-light-1 justify-around">

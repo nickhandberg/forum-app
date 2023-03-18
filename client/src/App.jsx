@@ -67,14 +67,13 @@ function App() {
                                     element={<CreatePost />}
                                 />
                                 <Route
-                                    path="/createChannel/:channel?"
+                                    path="/newChannel/:channel?"
                                     element={<CreateChannel />}
                                 />
                             </Route>
                         </Route>
 
                         {/* CATCH ALL ROUTE */}
-
                         <Route path="*" element={<Missing />} />
                     </Routes>
                 </div>
