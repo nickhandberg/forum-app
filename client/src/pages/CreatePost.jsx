@@ -9,15 +9,18 @@ const PostTypes = {
 };
 
 const CreatePost = () => {
-    const [postType, setPostType] = useState(PostTypes.text);
+    let { channel } = useParams();
 
+    const [postType, setPostType] = useState(PostTypes.text);
+    const [name, setName] = useState(channel ? channel : "");
     const [title, setTitle] = useState("");
     const [selfText, setSelfText] = useState("");
     const [link, setLink] = useState("");
     const [image, setImage] = useState("");
+    const [notif, setNotif] = useState("");
 
     const axiosPrivate = useAxiosPrivate();
-    let { channel } = useParams();
+
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -40,7 +43,7 @@ const CreatePost = () => {
                 break;
         }
         let data = {
-            channel_name: channel,
+            channel_name: name,
             image_link: image,
             title: title,
             self_text: selfText,
@@ -55,9 +58,13 @@ const CreatePost = () => {
                     withCredentials: true,
                 }
             );
-            navigate(`/c/${channel}/${response.data.post_id.toString(32)}`);
+            navigate(`/c/${name}/${response.data.post_id.toString(32)}`);
         } catch (err) {
-            setNotif("Create new post failed");
+            if (!err?.response) {
+                setNotif("creating post failed");
+            } else if (err.response?.status === 404) {
+                setNotif(`channel ${name} does not exist`);
+            }
         }
     };
 
@@ -66,7 +73,9 @@ const CreatePost = () => {
             <div className="bg-light-1 dark:bg-dark-2 w-full max-w-[800px] text-dark-1 md:rounded-lg dark:text-light-1 mb-12">
                 <div className="p-4">
                     <h1 className="text-3xl ">Create post</h1>
-                    <h2 className="text-xl">in {channel}</h2>
+                    <h2 className="text-xl">
+                        in <span className="text-green-1">/c/{name}</span>
+                    </h2>
                 </div>
 
                 <div className="flex bg-light-2  dark:bg-dark-3 text-xl md:text-2xl  text-center">
@@ -99,6 +108,24 @@ const CreatePost = () => {
                     onSubmit={handleSubmit}
                     className="flex flex-col gap-2 p-4"
                 >
+                    {!channel && (
+                        <>
+                            <label className="text-2xl" htmlFor="name">
+                                {"Channel:"}
+                            </label>
+                            <input
+                                className="bg-light-3 dark:bg-dark-3 rounded-md text-3xl px-2 py-[2px]"
+                                type="text"
+                                id="name"
+                                autoComplete="off"
+                                onChange={(e) => setName(e.target.value)}
+                                value={name}
+                                maxLength="21"
+                                required
+                            />
+                        </>
+                    )}
+
                     <label className="text-2xl" htmlFor="title">
                         {"Title:"}
                     </label>
@@ -160,9 +187,11 @@ const CreatePost = () => {
                             />
                         </div>
                     )}
+                    <p className="text-[red] mt-2">{notif}</p>
                     <button
                         className={`${
                             !title ||
+                            !name ||
                             (postType === PostTypes.text && !selfText) ||
                             (postType === PostTypes.link && !link) ||
                             (postType === PostTypes.image && !image)
@@ -171,6 +200,7 @@ const CreatePost = () => {
                         }  mt-4 rounded-lg text-2xl p-2`}
                         disabled={
                             !title ||
+                            !name ||
                             (postType === PostTypes.text && !selfText) ||
                             (postType === PostTypes.link && !link) ||
                             (postType === PostTypes.image && !image)

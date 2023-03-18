@@ -109,6 +109,7 @@ const Channel = () => {
                                     {channel}
                                 </h1>
                                 <button
+                                    className="flex items-center gap-1"
                                     onClick={
                                         !userJoined
                                             ? () => handleChannelJoin()
@@ -136,14 +137,14 @@ const Channel = () => {
                                         w={"30px"}
                                         h={"30px"}
                                     />
+                                    <p>{role ? role : "join"}</p>
                                 </button>
-                                <p>{role ? role : "join"}</p>
                             </div>
                             <p className="text-[red] mt-2">{notif}</p>
                         </div>
 
                         <button
-                            onClick={() => navigate(`/c/${channel}/newpost`)}
+                            onClick={() => navigate(`/newpost/${channel}`)}
                             className="bg-light-1 dark:bg-dark-3 flex justify-center items-center px-4 p-2 gap-2 rounded-xl"
                         >
                             <Icon

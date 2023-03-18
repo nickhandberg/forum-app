@@ -38,7 +38,7 @@ const Feed = ({ param, feedType, setMissing }) => {
             isMounted = false;
             isMounted && controller.abort();
         };
-    }, []);
+    }, [param]);
 
     return (
         <div>

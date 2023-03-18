@@ -22,6 +22,7 @@ import User from "./pages/User";
 function App() {
     const { darkMode } = useAppContext();
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+    const [createMenuOpen, setCreateMenuOpen] = useState(false);
     const refresh = useRefreshToken();
 
     useEffect(() => {
@@ -31,13 +32,23 @@ function App() {
     // Hide dropdown menu if user clicks on another part of screen
     document.addEventListener("click", function (event) {
         const dropdown = document.getElementById("profileDropdown");
+        const dropdown2 = document.getElementById("createDropdown");
         const icon = document.getElementById("profileIcon");
+        const icon2 = document.getElementById("createIcon");
         if (dropdown !== null) {
             if (
                 !dropdown.contains(event.target) &&
                 !icon.contains(event.target)
             ) {
                 setProfileMenuOpen(false);
+            }
+        }
+        if (dropdown2 !== null) {
+            if (
+                !dropdown2.contains(event.target) &&
+                !icon2.contains(event.target)
+            ) {
+                setCreateMenuOpen(false);
             }
         }
     });
@@ -49,6 +60,8 @@ function App() {
                     <Nav
                         profileMenuOpen={profileMenuOpen}
                         setProfileMenuOpen={setProfileMenuOpen}
+                        createMenuOpen={createMenuOpen}
+                        setCreateMenuOpen={setCreateMenuOpen}
                     />
                     <Routes>
                         {/* PUBLIC ROUTES */}
@@ -63,11 +76,11 @@ function App() {
                         <Route element={<PersistLogin />}>
                             <Route element={<RequireAuth />}>
                                 <Route
-                                    path="/c/:channel/newpost"
+                                    path="/newpost/:channel?"
                                     element={<CreatePost />}
                                 />
                                 <Route
-                                    path="/newChannel/:channel?"
+                                    path="/newchannel/:channel?"
                                     element={<CreateChannel />}
                                 />
                             </Route>

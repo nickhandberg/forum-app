@@ -3,7 +3,10 @@ const router = express.Router();
 const channelsController = require("../controllers/channelsController");
 const verifyJWT = require("../middleware/verifyJWT");
 
-router.route("/").post(verifyJWT, channelsController.createChannel);
+router
+    .route("/")
+    .get(channelsController.getAllChannels)
+    .post(verifyJWT, channelsController.createChannel);
 
 router
     .route("/:channel_name/join")

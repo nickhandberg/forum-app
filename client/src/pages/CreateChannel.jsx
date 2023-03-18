@@ -8,6 +8,7 @@ const CreateChannel = () => {
     const { channel } = useParams();
     const [name, setName] = useState(channel ? channel : "");
     const [validName, setValidName] = useState(false);
+    const [notif, setNotif] = useState("");
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
 
@@ -32,7 +33,11 @@ const CreateChannel = () => {
             );
             navigate(`/c/${name}`);
         } catch (err) {
-            //setNotif("Create new post failed");
+            if (!err?.response) {
+                setNotif("creating channel failed");
+            } else if (err.response?.status === 409) {
+                setNotif(`channel ${name} already exists`);
+            }
         }
     };
 
@@ -73,7 +78,7 @@ const CreateChannel = () => {
                         <br /> Must begin with a letter. <br /> Cant contain
                         special characters
                     </p>
-
+                    <p className="text-[red] mt-2">{notif}</p>
                     <button
                         className={`${
                             !validName

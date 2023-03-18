@@ -80,24 +80,28 @@ const createPost = async (req, res) => {
             [req.username]
         );
 
-        const newPost = await pool.query(
-            "INSERT INTO posts (channel_id, user_id, image_link, link, self_text, karma, title, post_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING post_id",
-            [
-                channel_id.rows[0].channel_id,
-                user_id.rows[0].user_id,
-                image_link,
-                link,
-                self_text,
-                0,
-                title,
-                new Date(),
-            ]
-        );
-        if (link) {
-            await getPreviewData(link, newPost.rows[0].post_id);
-        }
+        if (channel_id.rowCount > 0 && user_id.rowCount > 0) {
+            const newPost = await pool.query(
+                "INSERT INTO posts (channel_id, user_id, image_link, link, self_text, karma, title, post_date) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING post_id",
+                [
+                    channel_id.rows[0].channel_id,
+                    user_id.rows[0].user_id,
+                    image_link,
+                    link,
+                    self_text,
+                    0,
+                    title,
+                    new Date(),
+                ]
+            );
+            if (link) {
+                await getPreviewData(link, newPost.rows[0].post_id);
+            }
 
-        res.json(newPost.rows[0]);
+            res.json(newPost.rows[0]);
+        } else {
+            res.sendStatus(404);
+        }
     } catch (err) {
         console.error(err.message);
     }

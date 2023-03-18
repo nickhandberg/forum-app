@@ -133,29 +133,36 @@ const createChannel = async (req, res) => {
 
         if (response.rowCount > 0) {
             res.sendStatus(409);
+        } else {
+            const newChannel = await pool.query(
+                "INSERT INTO channels (channel_name) VALUES ($1) RETURNING channel_id",
+                [channel_name]
+            );
+
+            // SET CHANNEL OWNER
+            const user_id = await pool.query(
+                "SELECT user_id FROM users WHERE username = $1",
+                [req.username]
+            );
+
+            joinChannel(
+                user_id.rows[0].user_id,
+                newChannel.rows[0].channel_id,
+                Roles.owner
+            );
+
+            res.json(newChannel.rows[0]);
         }
-
-        const newChannel = await pool.query(
-            "INSERT INTO channels (channel_name) VALUES ($1) RETURNING channel_id",
-            [channel_name]
-        );
-
-        // SET CHANNEL OWNER
-        const user_id = await pool.query(
-            "SELECT user_id FROM users WHERE username = $1",
-            [req.username]
-        );
-
-        joinChannel(
-            user_id.rows[0].user_id,
-            newChannel.rows[0].channel_id,
-            Roles.owner
-        );
-
-        res.json(newChannel.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
+};
+
+const getAllChannels = async (req, res) => {
+    try {
+        const channels = await pool.query("SELECT * FROM channels");
+        res.json(channels.rows);
+    } catch (err) {}
 };
 
 module.exports = {
@@ -163,4 +170,5 @@ module.exports = {
     getChannelRole,
     addChannelMember,
     removeChannelMember,
+    getAllChannels,
 };

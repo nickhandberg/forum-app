@@ -1,17 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAppContext from "../hooks/useAppContext";
-import { menuIcon, profileDropdownIcon, search } from "../img/iconPaths";
+import { menuIcon, plus, profileDropdownIcon, search } from "../img/iconPaths";
+import axios from "../utils/axios";
+import CreateDropdown from "./CreateDropdown";
 import Icon from "./Icon";
 import ProfileDropdown from "./ProfileDropdown";
 
-const Nav = ({ profileMenuOpen, setProfileMenuOpen }) => {
+const Nav = ({
+    profileMenuOpen,
+    setProfileMenuOpen,
+    createMenuOpen,
+    setCreateMenuOpen,
+}) => {
     const { auth, darkMode } = useAppContext();
+    const [channels, setChannels] = useState(null);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
+        const getChannels = async () => {
+            try {
+                const response = await axios.get(`/channels/`, {
+                    signal: controller.signal,
+                });
+                isMounted && setChannels(response.data);
+            } catch (err) {
+                if (err.response?.status === 404) {
+                    setMissing(true);
+                } else {
+                    console.error(err);
+                }
+            }
+        };
+        getChannels();
+
+        return () => {
+            isMounted = false;
+            isMounted && controller.abort();
+        };
+    }, []);
+
     const navToRandomChannel = () => {
-        let randomChannel = "test";
-        redirect(`/c/${randomChannel}`);
+        let i = Math.floor(Math.random() * channels.length);
+        redirect(`/c/${channels[i].channel_name}`);
     };
 
     function redirect(path) {
@@ -35,23 +68,20 @@ const Nav = ({ profileMenuOpen, setProfileMenuOpen }) => {
                     <p className="cursor-pointer" onClick={() => redirect("/")}>
                         home
                     </p>
-                    <p
+                    {/* <p
                         className="cursor-pointer"
                         onClick={() => redirect("/c/battlestations/newpost")}
                     >
                         post
+                    </p> */}
+                    <p className="cursor-pointer" onClick={() => redirect("/")}>
+                        all
                     </p>
                     <p
                         className="cursor-pointer"
                         onClick={() => navToRandomChannel()}
                     >
                         random
-                    </p>
-                    <p
-                        className="cursor-pointer"
-                        onClick={() => redirect("/c/all")}
-                    >
-                        all
                     </p>
                 </div>
                 <div className="hidden md:flex lg:flex items-center gap-2 mr-8">
@@ -70,7 +100,20 @@ const Nav = ({ profileMenuOpen, setProfileMenuOpen }) => {
                         />
                     </button>
                 </div>
-                <div className="flex-shrink  ">
+                <div className=" gap-4 hidden md:flex">
+                    <button
+                        onClick={() => setCreateMenuOpen(!createMenuOpen)}
+                        className="cursor-pointer flex align-middle items-center"
+                        id="createIcon"
+                    >
+                        <Icon
+                            path={plus}
+                            fill={darkMode ? "#c4c4c4" : "#161617"}
+                            stroke={darkMode ? "#c4c4c4" : "#161617"}
+                            w={"35px"}
+                            h={"35px"}
+                        />
+                    </button>
                     <button
                         onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                         className="cursor-pointer flex align-middle items-center"
@@ -90,12 +133,9 @@ const Nav = ({ profileMenuOpen, setProfileMenuOpen }) => {
                         />
                     </button>
 
-                    {profileMenuOpen && (
-                        <ProfileDropdown
-                            darkMode={darkMode}
-                            // setDarkMode={setDarkMode}
-                        />
-                    )}
+                    {createMenuOpen && <CreateDropdown />}
+
+                    {profileMenuOpen && <ProfileDropdown />}
                 </div>
             </nav>
         </header>
