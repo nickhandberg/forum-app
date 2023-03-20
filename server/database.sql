@@ -37,3 +37,17 @@ CREATE TABLE posts(
     FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 
+CREATE TABLE comments(
+    comment_id SERIAL PRIMARY KEY,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
+    parent_id INT NOT NULL,
+    parent_path VARCHAR(255) NOT NULL,
+    comment_text TEXT NOT NULL,
+    post_date TIMESTAMP,
+    FOREIGN KEY(post_id) REFERENCES posts(post_id),
+    FOREIGN KEY(user_id) REFERENCES users(user_id)
+);
+
+CREATE INDEX comments_idx ON comments (parent_path, post_date);
+

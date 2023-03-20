@@ -16,7 +16,9 @@ import {
 import axios from "../utils/axios";
 import { getDomain } from "../utils/getDomain";
 import { getPostAge } from "../utils/getPostAge";
+import ButtonBar from "./ButtonBar";
 import Icon from "./Icon";
+import TitleBar from "./TitleBar";
 
 const PostCard = ({
     post_id,
@@ -99,37 +101,20 @@ const PostCard = ({
                 </div>
             )}
 
-            <div className="flex flex-col px-4 pt-4 z-10">
-                <h1 className="text-lg md:text-2xl dark:text-light-1 font-semibold">
-                    {title}
-                </h1>
-                <div className="flex flex-col md:flex-row md:gap-8 md:mt-1">
-                    <p
-                        className="text-green-1 text-sm md:text-base hover:underline w-min cursor-pointer"
-                        onClick={(e) => redirect(e, `/c/${channel}`)}
-                    >
-                        {channel}
-                    </p>
-                    <p className="dark:text-light-2 text-xs md:text-base">
-                        Posted by{" "}
-                        <span
-                            onClick={(e) => redirect(e, `/u/${username}`)}
-                            className="text-green-1 hover:underline cursor-pointer"
-                        >
-                            {username}
-                        </span>{" "}
-                        {getPostAge(age)}
-                    </p>
-                </div>
-            </div>
+            <TitleBar
+                title={title}
+                channel={channel}
+                username={username}
+                age={age}
+            />
 
             {self_text && (
                 <div>
-                    <pre className="postText max-h-[250px] md:max-h-[300px] lg:max-h-[480px]  overflow-hidden px-4 pt-2 text-lg md:rounded-md h-full dark:text-light-2">
+                    <pre className="postText max-h-[250px] md:max-h-[300px] lg:max-h-[480px]  overflow-hidden px-4 pt-2 text-sm md:text-base md:rounded-md h-full dark:text-light-2">
                         {self_text}
                     </pre>
 
-                    <div
+                    {/* <div
                         className={`${
                             self_text.length > 500
                                 ? darkMode
@@ -137,102 +122,17 @@ const PostCard = ({
                                     : "grad2"
                                 : ""
                         } w-full bottom-[0px] h-[100px] md:h-[100px] mt-[-100px] md:mt-[-100px] relative `}
-                    ></div>
-                    {/* <p className="text-dark-1  dark:text-light-1 text-lg relative bottom-[10px] md:bottom-[25px] text-center">
-                        Read More
-                    </p> */}
+                    ></div> */}
                 </div>
             )}
 
-            <div className="flex justify-between mt-4 pb-4  px-4">
-                <div className="flex flex-col text-sm dark:text-light-2">
-                    <p>
-                        {karma > 1000 ? (karma / 1000).toFixed(1) + "k" : karma}{" "}
-                        points
-                    </p>
-                    <p>152 comments</p>
-                </div>
-
-                <div className="flex items-center gap-8">
-                    <button
-                        onClick={(e) => {
-                            handleUpvote(e);
-                        }}
-                    >
-                        <Icon
-                            //path={upvoted ? upvoteFilled : upvote}
-                            path={altUpvote}
-                            fill={
-                                upvoted
-                                    ? "#6fc938"
-                                    : darkMode
-                                    ? "#c4c4c4"
-                                    : "#68696b"
-                            }
-                            stroke={
-                                upvoted
-                                    ? "#6fc938"
-                                    : darkMode
-                                    ? "#c4c4c4"
-                                    : "#68696b"
-                            }
-                            w={"35px"}
-                            h={"35px"}
-                        />
-                    </button>
-
-                    <button
-                        onClick={(e) => {
-                            handleDownvote(e);
-                        }}
-                    >
-                        <Icon
-                            //path={downvoted ? downvoteFilled : downvote}
-                            path={altDownvote}
-                            fill={
-                                downvoted
-                                    ? "#d90f63"
-                                    : darkMode
-                                    ? "#c4c4c4"
-                                    : "#68696b"
-                            }
-                            stroke={
-                                downvoted
-                                    ? "#d90f63"
-                                    : darkMode
-                                    ? "#c4c4c4"
-                                    : "#68696b"
-                            }
-                            w={"35px"}
-                            h={"35px"}
-                        />
-                    </button>
-                    <button
-                        className="flex align-middle"
-                        onClick={(e) => handleSave(e)}
-                    >
-                        <Icon
-                            path={saved ? starFilled : star}
-                            fill={
-                                saved
-                                    ? "#d6c106"
-                                    : darkMode
-                                    ? "#c4c4c4"
-                                    : "#68696b"
-                            }
-                            stroke={
-                                saved
-                                    ? "#d6c106"
-                                    : darkMode
-                                    ? "#c4c4c4"
-                                    : "#68696b"
-                            }
-                            w={"30px"}
-                            h={"30px"}
-                        />
-                    </button>
-                </div>
-            </div>
+            <ButtonBar
+                isCard={true}
+                karma={karma}
+                username={username}
+                channel={channel}
+                self_text={self_text ? true : false}
+            />
         </div>
     );
 };

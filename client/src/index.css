@@ -6,6 +6,8 @@
 
 * {
     font-family: "Poppins", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
 }
 
 pre {

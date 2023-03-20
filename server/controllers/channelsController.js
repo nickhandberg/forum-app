@@ -124,11 +124,11 @@ const getChannelRole = async (req, res) => {
 
 const createChannel = async (req, res) => {
     try {
-        let { channel_name } = req.body;
+        const { channel_name } = req.body;
 
         const response = await pool.query(
             "SELECT * FROM channels WHERE channel_name = $1",
-            [channel_name]
+            [channel_name.toLowerCase()]
         );
 
         if (response.rowCount > 0) {
@@ -136,7 +136,7 @@ const createChannel = async (req, res) => {
         } else {
             const newChannel = await pool.query(
                 "INSERT INTO channels (channel_name) VALUES ($1) RETURNING channel_id",
-                [channel_name]
+                [channel_name.toLowerCase()]
             );
 
             // SET CHANNEL OWNER

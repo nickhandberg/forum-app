@@ -31,7 +31,7 @@ const CreateChannel = () => {
                     withCredentials: true,
                 }
             );
-            navigate(`/c/${name}`);
+            navigate(`/c/${name.toLowerCase()}`);
         } catch (err) {
             if (!err?.response) {
                 setNotif("creating channel failed");

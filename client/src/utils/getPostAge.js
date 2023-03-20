@@ -12,15 +12,15 @@ export const getPostAge = (date) => {
     var years = Math.floor(months / 12);
 
     if (years > 0) {
-        return `${years} ${years > 1 ? "years" : "year"} ago`;
+        return `${years}y`;
     } else if (months > 0) {
-        return `${months} ${months > 1 ? "months" : "month"} ago`;
+        return `${months}m`;
     } else if (days > 0) {
-        return `${days} ${days > 1 ? "days" : "day"} ago`;
+        return `${days}d`;
     } else if (hours > 0) {
-        return `${hours} ${hours > 1 ? "hours" : "hour"} ago`;
+        return `${hours}h`;
     } else if (minutes > 0) {
-        return `${minutes} ${minutes > 1 ? "minutes" : "minute"} ago`;
+        return `${minutes}m`;
     } else {
         return "just now";
     }
