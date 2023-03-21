@@ -19,6 +19,7 @@ app.set("trust proxy", 1);
 app.use("/auth", require("./routes/auth"));
 app.use("/posts", require("./routes/posts"));
 app.use("/channels", require("./routes/channels"));
+app.use("/comments", require("./routes/comments"));
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Server has started on port ${PORT}`);
