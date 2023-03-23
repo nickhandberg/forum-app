@@ -14,6 +14,7 @@ import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import useAppContext from "./hooks/useAppContext";
 import useRefreshToken from "./hooks/useRefreshToken";
+import CommentDetails from "./pages/CommentDetails";
 import CreateChannel from "./pages/CreateChannel";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
@@ -84,6 +85,10 @@ function App() {
                         <Route path="/register" element={<Registration />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/c/:channel/:post_id" element={<Post />} />
+                        <Route
+                            path="/comment/:comment_id"
+                            element={<CommentDetails />}
+                        />
 
                         {/* PROTECTED ROUTES */}
                         <Route element={<PersistLogin />}>

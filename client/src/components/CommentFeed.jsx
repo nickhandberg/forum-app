@@ -57,6 +57,8 @@ const CommentFeed = () => {
                     username={comment.username}
                     comment_id={comment.comment_id}
                     depth={0}
+                    karma={0}
+                    age={comment.post_date}
                     path={comment.path}
                     comment_text={comment.comment_text}
                     darkMode={darkMode}
