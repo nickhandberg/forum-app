@@ -10,8 +10,6 @@ import {
     editIcon,
     replyIcon,
     signIn,
-    star,
-    starFilled,
     trashcan,
 } from "../img/iconPaths";
 
@@ -27,7 +25,6 @@ const ButtonBar = ({
     const { auth, darkMode } = useAppContext();
     const [upvoted, setUpvoted] = useState(false);
     const [downvoted, setDownvoted] = useState(false);
-    const [saved, setSaved] = useState(false);
     const [showContextMenu, setShowContextMenu] = useState(false);
     const navigate = useNavigate();
 
@@ -40,11 +37,6 @@ const ButtonBar = ({
         e.stopPropagation();
         setDownvoted(!downvoted);
         setUpvoted(false);
-    };
-
-    const handleSave = (e) => {
-        e.stopPropagation();
-        setSaved(!saved);
     };
 
     const handleReply = (e) => {
@@ -155,9 +147,9 @@ const ButtonBar = ({
                         />
                     </button>
                     {showContextMenu && (
-                        <div className="absolute z-20 right-[-16px] text-xl dark:text-light-2 bg-light-3 dark:bg-dark-3 border-b-2 border-l-2 border-dark-1 flex flex-col p-5 mt-[18px] gap-6">
+                        <div className="absolute z-20 right-[-16px] text-xl dark:text-light-2 bg-light-1 dark:bg-dark-2 border-b-2 border-x-2 border-dark-1 dark:border-dark-3 flex flex-col top-[51px]">
                             <button
-                                className="flex items-center gap-2"
+                                className="flex items-center p-5 hover:bg-light-2 dark:hover:bg-dark-3 gap-2"
                                 onClick={(e) => {
                                     redirect(e, `/c/${channel}`);
                                 }}
@@ -173,7 +165,7 @@ const ButtonBar = ({
                             </button>
 
                             <button
-                                className="flex items-center gap-2"
+                                className="flex items-center gap-2 p-5 hover:bg-dark-3"
                                 onClick={(e) => {
                                     redirect(e, `/u/${username}`);
                                 }}
@@ -188,37 +180,11 @@ const ButtonBar = ({
                                 {username}
                             </button>
 
-                            <button
-                                className="flex align-middle gap-2"
-                                onClick={(e) => handleSave(e)}
-                            >
-                                <Icon
-                                    path={saved ? starFilled : star}
-                                    fill={
-                                        saved
-                                            ? "#d6c106"
-                                            : darkMode
-                                            ? "#c4c4c4"
-                                            : "#68696b"
-                                    }
-                                    stroke={
-                                        saved
-                                            ? "#d6c106"
-                                            : darkMode
-                                            ? "#c4c4c4"
-                                            : "#68696b"
-                                    }
-                                    w={"30px"}
-                                    h={"30px"}
-                                />
-                                {saved ? "Saved" : "Save"}
-                            </button>
-
                             {auth?.username === username &&
-                                isSelfText != "" &&
+                                isSelfText &&
                                 !isCard && (
                                     <button
-                                        className="flex items-center gap-2"
+                                        className="flex items-center gap-2 p-5 hover:bg-dark-3"
                                         onClick={(e) => {
                                             handleEditClick(e);
                                         }}
@@ -239,7 +205,7 @@ const ButtonBar = ({
                                 )}
                             {auth?.username === username && !isCard && (
                                 <button
-                                    className="flex items-center gap-2"
+                                    className="flex items-center gap-2 p-5 hover:bg-dark-3"
                                     onClick={() => setConfirm(true)}
                                 >
                                     <Icon

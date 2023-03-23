@@ -80,12 +80,6 @@ const Nav = ({
                     <p className="cursor-pointer" onClick={() => redirect("/")}>
                         home
                     </p>
-                    {/* <p
-                        className="cursor-pointer"
-                        onClick={() => redirect("/c/battlestations/newpost")}
-                    >
-                        post
-                    </p> */}
                     <p className="cursor-pointer" onClick={() => redirect("/")}>
                         all
                     </p>
@@ -112,7 +106,7 @@ const Nav = ({
                         />
                     </button>
                 </div>
-                <div className=" gap-4 hidden md:flex">
+                <div className="relative gap-4 hidden md:flex">
                     <button
                         onClick={() => setCreateMenuOpen(!createMenuOpen)}
                         className="cursor-pointer flex align-middle items-center"

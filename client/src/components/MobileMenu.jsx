@@ -77,7 +77,7 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
                                 ? () => navigate(`/u/${auth.username}`)
                                 : () => navigate("/login")
                         }
-                        className="flex align-middle gap-2 hover:bg-light-2 py-2  dark:hover:bg-dark-3"
+                        className="flex align-middle gap-2 hover:bg-light-2 py-4  dark:hover:bg-dark-3"
                     >
                         <Icon
                             path={signIn}
@@ -94,7 +94,7 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
                                 ? () => handleLogout()
                                 : () => navigate("/register")
                         }
-                        className="flex align-middle gap-2 hover:bg-light-2 py-2 dark:hover:bg-dark-3"
+                        className="flex align-middle gap-2 hover:bg-light-2 py-4 dark:hover:bg-dark-3"
                     >
                         <Icon
                             path={auth?.accessToken ? signOut : signUp}
@@ -134,7 +134,7 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
             {createOpen && (
                 <div className="flex flex-col align-middle pl-12">
                     <button
-                        className="flex align-middle gap-2 hover:bg-light-2 py-2 dark:hover:bg-dark-3"
+                        className="flex align-middle gap-2 hover:bg-light-2 py-4 dark:hover:bg-dark-3"
                         onClick={() => navigate("/newpost")}
                     >
                         <Icon
@@ -147,7 +147,7 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
                         New Post
                     </button>
                     <button
-                        className="flex align-middle gap-2 hover:bg-light-2 py-2 dark:hover:bg-dark-3"
+                        className="flex align-middle gap-2 hover:bg-light-2 py-4 dark:hover:bg-dark-3"
                         onClick={() => navigate("/newchannel")}
                     >
                         <Icon

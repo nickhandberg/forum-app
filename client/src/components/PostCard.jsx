@@ -1,21 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import useAppContext from "../hooks/useAppContext";
-import {
-    altDownvote,
-    altUpvote,
-    comment,
-    downvote,
-    downvoteFilled,
-    linkExternal,
-    star,
-    starFilled,
-    upvote,
-    upvoteFilled,
-} from "../img/iconPaths";
-import axios from "../utils/axios";
+import { linkExternal } from "../img/iconPaths";
 import { getDomain } from "../utils/getDomain";
-import { getPostAge } from "../utils/getPostAge";
 import ButtonBar from "./ButtonBar";
 import Icon from "./Icon";
 import TitleBar from "./TitleBar";
@@ -31,34 +18,9 @@ const PostCard = ({
     age,
     karma,
 }) => {
-    const [upvoted, setUpvoted] = useState(false);
-    const [downvoted, setDownvoted] = useState(false);
-    const [saved, setSaved] = useState(false);
-    const [linkData, setLinkData] = useState({});
     const { darkMode } = useAppContext();
 
     const navigate = useNavigate();
-
-    const handleUpvote = (e) => {
-        e.stopPropagation();
-        setUpvoted(!upvoted);
-        setDownvoted(false);
-    };
-    const handleDownvote = (e) => {
-        e.stopPropagation();
-        setDownvoted(!downvoted);
-        setUpvoted(false);
-    };
-
-    const handleSave = (e) => {
-        e.stopPropagation();
-        setSaved(!saved);
-    };
-
-    function redirect(e, path) {
-        e.stopPropagation();
-        navigate(path);
-    }
 
     return (
         <div
@@ -87,7 +49,7 @@ const PostCard = ({
             )}
             {link && image && (
                 <div>
-                    <div className="max-h-[720px] cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden text-lg md:rounded-md h-full dark:text-light-2">
+                    <div className="max-h-[720px] cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden text-lg md:rounded-t-md h-full dark:text-light-2">
                         <img
                             className="w-min min-h-[200px] m-auto"
                             src={image}
@@ -113,16 +75,6 @@ const PostCard = ({
                     <pre className="postText max-h-[250px] md:max-h-[300px] lg:max-h-[480px]  overflow-hidden px-4 pt-2 text-sm md:text-base md:rounded-md h-full dark:text-light-2">
                         {self_text}
                     </pre>
-
-                    {/* <div
-                        className={`${
-                            self_text.length > 500
-                                ? darkMode
-                                    ? "grad1"
-                                    : "grad2"
-                                : ""
-                        } w-full bottom-[0px] h-[100px] md:h-[100px] mt-[-100px] md:mt-[-100px] relative `}
-                    ></div> */}
                 </div>
             )}
 

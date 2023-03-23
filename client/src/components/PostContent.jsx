@@ -125,18 +125,18 @@ const PostContent = ({
                 <div>
                     <a
                         href={link}
-                        className="max-h-[720px] cursor-pointer bg-light-3 dark:bg-dark-3 text-center overflow-hidden text-lg md:rounded-md h-ful"
+                        className="max-h-[720px] cursor-pointer bg-light-3 dark:bg-dark-3 overflow-hidden text-lg md:rounded-md h-ful"
                     >
                         <img
-                            className="w-min m-auto min-h-[200px]"
+                            className="w-min m-auto min-h-[200px] md:rounded-t-md"
                             src={image}
                         ></img>
+                        <div className="relative backdrop-brightness-50 backdrop-blur-sm p-4 bottom-0 h-[60px] mt-[-60px]">
+                            <p className="text-xl text-light-1 md:text-3xl">
+                                {getDomain(link)}
+                            </p>
+                        </div>
                     </a>
-                    <div className="relative backdrop-brightness-50 backdrop-blur-sm p-4 bottom-0 h-[60px] mt-[-60px]">
-                        <p className="text-xl text-light-1 md:text-3xl">
-                            {getDomain(link)}
-                        </p>
-                    </div>
                 </div>
             )}
 
@@ -159,7 +159,7 @@ const PostContent = ({
                 handleEditClick={handleEditClick}
                 username={username}
                 channel={channel}
-                self_text={self_text ? true : false}
+                isSelfText={self_text ? true : false}
             />
 
             {showEditForm && (

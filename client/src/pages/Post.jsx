@@ -1,30 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import CommentFeed from "../components/CommentFeed";
-import Icon from "../components/Icon";
 import PostContent from "../components/PostContent";
 import useAppContext from "../hooks/useAppContext";
-import {
-    comment,
-    downvote,
-    downvoteFilled,
-    linkExternal,
-    star,
-    starFilled,
-    upvote,
-    upvoteFilled,
-} from "../img/iconPaths";
 import axios from "../utils/axios";
-import { getPostAge } from "../utils/getPostAge";
 
 const Post = () => {
     const { darkMode } = useAppContext();
-
     const [post, setPost] = useState([]);
-
-    let { channel, post_id } = useParams();
-
-    const navigate = useNavigate();
+    let { post_id } = useParams();
 
     useEffect(() => {
         let isMounted = true;

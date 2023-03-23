@@ -16,21 +16,6 @@ const createComment = async (req, res) => {
 };
 
 const getComments = async (req, res) => {
-    // const comments = await pool.query(
-    //     `WITH cte_replies AS (
-    //         SELECT parent_id,
-    //         COALESCE(json_agg(row_to_json(replies)),'[]'::JSON) AS replies
-    //     FROM comments AS replies
-    //     GROUP BY parent_id
-    //     )
-    //     SELECT *
-    //     FROM
-    //         comments c
-    //         LEFT JOIN cte_replies ON c.comment_id = cte_replies.parent_id
-    //     WHERE
-    //         cte_replies.parent_id = c.comment_id`
-    // );
-
     const comments = await pool.query(
         `WITH RECURSIVE comments_cte (user_id, comment_id, path, comment_text) AS (
             SELECT user_id, comment_id, CONCAT('/',comment_id::text), comment_text 
@@ -41,11 +26,8 @@ const getComments = async (req, res) => {
             FROM comments r 
             JOIN comments_cte 
             ON comments_cte.comment_id = r.parent_id
-        ), author AS (
-            SELECT user_id, username
-            FROM users
-        ) 
-        SELECT * FROM comments_cte c LEFT JOIN author a ON a.user_id = c.user_id ORDER BY path`
+        )
+        SELECT c.*, u.username FROM comments_cte c LEFT JOIN users u ON c.user_id = u.user_id ORDER BY path`
     );
 
     res.json(comments.rows);

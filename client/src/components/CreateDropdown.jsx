@@ -18,7 +18,7 @@ const CreateDropdown = () => {
     return (
         <div
             id="createDropdown"
-            className="fixed top-12 right-[200px] rounded-b-lg border-dark-3 border-[2px] border-t-0 bg-light-1 dark:bg-dark-2 overflow-hidden  flex flex-col text-lg transition-all ease-in-out"
+            className="absolute top-[44px] min-w-max rounded-b-lg border-dark-3 border-[2px] border-t-0 bg-light-1 dark:bg-dark-2 overflow-hidden  flex flex-col text-lg transition-all ease-in-out"
         >
             <button
                 className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
