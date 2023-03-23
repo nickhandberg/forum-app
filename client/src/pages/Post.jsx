@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import CommentFeed from "../components/CommentFeed";
 import Icon from "../components/Icon";
 import PostContent from "../components/PostContent";
 import useAppContext from "../hooks/useAppContext";
@@ -50,7 +51,7 @@ const Post = () => {
     }, []);
 
     return (
-        <div className="flex-col flex items-center justify-center pt-[60px] md:mx-8">
+        <div className="flex-col flex items-center justify-center max-w-[1000px] pt-[60px] m-auto">
             <PostContent
                 post_id={post.post_id}
                 channel={post.channel_name}
@@ -63,6 +64,7 @@ const Post = () => {
                 karma={post.karma}
                 darkMode={darkMode}
             />
+            <CommentFeed />
         </div>
     );
 };

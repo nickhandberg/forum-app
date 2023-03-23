@@ -16,6 +16,13 @@ module.exports = {
 
             /*COMMON */
             "green-1": "#4db010",
+
+            /*COMMENT COLORS */
+            "c-blue": "#057bfa",
+            "c-orange": "#fa9c05",
+            "c-green": "#05fa6b",
+            "c-purple": "#d105fa",
+            "c-red": "#fa0536",
         },
     },
     plugins: [],
