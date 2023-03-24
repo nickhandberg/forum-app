@@ -16,40 +16,49 @@ const createComment = async (req, res) => {
 };
 
 const getComments = async (req, res) => {
-    const comments = await pool.query(
-        `WITH RECURSIVE comments_cte (user_id, comment_id, path, comment_text, post_date) AS (
-            SELECT user_id, comment_id, CONCAT('/',comment_id::text), comment_text, post_date 
-            FROM comments 
-            WHERE parent_id IS NULL 
-            UNION ALL 
-            SELECT r.user_id, r.comment_id, CONCAT(path,'/', r.comment_id), r.comment_text, r.post_date 
-            FROM comments r 
-            JOIN comments_cte 
-            ON comments_cte.comment_id = r.parent_id
-        )
-        SELECT c.*, u.username FROM comments_cte c LEFT JOIN users u ON c.user_id = u.user_id ORDER BY path`
-    );
+    try {
+        const comments = await pool.query(
+            `WITH RECURSIVE comments_cte (post_id, user_id, comment_id, path, comment_text, post_date) AS (
+                SELECT post_id, user_id, comment_id, CONCAT('/',comment_id::text), comment_text, post_date 
+                FROM comments 
+                WHERE parent_id IS NULL 
+                UNION ALL 
+                SELECT r.post_id, r.user_id, r.comment_id, CONCAT(path,'/', r.comment_id), r.comment_text, r.post_date 
+                FROM comments r 
+                JOIN comments_cte 
+                ON comments_cte.comment_id = r.parent_id
+            )
+            SELECT c.*, u.username FROM comments_cte c LEFT JOIN users u ON c.user_id = u.user_id WHERE c.post_id = $1 ORDER BY path`,
+            [req.params.post_id]
+        );
 
-    res.json(comments.rows);
+        res.json(comments.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
 };
 
 const getCommentById = async (req, res) => {
-    const comments = await pool.query(
-        `WITH RECURSIVE comments_cte (user_id, comment_id, path, comment_text, post_date) AS (
-            SELECT user_id, comment_id, CONCAT('/',comment_id::text), comment_text, post_date
-            FROM comments 
-            WHERE comment_id = $1
-            UNION ALL 
-            SELECT r.user_id, r.comment_id, CONCAT(path,'/', r.comment_id), r.comment_text, r.post_date
-            FROM comments r 
-            JOIN comments_cte 
-            ON comments_cte.comment_id = r.parent_id
-        )
-        SELECT c.*, u.username FROM comments_cte c LEFT JOIN users u ON c.user_id = u.user_id ORDER BY path`,
-        [req.params.comment_id]
-    );
+    try {
+        const comments = await pool.query(
+            `WITH RECURSIVE comments_cte (user_id, comment_id, path, comment_text, post_date) AS (
+                SELECT user_id, comment_id, CONCAT('/',comment_id::text), comment_text, post_date
+                FROM comments 
+                WHERE comment_id = $1
+                UNION ALL 
+                SELECT r.user_id, r.comment_id, CONCAT(path,'/', r.comment_id), r.comment_text, r.post_date
+                FROM comments r 
+                JOIN comments_cte 
+                ON comments_cte.comment_id = r.parent_id
+            )
+            SELECT c.*, u.username FROM comments_cte c LEFT JOIN users u ON c.user_id = u.user_id ORDER BY path`,
+            [req.params.comment_id]
+        );
 
-    res.json(comments.rows);
+        res.json(comments.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
 };
 
 module.exports = {

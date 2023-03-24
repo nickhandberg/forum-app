@@ -19,6 +19,7 @@ const PostContent = ({
     title,
     age,
     karma,
+    comment_cnt,
 }) => {
     const [confirm, setConfirm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
@@ -155,6 +156,7 @@ const PostContent = ({
 
             <ButtonBar
                 karma={karma}
+                comment_cnt={comment_cnt}
                 setConfirm={setConfirm}
                 handleEditClick={handleEditClick}
                 username={username}

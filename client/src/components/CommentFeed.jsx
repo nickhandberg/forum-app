@@ -4,7 +4,7 @@ import useAppContext from "../hooks/useAppContext";
 import axios from "../utils/axios";
 import Comment from "./Comment";
 
-const CommentFeed = () => {
+const CommentFeed = ({ post_id }) => {
     const [comments, setComments] = useState([]);
     const { darkMode } = useAppContext();
 
@@ -15,25 +15,23 @@ const CommentFeed = () => {
         const controller = new AbortController();
         const getComments = async () => {
             try {
-                const response = await axios.get(`/comments/42`, {
+                const response = await axios.get(`/comments/${post_id}`, {
                     signal: controller.signal,
                 });
                 isMounted && setComments(response.data);
             } catch (err) {
-                if (err.response?.status === 404) {
-                    setMissing(true);
-                } else {
-                    console.error(err);
-                }
+                console.log(err);
             }
         };
-        getComments();
+        if (post_id) {
+            getComments();
+        }
 
         return () => {
             isMounted = false;
             isMounted && controller.abort();
         };
-    }, []);
+    }, [post_id]);
 
     const filterComments = (id) => {
         let c = [];

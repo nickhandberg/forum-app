@@ -21,6 +21,7 @@ const ButtonBar = ({
     username,
     channel,
     isSelfText,
+    comment_cnt,
 }) => {
     const { auth, darkMode } = useAppContext();
     const [upvoted, setUpvoted] = useState(false);
@@ -60,7 +61,10 @@ const ButtonBar = ({
                     {karma > 1000 ? (karma / 1000).toFixed(1) + "k" : karma}{" "}
                     points
                 </p>
-                <p>152 comments</p>
+                <p>
+                    {comment_cnt ? comment_cnt : 0}{" "}
+                    {comment_cnt === 1 ? "comment" : "comments"}
+                </p>
             </div>
 
             <div className="flex items-center gap-6 md:gap-14">

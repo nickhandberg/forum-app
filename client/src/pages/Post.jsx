@@ -46,9 +46,10 @@ const Post = () => {
                 title={post.title}
                 age={post.post_date}
                 karma={post.karma}
+                comment_cnt={post.comment_cnt}
                 darkMode={darkMode}
             />
-            <CommentFeed />
+            <CommentFeed post_id={post.post_id} />
         </div>
     );
 };

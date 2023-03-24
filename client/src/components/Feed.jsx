@@ -66,6 +66,7 @@ const Feed = ({ param, feedType, setMissing }) => {
                         title={post.title}
                         age={post.post_date}
                         karma={post.karma}
+                        comment_cnt={post.comment_cnt}
                         darkMode={darkMode}
                     />
                 ))}

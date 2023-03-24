@@ -17,6 +17,7 @@ const PostCard = ({
     title,
     age,
     karma,
+    comment_cnt,
 }) => {
     const { darkMode } = useAppContext();
 
@@ -81,6 +82,7 @@ const PostCard = ({
             <ButtonBar
                 isCard={true}
                 karma={karma}
+                comment_cnt={comment_cnt}
                 username={username}
                 channel={channel}
                 self_text={self_text ? true : false}

@@ -17,7 +17,17 @@ const getPreviewData = async (link, post_id) => {
 const getAllPosts = async (req, res) => {
     try {
         const allPosts = await pool.query(
-            "SELECT p.*, u.username, c.channel_name FROM posts p JOIN users u ON p.user_id = u.user_id JOIN channels c ON p.channel_id = c.channel_id"
+            `WITH post_comments AS (
+                SELECT post_id, COUNT(post_id) AS comment_cnt
+                FROM comments
+                GROUP BY post_id
+            )
+            SELECT p.*, u.username, c.channel_name, comment_cnt
+            FROM posts p 
+            JOIN users u ON p.user_id = u.user_id 
+            JOIN channels c ON p.channel_id = c.channel_id
+            LEFT JOIN post_comments pc ON pc.post_id = p.post_id
+            `
         );
         res.json(allPosts.rows);
     } catch (err) {
@@ -33,7 +43,17 @@ const getPostsByChannel = async (req, res) => {
             [channel_name]
         );
         const allPosts = await pool.query(
-            "SELECT p.*, u.username, c.channel_name FROM posts p JOIN users u ON p.user_id = u.user_id JOIN channels c ON p.channel_id = c.channel_id WHERE p.channel_id = $1",
+            `WITH post_comments AS (
+                SELECT post_id, COUNT(post_id) AS comment_cnt
+                FROM comments
+                GROUP BY post_id  
+            )
+            SELECT p.*, u.username, c.channel_name, comment_cnt
+            FROM posts p 
+            JOIN users u ON p.user_id = u.user_id 
+            JOIN channels c ON p.channel_id = c.channel_id
+            LEFT JOIN post_comments pc ON pc.post_id = p.post_id
+            WHERE p.channel_id = $1`,
             [channel_id.rows[0].channel_id]
         );
         res.json(allPosts.rows);
@@ -144,7 +164,19 @@ const deletePost = async (req, res) => {
 const getPost = async (req, res) => {
     try {
         const post = await pool.query(
-            "SELECT p.*, u.username, c.channel_name FROM posts p JOIN users u ON p.user_id = u.user_id JOIN channels c ON p.channel_id = c.channel_id WHERE p.post_id = $1",
+            `WITH post_comments AS (
+                SELECT post_id, COUNT(post_id) AS comment_cnt
+                FROM comments
+                WHERE post_id = $1
+                GROUP BY post_id
+                
+            )
+            SELECT p.*, u.username, c.channel_name, pc.comment_cnt 
+            FROM posts p 
+            JOIN users u ON p.user_id = u.user_id 
+            JOIN channels c ON p.channel_id = c.channel_id
+            LEFT JOIN post_comments pc ON p.post_id = pc.post_id
+            WHERE p.post_id = $1`,
             [req.params.id]
         );
         res.json(post.rows[0]);
