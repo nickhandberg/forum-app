@@ -2,6 +2,7 @@ const pool = require("../db");
 
 const createComment = async (req, res) => {
     try {
+        console.log(req.body);
         let { parent_id, comment_text } = req.body;
 
         const user_id = await pool.query(
@@ -52,12 +53,12 @@ const getComments = async (req, res) => {
 const getCommentById = async (req, res) => {
     try {
         const comments = await pool.query(
-            `WITH RECURSIVE comments_cte (user_id, comment_id, path, comment_text, post_date) AS (
-                SELECT user_id, comment_id, CONCAT('/',comment_id::text), comment_text, post_date
+            `WITH RECURSIVE comments_cte (post_id, user_id, comment_id, path, comment_text, post_date) AS (
+                SELECT post_id, user_id, comment_id, CONCAT('/',comment_id::text), comment_text, post_date
                 FROM comments 
                 WHERE comment_id = $1
                 UNION ALL 
-                SELECT r.user_id, r.comment_id, CONCAT(path,'/', r.comment_id), r.comment_text, r.post_date
+                SELECT r.post_id, r.user_id, r.comment_id, CONCAT(path,'/', r.comment_id), r.comment_text, r.post_date
                 FROM comments r 
                 JOIN comments_cte 
                 ON comments_cte.comment_id = r.parent_id

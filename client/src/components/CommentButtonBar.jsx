@@ -12,7 +12,13 @@ import {
     trashcan,
 } from "../img/iconPaths";
 
-const CommentButtonBar = ({ karma, setConfirm, handleEditClick, username }) => {
+const CommentButtonBar = ({
+    karma,
+    setConfirm,
+    handleEditClick,
+    handleCommentClick,
+    username,
+}) => {
     const { auth, darkMode } = useAppContext();
     const [upvoted, setUpvoted] = useState(false);
     const [downvoted, setDownvoted] = useState(false);
@@ -49,7 +55,7 @@ const CommentButtonBar = ({ karma, setConfirm, handleEditClick, username }) => {
             <div className="flex items-center gap-6 md:gap-14">
                 <button
                     className="flex align-middle"
-                    onClick={(e) => handleReply(e)}
+                    onClick={() => handleCommentClick()}
                 >
                     <Icon
                         path={replyIcon}

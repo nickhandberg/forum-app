@@ -52,6 +52,7 @@ const CommentFeed = ({ post_id }) => {
             {comments.map((comment, i) => (
                 <Comment
                     key={i}
+                    post_id={comment.post_id}
                     username={comment.username}
                     comment_id={comment.comment_id}
                     depth={0}

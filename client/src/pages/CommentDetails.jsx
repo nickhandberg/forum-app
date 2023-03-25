@@ -21,6 +21,7 @@ const CommentDetails = () => {
                     }
                 );
                 isMounted && setComments(response.data);
+                console.log(response.data);
             } catch (err) {
                 if (err.response?.status === 404) {
                     setMissing(true);
@@ -35,7 +36,7 @@ const CommentDetails = () => {
             isMounted = false;
             isMounted && controller.abort();
         };
-    }, []);
+    }, [comment_id]);
 
     return (
         <div className="flex-col flex items-center justify-center max-w-[1000px] pt-[60px] m-auto">
@@ -43,6 +44,7 @@ const CommentDetails = () => {
                 {comments.map((comment, i) => (
                     <Comment
                         key={i}
+                        post_id={comment.post_id}
                         username={comment.username}
                         comment_id={comment.comment_id}
                         karma={0}
