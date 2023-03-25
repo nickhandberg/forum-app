@@ -8,8 +8,6 @@ import Login from "./pages/Login";
 import Missing from "./pages/Missing";
 import Registration from "./pages/Registration";
 
-import MissingChannel from "./components/MissingChannel";
-import MissingUser from "./components/MissingUser";
 import PersistLogin from "./components/PersistLogin";
 import RequireAuth from "./components/RequireAuth";
 import useAppContext from "./hooks/useAppContext";

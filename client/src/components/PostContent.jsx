@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Icon from "../components/Icon";
 import useAppContext from "../hooks/useAppContext";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -31,19 +31,25 @@ const PostContent = ({
 
     const { auth, darkMode } = useAppContext();
     const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         editRef?.current?.focus();
         commentRef?.current?.focus();
     }, [showEditForm, showCommentForm]);
 
-    const navigate = useNavigate();
-
     const handleEditClick = () => {
+        if (!auth?.username) {
+            navigate("/login", { state: { from: location } });
+        }
         setShowCommentForm(false);
         setShowEditForm(!showEditForm);
     };
     const handleCommentClick = () => {
+        if (!auth?.username) {
+            navigate("/login", { state: { from: location } });
+        }
         setShowEditForm(false);
         setShowCommentForm(!showCommentForm);
     };
