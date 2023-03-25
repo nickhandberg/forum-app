@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAppContext from "../hooks/useAppContext";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { getPostAge } from "../utils/getPostAge";
 import CommentButtonBar from "./CommentButtonBar";
@@ -15,12 +16,14 @@ const Comment = ({
     comment_text,
 }) => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [confirm, setConfirm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
     const [showCommentForm, setShowCommentForm] = useState(false);
     const [comment, setComment] = useState("");
     const editRef = useRef();
     const commentRef = useRef();
+    const { auth } = useAppContext();
 
     const axiosPrivate = useAxiosPrivate();
 
@@ -39,11 +42,17 @@ const Comment = ({
         return arr.join("/");
     };
 
-    const handleEditClick = (e) => {
-        e.stopPropagation();
+    const handleEditClick = () => {
+        if (!auth.username) {
+            navigate("/login", { state: { from: location } });
+        }
+        setShowCommentForm(false);
         setShowEditForm(!showEditForm);
     };
     const handleCommentClick = () => {
+        if (!auth?.username) {
+            navigate("/login", { state: { from: location } });
+        }
         setShowEditForm(false);
         setShowCommentForm(!showCommentForm);
     };
@@ -61,7 +70,7 @@ const Comment = ({
                 }
             );
         } catch (err) {
-            //console.log(err)
+            //console.error(err);
         }
     };
 
