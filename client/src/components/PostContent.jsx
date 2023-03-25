@@ -24,20 +24,28 @@ const PostContent = ({
     const [confirm, setConfirm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
     const [editedText, setEditedText] = useState(self_text);
+    const [showCommentForm, setShowCommentForm] = useState(false);
+    const [comment, setComment] = useState("");
     const editRef = useRef();
+    const commentRef = useRef();
 
     const { auth, darkMode } = useAppContext();
     const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
         editRef?.current?.focus();
-    }, [showEditForm]);
+        commentRef?.current?.focus();
+    }, [showEditForm, showCommentForm]);
 
     const navigate = useNavigate();
 
-    const handleEditClick = (e) => {
-        e.stopPropagation();
+    const handleEditClick = () => {
+        setShowCommentForm(false);
         setShowEditForm(!showEditForm);
+    };
+    const handleCommentClick = () => {
+        setShowEditForm(false);
+        setShowCommentForm(!showCommentForm);
     };
 
     const handleDelete = async () => {
@@ -72,6 +80,23 @@ const PostContent = ({
             navigate(`/c/${channel}/${post_id}`);
         } catch (err) {
             // setNotif("Update post failed");
+        }
+    };
+
+    const handleComment = async () => {
+        try {
+            const data = { parent_id: null, comment_text: comment };
+            const response = await axiosPrivate.post(
+                `/comments/${post_id}`,
+
+                JSON.stringify(data),
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true,
+                }
+            );
+        } catch (err) {
+            //console.log(err)
         }
     };
 
@@ -159,6 +184,7 @@ const PostContent = ({
                 comment_cnt={comment_cnt}
                 setConfirm={setConfirm}
                 handleEditClick={handleEditClick}
+                handleCommentClick={handleCommentClick}
                 username={username}
                 channel={channel}
                 isSelfText={self_text ? true : false}
@@ -199,6 +225,48 @@ const PostContent = ({
                                 setShowEditForm(false);
                             }}
                             className={`w-1/2 mt-4 bg-light-2 dark:bg-dark-3 rounded-lg text-2xl p-2`}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            )}
+
+            {showCommentForm && (
+                <form
+                    onSubmit={handleComment}
+                    className="flex flex-col md:gap-2 md:p-4"
+                >
+                    <div className="flex flex-col gap-2">
+                        <textarea
+                            className="bg-light-3 text-base  dark:bg-dark-3 md:rounded-md p-2 "
+                            rows="10"
+                            id="commentText"
+                            autoComplete="off"
+                            ref={commentRef}
+                            onChange={(e) => setComment(e.target.value)}
+                            value={comment}
+                            required
+                            placeholder="Comment text"
+                        />
+                    </div>
+                    <div className="flex gap-2 px-2 pb-2 md:px-0 md:pb-0">
+                        <button
+                            className={`w-1/2 ${
+                                !comment
+                                    ? "bg-light-2 dark:bg-dark-3"
+                                    : "bg-green-1 text-dark-1"
+                            }  mt-4 md:rounded-lg text-2xl p-2`}
+                            disabled={!comment ? true : false}
+                        >
+                            Comment
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setShowCommentForm(false);
+                            }}
+                            className={`w-1/2 mt-4 bg-light-2 dark:bg-dark-3 md:rounded-lg text-2xl p-2`}
                         >
                             Cancel
                         </button>

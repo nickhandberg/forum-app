@@ -48,5 +48,3 @@ CREATE TABLE comments(
     FOREIGN KEY(user_id) REFERENCES users(user_id)
 );
 
-CREATE INDEX comments_idx ON comments (parent_path, post_date);
-

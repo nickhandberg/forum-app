@@ -8,6 +8,6 @@ router.get("/getComment/:comment_id", commentsController.getCommentById);
 router
     .route("/:post_id")
     .get(commentsController.getComments)
-    .post(commentsController.createComment);
+    .post(verifyJWT, commentsController.createComment);
 
 module.exports = router;

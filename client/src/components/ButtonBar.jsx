@@ -18,6 +18,7 @@ const ButtonBar = ({
     karma,
     setConfirm,
     handleEditClick,
+    handleCommentClick,
     username,
     channel,
     isSelfText,
@@ -40,10 +41,6 @@ const ButtonBar = ({
         setUpvoted(false);
     };
 
-    const handleReply = (e) => {
-        e.stopPropagation();
-    };
-
     const handleContextMenu = (e) => {
         e.stopPropagation();
         setShowContextMenu(!showContextMenu);
@@ -63,7 +60,7 @@ const ButtonBar = ({
                 </p>
                 <p>
                     {comment_cnt ? comment_cnt : 0}{" "}
-                    {comment_cnt === 1 ? "comment" : "comments"}
+                    {comment_cnt === "1" ? "comment" : "comments"}
                 </p>
             </div>
 
@@ -71,7 +68,7 @@ const ButtonBar = ({
                 {!isCard && (
                     <button
                         className="flex align-middle"
-                        onClick={(e) => handleReply(e)}
+                        onClick={() => handleCommentClick()}
                     >
                         <Icon
                             path={replyIcon}
@@ -189,8 +186,8 @@ const ButtonBar = ({
                                 !isCard && (
                                     <button
                                         className="flex items-center gap-2 p-5 hover:bg-dark-3"
-                                        onClick={(e) => {
-                                            handleEditClick(e);
+                                        onClick={() => {
+                                            handleEditClick();
                                         }}
                                     >
                                         <Icon
