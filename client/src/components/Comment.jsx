@@ -17,10 +17,11 @@ const Comment = ({
 }) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [confirm, setConfirm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
+    const [editedText, setEditedText] = useState(false);
     const [showCommentForm, setShowCommentForm] = useState(false);
     const [comment, setComment] = useState("");
+    const [isDeleted, setIsDeleted] = useState(false);
     const editRef = useRef();
     const commentRef = useRef();
     const { auth } = useAppContext();
@@ -31,6 +32,12 @@ const Comment = ({
         editRef?.current?.focus();
         commentRef?.current?.focus();
     }, [showEditForm, showCommentForm]);
+
+    useEffect(() => {}, [isDeleted]);
+
+    useEffect(() => {
+        if (comment_text === "[deleted]") setIsDeleted(true);
+    }, []);
 
     const getDepth = (path) => {
         return path.split("/").length - 1;
@@ -70,7 +77,38 @@ const Comment = ({
                 }
             );
         } catch (err) {
-            //console.error(err);
+            console.error(err);
+        }
+    };
+
+    const handleDelete = async () => {
+        try {
+            const response = await axiosPrivate.delete(
+                `/comments/getComment/${comment_id}`,
+                {
+                    withCredentials: true,
+                }
+            );
+            setIsDeleted(true);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const handleEdit = async () => {
+        try {
+            const data = { comment_text: editedText };
+            const response = await axiosPrivate.put(
+                `/comments/getComment/${comment_id}`,
+
+                JSON.stringify(data),
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true,
+                }
+            );
+        } catch (err) {
+            // setNotif("Update post failed");
         }
     };
 
@@ -111,7 +149,7 @@ const Comment = ({
                     ) : (
                         <div className="px-0 md:px-2 pt-1">
                             <div className="flex gap-1 text-xs md:text-sm">
-                                <h1>{username}</h1>
+                                <h1>{isDeleted ? "[deleted]" : username}</h1>
                                 <p>•</p>
                                 <p>
                                     {karma > 1000
@@ -124,15 +162,17 @@ const Comment = ({
                             </div>
 
                             <pre className="py-2 text-sm md:text-base">
-                                {comment_text}
+                                {isDeleted ? "[deleted]" : comment_text}
                             </pre>
+                            {!isDeleted && (
+                                <CommentButtonBar
+                                    handleEditClick={handleEditClick}
+                                    handleCommentClick={handleCommentClick}
+                                    handleDelete={handleDelete}
+                                    username={username}
+                                />
+                            )}
 
-                            <CommentButtonBar
-                                setConfirm={setConfirm}
-                                handleEditClick={handleEditClick}
-                                handleCommentClick={handleCommentClick}
-                                username={username}
-                            />
                             {showCommentForm && (
                                 <form
                                     onSubmit={handleComment}
@@ -168,6 +208,50 @@ const Comment = ({
                                             type="button"
                                             onClick={() => {
                                                 setShowCommentForm(false);
+                                            }}
+                                            className={`w-1/2 mt-4 bg-light-2 dark:bg-dark-3 md:rounded-lg text-2xl p-2`}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            )}
+                            {showEditForm && (
+                                <form
+                                    onSubmit={handleEdit}
+                                    className="flex flex-col md:gap-2 md:p-4"
+                                >
+                                    <div className="flex flex-col md:gap-2">
+                                        <textarea
+                                            className="bg-light-3 text-[2ch]  dark:bg-dark-3 md:rounded-md text-base px-2 py-[2px]"
+                                            rows="12"
+                                            id="editedText"
+                                            autoComplete="off"
+                                            ref={editRef}
+                                            onChange={(e) =>
+                                                setEditedText(e.target.value)
+                                            }
+                                            value={editedText}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button
+                                            className={`w-1/2 ${
+                                                !editedText
+                                                    ? "bg-light-2 dark:bg-dark-3"
+                                                    : "bg-green-1 text-dark-1"
+                                            }  mt-4 md:rounded-lg text-2xl p-2`}
+                                            disabled={
+                                                !editedText ? true : false
+                                            }
+                                        >
+                                            Update
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setShowEditForm(false);
                                             }}
                                             className={`w-1/2 mt-4 bg-light-2 dark:bg-dark-3 md:rounded-lg text-2xl p-2`}
                                         >

@@ -21,7 +21,6 @@ const CommentDetails = () => {
                     }
                 );
                 isMounted && setComments(response.data);
-                console.log(response.data);
             } catch (err) {
                 if (err.response?.status === 404) {
                     setMissing(true);

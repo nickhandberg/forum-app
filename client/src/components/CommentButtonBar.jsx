@@ -13,10 +13,9 @@ import {
 } from "../img/iconPaths";
 
 const CommentButtonBar = ({
-    karma,
-    setConfirm,
     handleEditClick,
     handleCommentClick,
+    handleDelete,
     username,
 }) => {
     const { auth, darkMode } = useAppContext();
@@ -34,10 +33,6 @@ const CommentButtonBar = ({
         e.stopPropagation();
         setDownvoted(!downvoted);
         setUpvoted(false);
-    };
-
-    const handleReply = (e) => {
-        e.stopPropagation();
     };
 
     const handleContextMenu = (e) => {
@@ -155,6 +150,7 @@ const CommentButtonBar = ({
                                 <button
                                     className="flex items-center gap-2 p-5 hover:bg-dark-3"
                                     onClick={(e) => {
+                                        setShowContextMenu(false);
                                         handleEditClick(e);
                                     }}
                                 >
@@ -173,7 +169,7 @@ const CommentButtonBar = ({
                             {auth?.username === username && (
                                 <button
                                     className="flex items-center gap-2 p-5 hover:bg-dark-3"
-                                    onClick={() => setConfirm(true)}
+                                    onClick={() => handleDelete()}
                                 >
                                     <Icon
                                         path={trashcan}

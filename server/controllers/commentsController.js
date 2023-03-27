@@ -1,6 +1,7 @@
 const pool = require("../db");
 
 const createComment = async (req, res) => {
+    console.log(req.body);
     try {
         console.log(req.body);
         let { parent_id, comment_text } = req.body;
@@ -24,6 +25,33 @@ const createComment = async (req, res) => {
         res.json(newComment.rows[0]);
     } catch (err) {
         console.error(err.message);
+    }
+};
+
+const editComment = async (req, res) => {
+    try {
+        const { comment_id } = req.params;
+        const { comment_text } = req.body;
+        const updatedComment = pool.query(
+            `UPDATE comments SET comment_text = $1 WHERE comment_id = $2`,
+            [comment_text, comment_id]
+        );
+        res.json(`Post ${comment_id} was updated`);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+const deleteComment = async (req, res) => {
+    try {
+        const { comment_id } = req.params;
+        const updatedComment = pool.query(
+            `UPDATE comments SET comment_text = $1 WHERE comment_id = $2`,
+            ["[deleted]", comment_id]
+        );
+        res.json(`Post ${comment_id} was deleted`);
+    } catch (err) {
+        console.error(err);
     }
 };
 
@@ -77,4 +105,6 @@ module.exports = {
     getComments,
     createComment,
     getCommentById,
+    editComment,
+    deleteComment,
 };
