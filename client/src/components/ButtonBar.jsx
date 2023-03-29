@@ -45,6 +45,9 @@ const ButtonBar = ({
 
     const handleUpvote = (e) => {
         e.stopPropagation();
+        if (auth.accessToken == undefined) {
+            navigate("/login");
+        }
         setUpvoted(!upvoted);
         setDownvoted(false);
         if (!upvoted) {
@@ -57,6 +60,9 @@ const ButtonBar = ({
     };
     const handleDownvote = (e) => {
         e.stopPropagation();
+        if (auth.accessToken == undefined) {
+            navigate("/login");
+        }
         setDownvoted(!downvoted);
         setUpvoted(false);
         if (!downvoted) {
