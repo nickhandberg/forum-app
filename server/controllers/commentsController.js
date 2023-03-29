@@ -1,21 +1,14 @@
 const pool = require("../db");
 
 const createComment = async (req, res) => {
-    console.log(req.body);
     try {
-        console.log(req.body);
         let { parent_id, comment_text } = req.body;
-
-        const user_id = await pool.query(
-            "SELECT user_id FROM users WHERE username = $1",
-            [req.username]
-        );
 
         const newComment = await pool.query(
             "INSERT INTO comments (post_id, user_id, parent_id, comment_text, post_date) VALUES($1, $2, $3, $4, $5) RETURNING *",
             [
                 req.params.post_id,
-                user_id.rows[0].user_id,
+                req.user.user_id,
                 parent_id,
                 comment_text,
                 new Date(),

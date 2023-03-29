@@ -9,13 +9,14 @@ router
     .post(verifyJWT, postsController.createPost);
 
 router
+    .get("/private/", verifyJWT, postsController.getAllPosts)
+    .get("/private/getPost/:id", verifyJWT, postsController.getPost);
+
+router
     .route("/getPost/:id")
+    .post(verifyJWT, postsController.handleVote)
     .get(postsController.getPost)
     .put(verifyJWT, postsController.updatePost)
     .delete(verifyJWT, postsController.deletePost);
-
-router.get("/getByUser/:username", postsController.getPostsByUser);
-
-router.get("/:channel_name", postsController.getPostsByChannel);
 
 module.exports = router;

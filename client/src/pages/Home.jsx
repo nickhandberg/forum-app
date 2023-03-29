@@ -21,7 +21,12 @@ const Home = () => {
                     />
                 </button>
             </div>
-            <Feed param={channel} showGrid={showGrid} darkMode={darkMode} />
+            <Feed
+                param={channel}
+                feedType={"main"}
+                showGrid={showGrid}
+                darkMode={darkMode}
+            />
         </div>
     );
 };

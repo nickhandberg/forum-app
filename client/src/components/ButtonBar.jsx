@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/Icon";
 import useAppContext from "../hooks/useAppContext";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import {
     altDownvote,
     altUpvote,
@@ -14,6 +15,8 @@ import {
 } from "../img/iconPaths";
 
 const ButtonBar = ({
+    vote,
+    post_id,
     isCard,
     karma,
     setConfirm,
@@ -25,25 +28,66 @@ const ButtonBar = ({
     comment_cnt,
 }) => {
     const { auth, darkMode } = useAppContext();
-    const [upvoted, setUpvoted] = useState(false);
-    const [downvoted, setDownvoted] = useState(false);
+    const [upvoted, setUpvoted] = useState(vote > 0 ? true : false);
+    const [downvoted, setDownvoted] = useState(vote < 0 ? true : false);
     const [showContextMenu, setShowContextMenu] = useState(false);
+    const [tempKarma, setTempKarma] = useState(karma);
+    const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setTempKarma(karma);
+    }, [karma]);
+
+    useEffect(() => {
+        vote > 0 ? setUpvoted(true) : vote < 0 ? setDownvoted(true) : null;
+    }, [vote]);
 
     const handleUpvote = (e) => {
         e.stopPropagation();
         setUpvoted(!upvoted);
         setDownvoted(false);
+        if (!upvoted) {
+            setTempKarma(parseInt(tempKarma) + (downvoted ? 2 : 1));
+            placeVote(1);
+        } else {
+            setTempKarma(parseInt(tempKarma) - 1);
+            placeVote(0);
+        }
     };
     const handleDownvote = (e) => {
         e.stopPropagation();
         setDownvoted(!downvoted);
         setUpvoted(false);
+        if (!downvoted) {
+            setTempKarma(parseInt(tempKarma) - (upvoted ? 2 : 1));
+            placeVote(-1);
+        } else {
+            setTempKarma(parseInt(tempKarma) + 1);
+            placeVote(0);
+        }
     };
 
     const handleContextMenu = (e) => {
         e.stopPropagation();
         setShowContextMenu(!showContextMenu);
+    };
+
+    const placeVote = async (i) => {
+        try {
+            const data = { vote: i };
+            const response = await axiosPrivate.post(
+                `/posts/getPost/${post_id}`,
+                JSON.stringify(data),
+                {
+                    headers: { "Content-Type": "application/json" },
+                    withCredentials: true,
+                }
+            );
+        } catch (err) {
+            console.log(err);
+            // setNotif("Delete post failed");
+        }
     };
 
     const redirect = (e, path) => {
@@ -54,8 +98,16 @@ const ButtonBar = ({
     return (
         <div className="flex justify-between mt-4 pb-4  px-4">
             <div className="flex flex-col text-xs md:text-sm dark:text-light-2">
-                <p>
-                    {karma > 1000 ? (karma / 1000).toFixed(1) + "k" : karma}{" "}
+                <p
+                    className={
+                        downvoted
+                            ? "text-[#d90f63]"
+                            : upvoted
+                            ? "text-[#6fc938]"
+                            : ""
+                    }
+                >
+                    {karma > 1000 ? (karma / 1000).toFixed(1) + "k" : tempKarma}{" "}
                     points
                 </p>
                 <p>

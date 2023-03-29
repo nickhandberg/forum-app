@@ -10,6 +10,7 @@ import ButtonBar from "./ButtonBar";
 import TitleBar from "./TitleBar";
 
 const PostContent = ({
+    vote,
     post_id,
     channel,
     username,
@@ -186,6 +187,8 @@ const PostContent = ({
             )}
 
             <ButtonBar
+                vote={vote}
+                post_id={post_id}
                 karma={karma}
                 comment_cnt={comment_cnt}
                 setConfirm={setConfirm}

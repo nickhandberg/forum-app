@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAppContext from "../hooks/useAppContext";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import axios from "../utils/axios";
 
 import PostCard from "./PostCard";
 
 const Feed = ({ param, feedType, setMissing }) => {
     const [posts, setPosts] = useState([]);
-    const navigate = useNavigate();
-    const { darkMode, showGrid } = useAppContext();
+    const axiosPrivate = useAxiosPrivate();
+    const { auth, darkMode, showGrid } = useAppContext();
 
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
+
         const getPosts = async () => {
             try {
-                const response = await axios.get(
-                    `/posts/${feedType === "user" ? "getByUser" : ""}/${
-                        param ? param : ""
-                    }`,
+                const response = await axiosPrivate.get(
+                    `/posts/${auth?.accessToken ? "private" : ""}`,
                     {
+                        params: {
+                            type: `${feedType}`,
+                            value: `${param}`,
+                        },
                         signal: controller.signal,
                     }
                 );
@@ -38,16 +42,11 @@ const Feed = ({ param, feedType, setMissing }) => {
             isMounted = false;
             isMounted && controller.abort();
         };
-    }, [param]);
+    }, [param, auth.accessToken]);
 
     return (
         <div>
             <div
-                // className={`grid ${
-                //     showGrid
-                //         ? "xl:grid-cols-3 md:grid-cols-2 grid-cols-1"
-                //         : "grid-cols-1 max-w-[800px] m-auto w-full"
-                // } gap-3`}
                 className={`gap-3 columns-1 ${
                     showGrid
                         ? "xl:columns-3 md:columns-2 columns-1"
@@ -57,6 +56,7 @@ const Feed = ({ param, feedType, setMissing }) => {
                 {posts.map((post, i) => (
                     <PostCard
                         key={i}
+                        vote={post.vote ? post.vote : 0}
                         post_id={post.post_id}
                         channel={post.channel_name}
                         username={post.username}

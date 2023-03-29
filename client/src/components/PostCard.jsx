@@ -8,6 +8,7 @@ import Icon from "./Icon";
 import TitleBar from "./TitleBar";
 
 const PostCard = ({
+    vote,
     post_id,
     channel,
     username,
@@ -80,6 +81,8 @@ const PostCard = ({
             )}
 
             <ButtonBar
+                vote={vote}
+                post_id={post_id}
                 isCard={true}
                 karma={karma}
                 comment_cnt={comment_cnt}

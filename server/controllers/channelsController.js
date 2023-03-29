@@ -9,7 +9,7 @@ const Roles = {
 const joinChannel = async (user_id, channel_id, role) => {
     try {
         const response = await pool.query(
-            "INSERT INTO user_channel (user_id, channel_id, user_role) VALUES ($1,$2,$3)",
+            "INSERT INTO user_channels (user_id, channel_id, user_role) VALUES ($1,$2,$3)",
             [user_id, channel_id, role]
         );
     } catch (err) {
@@ -20,7 +20,7 @@ const joinChannel = async (user_id, channel_id, role) => {
 const leaveChannel = async (user_id, channel_id) => {
     try {
         const response = await pool.query(
-            "DELETE FROM user_channel WHERE user_id = $1 AND channel_id = $2",
+            "DELETE FROM user_channels WHERE user_id = $1 AND channel_id = $2",
             [user_id, channel_id]
         );
     } catch (err) {
@@ -63,7 +63,7 @@ const removeChannelMember = async (req, res) => {
         );
 
         const response = await pool.query(
-            "SELECT * FROM user_channel WHERE user_id = $1 AND channel_id = $2",
+            "SELECT * FROM user_channels WHERE user_id = $1 AND channel_id = $2",
             [user_id.rows[0].user_id, channel_id.rows[0].channel_id]
         );
 
@@ -96,7 +96,7 @@ const getChannelRole = async (req, res) => {
         );
 
         const response = await pool.query(
-            "SELECT * FROM user_channel WHERE user_id = $1 AND channel_id = $2",
+            "SELECT * FROM user_channels WHERE user_id = $1 AND channel_id = $2",
             [user_id.rows[0].user_id, channel_id.rows[0].channel_id]
         );
         if (response.rowCount > 0) {

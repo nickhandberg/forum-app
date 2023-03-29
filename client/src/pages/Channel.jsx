@@ -172,6 +172,7 @@ const Channel = () => {
                     </div>
                     <Feed
                         param={channel}
+                        feedType={"channel"}
                         showGrid={showGrid}
                         darkMode={darkMode}
                         setMissing={setMissing}
