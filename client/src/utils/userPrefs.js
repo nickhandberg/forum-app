@@ -1,7 +1,7 @@
 export const getUserPrefs = () => {
     let userPrefs = localStorage.getItem("userPrefs");
     if (userPrefs === null) {
-        userPrefs = JSON.stringify({ darkMode: false, showGrid: true });
+        userPrefs = JSON.stringify({ darkMode: true, showGrid: false });
     }
     return JSON.parse(userPrefs);
 };
