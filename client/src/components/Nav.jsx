@@ -71,7 +71,10 @@ const Nav = ({
                     </button>
 
                     {mobileMenuOpen && (
-                        <MobileMenu setMobileMenuOpen={setMobileMenuOpen} />
+                        <MobileMenu
+                            setMobileMenuOpen={setMobileMenuOpen}
+                            navToRandomChannel={navToRandomChannel}
+                        />
                     )}
                 </div>
 
@@ -89,22 +92,6 @@ const Nav = ({
                     >
                         random
                     </p>
-                </div>
-                <div className="hidden md:flex lg:flex items-center gap-2 mr-8">
-                    <input
-                        className="w-full rounded-md placeholder-dark-2 bg-light-3 border-light-3 border-2 px-2 dark:bg-dark-3 dark:border-dark-3 dark:placeholder-light-3"
-                        type="text"
-                        placeholder="search"
-                    />
-                    <button className="flex align-middle">
-                        <Icon
-                            path={search}
-                            fill={darkMode ? "#c4c4c4" : "#161617"}
-                            stroke={darkMode ? "#c4c4c4" : "#161617"}
-                            w={"28px"}
-                            h={"28px"}
-                        />
-                    </button>
                 </div>
                 <div className="relative gap-4 hidden md:flex">
                     <button

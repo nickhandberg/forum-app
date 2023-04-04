@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import useAppContext from "../hooks/useAppContext";
 import useLogout from "../hooks/useLogout";
 import {
+    allIcon,
     chevDown,
     chevLeft,
     chevUp,
+    homeIcon,
     moon,
     newPostIcon,
     plus,
+    randomIcon,
     signIn,
     signOut,
     signUp,
@@ -16,7 +19,7 @@ import {
 } from "../img/iconPaths";
 import Icon from "./Icon";
 
-const MobileMenu = ({ setMobileMenuOpen }) => {
+const MobileMenu = ({ setMobileMenuOpen, navToRandomChannel }) => {
     const [accountOpen, setAccountOpen] = useState(false);
     const [createOpen, setCreateOpen] = useState(false);
     const { auth, darkMode, setDarkMode } = useAppContext();
@@ -46,6 +49,58 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
                     h={"35px"}
                 />
             </button>
+
+            <button
+                className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
+                onClick={() => {
+                    setMobileMenuOpen(false);
+                    navigate("/");
+                }}
+            >
+                <Icon
+                    path={homeIcon}
+                    fill={darkMode ? "#c4c4c4" : "#161617"}
+                    stroke={darkMode ? "#c4c4c4" : "#161617"}
+                    w={"25px"}
+                    h={"25px"}
+                />
+                Home
+            </button>
+
+            <button
+                className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
+                onClick={() => {
+                    setMobileMenuOpen(false);
+                    navigate("/all");
+                }}
+            >
+                <Icon
+                    path={allIcon}
+                    fill={darkMode ? "#c4c4c4" : "#161617"}
+                    stroke={darkMode ? "#c4c4c4" : "#161617"}
+                    w={"25px"}
+                    h={"25px"}
+                />
+                All
+            </button>
+
+            <button
+                className="flex align-middle gap-2 hover:bg-light-2 p-5 dark:hover:bg-dark-3"
+                onClick={() => {
+                    setMobileMenuOpen(false);
+                    navToRandomChannel();
+                }}
+            >
+                <Icon
+                    path={randomIcon}
+                    fill={darkMode ? "#c4c4c4" : "#161617"}
+                    stroke={darkMode ? "#c4c4c4" : "#161617"}
+                    w={"25px"}
+                    h={"25px"}
+                />
+                Random
+            </button>
+
             <button
                 className="flex justify-between hover:bg-light-2 p-5 dark:hover:bg-dark-3"
                 onClick={() => setAccountOpen(!accountOpen)}
@@ -61,7 +116,7 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
                     <p>Account</p>
                 </div>
                 <Icon
-                    path={chevDown}
+                    path={accountOpen ? chevUp : chevDown}
                     fill={darkMode ? "#c4c4c4" : "#161617"}
                     stroke={darkMode ? "#c4c4c4" : "#161617"}
                     w={"25px"}
@@ -74,8 +129,14 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
                     <button
                         onClick={
                             auth?.accessToken
-                                ? () => navigate(`/u/${auth.username}`)
-                                : () => navigate("/login")
+                                ? () => {
+                                      setMobileMenuOpen(false);
+                                      navigate(`/u/${auth.username}`);
+                                  }
+                                : () => {
+                                      setMobileMenuOpen(false);
+                                      navigate("/login");
+                                  }
                         }
                         className="flex align-middle gap-2 hover:bg-light-2 py-4  dark:hover:bg-dark-3"
                     >
@@ -91,8 +152,14 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
                     <button
                         onClick={
                             auth?.accessToken
-                                ? () => handleLogout()
-                                : () => navigate("/register")
+                                ? () => {
+                                      setMobileMenuOpen(false);
+                                      handleLogout();
+                                  }
+                                : () => {
+                                      setMobileMenuOpen(false);
+                                      navigate("/register");
+                                  }
                         }
                         className="flex align-middle gap-2 hover:bg-light-2 py-4 dark:hover:bg-dark-3"
                     >
@@ -123,7 +190,7 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
                     <p>Create</p>
                 </div>
                 <Icon
-                    path={chevDown}
+                    path={createOpen ? chevUp : chevDown}
                     fill={darkMode ? "#c4c4c4" : "#161617"}
                     stroke={darkMode ? "#c4c4c4" : "#161617"}
                     w={"25px"}
@@ -135,7 +202,10 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
                 <div className="flex flex-col align-middle pl-12">
                     <button
                         className="flex align-middle gap-2 hover:bg-light-2 py-4 dark:hover:bg-dark-3"
-                        onClick={() => navigate("/newpost")}
+                        onClick={() => {
+                            setMobileMenuOpen(false);
+                            navigate("/newpost");
+                        }}
                     >
                         <Icon
                             path={newPostIcon}
@@ -148,7 +218,10 @@ const MobileMenu = ({ setMobileMenuOpen }) => {
                     </button>
                     <button
                         className="flex align-middle gap-2 hover:bg-light-2 py-4 dark:hover:bg-dark-3"
-                        onClick={() => navigate("/newchannel")}
+                        onClick={() => {
+                            setMobileMenuOpen(false);
+                            navigate("/newchannel");
+                        }}
                     >
                         <Icon
                             path={newPostIcon}
