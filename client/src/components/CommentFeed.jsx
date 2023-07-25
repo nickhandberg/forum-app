@@ -48,7 +48,7 @@ const CommentFeed = ({ post_id }) => {
     };
 
     return (
-        <div className="flex flex-col gap-2 py-6 w-full">
+        <div className="flex flex-col gap-2 py-6 w-full mb-[25%]">
             {comments.map((comment, i) => (
                 <Comment
                     key={i}

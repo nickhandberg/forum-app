@@ -129,7 +129,7 @@ const CommentButtonBar = ({
                         />
                     </button>
                     {showContextMenu && (
-                        <div className="absolute z-20 right-[-16px] text-xl dark:text-light-2 bg-light-1 dark:bg-dark-2 border-b-2 border-x-2 border-dark-1 dark:border-dark-3 flex flex-col top-[51px]">
+                        <div className="absolute z-20 right-[-16px] text-xl dark:text-light-2 bg-light-1 dark:bg-dark-2 border-b-2 border-x-2 border-dark-1 dark:border-dark-3 flex flex-col top-[35px]">
                             <button
                                 className="flex items-center gap-2 p-5 hover:bg-dark-3"
                                 onClick={(e) => {
